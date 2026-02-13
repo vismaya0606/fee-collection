@@ -670,8 +670,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Syllabus *</label>
-                                    <select id="syllabus" required>
+                                    <label>Syllabus (Optional)</label>
+                                    <select id="syllabus">
                                         <option value="">Select Syllabus</option>
                                         <option value="CBSE">CBSE</option>
                                         <option value="Matric">Matric</option>
@@ -1082,7 +1082,7 @@
                     name: document.getElementById('studentName').value,
                     rollNumber: document.getElementById('rollNumber').value,
                     course: document.getElementById('course').value,
-                    syllabus: document.getElementById('syllabus').value,
+                    syllabus: document.getElementById('syllabus').value || '-',
                     phone: document.getElementById('phoneNumber').value,
                     monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
                     admissionDate: document.getElementById('admissionDate').value,
