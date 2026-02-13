@@ -44,6 +44,13 @@
             font-size: 1.1em;
         }
 
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -151,12 +158,17 @@
             transition: all 0.3s;
         }
 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
@@ -339,48 +351,176 @@
             <p>Fee Collection & Management System</p>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3 id="totalStudents">0</h3>
-                <p>Total Students</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="totalCollected">₹0</h3>
-                <p>Total Collected</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="totalPending">₹0</h3>
-                <p>Pending Fees</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="thisMonth">₹0</h3>
-                <p>This Month</p>
-            </div>
+        <div class="loading" id="loadingIndicator">
+            ⏳ Loading data from cloud...
         </div>
 
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('students')">Students</button>
-            <button class="tab" onclick="switchTab('fees')">Fee Collection</button>
-            <button class="tab" onclick="switchTab('reports')">Reports</button>
-        </div>
+        <div id="mainContent" style="display: none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalStudents">0</h3>
+                    <p>Total Students</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalCollected">₹0</h3>
+                    <p>Total Collected</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalPending">₹0</h3>
+                    <p>Pending Fees</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="thisMonth">₹0</h3>
+                    <p>This Month</p>
+                </div>
+            </div>
 
-        <!-- Students Tab -->
-        <div id="students" class="tab-content active">
-            <h2 style="margin-bottom: 20px;">Add New Student</h2>
-            <form id="studentForm">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('students')">Students</button>
+                <button class="tab" onclick="switchTab('fees')">Fee Collection</button>
+                <button class="tab" onclick="switchTab('reports')">Reports</button>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="students" class="tab-content active">
+                <h2 style="margin-bottom: 20px;">Add New Student</h2>
+                <form id="studentForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Student Name *</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Roll Number *</label>
+                            <input type="text" id="rollNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Class *</label>
+                            <select id="course" required>
+                                <option value="">Select Class</option>
+                                <option value="Class 1">Class 1</option>
+                                <option value="Class 2">Class 2</option>
+                                <option value="Class 3">Class 3</option>
+                                <option value="Class 4">Class 4</option>
+                                <option value="Class 5">Class 5</option>
+                                <option value="Class 6">Class 6</option>
+                                <option value="Class 7">Class 7</option>
+                                <option value="Class 8">Class 8</option>
+                                <option value="Class 9">Class 9</option>
+                                <option value="Class 10">Class 10</option>
+                                <option value="Class 11">Class 11</option>
+                                <option value="Class 12">Class 12</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Syllabus *</label>
+                            <select id="syllabus" required>
+                                <option value="">Select Syllabus</option>
+                                <option value="CBSE">CBSE</option>
+                                <option value="Matric">Matric</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="phoneNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Monthly Fee (₹) *</label>
+                            <input type="number" id="monthlyFee" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Admission Date *</label>
+                            <input type="date" id="admissionDate" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Student</button>
+                </form>
+
+                <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
+                <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Syllabus</th>
+                                <th>Phone</th>
+                                <th>Monthly Fee</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fee Collection Tab -->
+            <div id="fees" class="tab-content">
+                <h2 style="margin-bottom: 20px;">Collect Fee</h2>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Student Name *</label>
-                        <input type="text" id="studentName" required>
+                        <label>Select Student *</label>
+                        <select id="feeStudent" required>
+                            <option value="">Choose student...</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Roll Number *</label>
-                        <input type="text" id="rollNumber" required>
+                        <label>Fee Month *</label>
+                        <input type="month" id="feeMonth" required>
                     </div>
                     <div class="form-group">
-                        <label>Class *</label>
-                        <select id="course" required>
-                            <option value="">Select Class</option>
+                        <label>Amount (₹) *</label>
+                        <input type="number" id="feeAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method *</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select method...</option>
+                            <option value="Cash">Cash</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Card">Card</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-success" onclick="collectFee()">Collect Fee</button>
+
+                <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Receipt No.</th>
+                                <th>Date</th>
+                                <th>Student</th>
+                                <th>Month</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports" class="tab-content">
+                <h2 style="margin-bottom: 20px;">Fee Status Report</h2>
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>Select Month</label>
+                        <input type="month" id="reportMonth">
+                    </div>
+                    <div class="form-group">
+                        <label>Filter by Class</label>
+                        <select id="reportCourse">
+                            <option value="">All Classes</option>
                             <option value="Class 1">Class 1</option>
                             <option value="Class 2">Class 2</option>
                             <option value="Class 3">Class 3</option>
@@ -396,155 +536,33 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Syllabus *</label>
-                        <select id="syllabus" required>
-                            <option value="">Select Syllabus</option>
+                        <label>Filter by Syllabus</label>
+                        <select id="reportSyllabus">
+                            <option value="">All Syllabus</option>
                             <option value="CBSE">CBSE</option>
                             <option value="Matric">Matric</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Phone Number *</label>
-                        <input type="tel" id="phoneNumber" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Monthly Fee (₹) *</label>
-                        <input type="number" id="monthlyFee" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Admission Date *</label>
-                        <input type="date" id="admissionDate" required>
-                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Student</button>
-            </form>
+                <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
 
-            <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
-            <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch">
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Roll No.</th>
-                            <th>Name</th>
-                            <th>Class</th>
-                            <th>Syllabus</th>
-                            <th>Phone</th>
-                            <th>Monthly Fee</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Fee Collection Tab -->
-        <div id="fees" class="tab-content">
-            <h2 style="margin-bottom: 20px;">Collect Fee</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Select Student *</label>
-                    <select id="feeStudent" required>
-                        <option value="">Choose student...</option>
-                    </select>
+                <div class="table-container" style="margin-top: 20px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Syllabus</th>
+                                <th>Monthly Fee</th>
+                                <th>Status</th>
+                                <th>Last Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                        </tbody>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label>Fee Month *</label>
-                    <input type="month" id="feeMonth" required>
-                </div>
-                <div class="form-group">
-                    <label>Amount (₹) *</label>
-                    <input type="number" id="feeAmount" required>
-                </div>
-                <div class="form-group">
-                    <label>Payment Method *</label>
-                    <select id="paymentMethod" required>
-                        <option value="">Select method...</option>
-                        <option value="Cash">Cash</option>
-                        <option value="UPI">UPI</option>
-                        <option value="Card">Card</option>
-                        <option value="Bank Transfer">Bank Transfer</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn btn-success" onclick="collectFee()">Collect Fee</button>
-
-            <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Receipt No.</th>
-                            <th>Date</th>
-                            <th>Student</th>
-                            <th>Month</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="paymentTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Reports Tab -->
-        <div id="reports" class="tab-content">
-            <h2 style="margin-bottom: 20px;">Fee Status Report</h2>
-            <div class="form-grid" style="margin-bottom: 20px;">
-                <div class="form-group">
-                    <label>Select Month</label>
-                    <input type="month" id="reportMonth">
-                </div>
-                <div class="form-group">
-                    <label>Filter by Class</label>
-                    <select id="reportCourse">
-                        <option value="">All Classes</option>
-                        <option value="Class 1">Class 1</option>
-                        <option value="Class 2">Class 2</option>
-                        <option value="Class 3">Class 3</option>
-                        <option value="Class 4">Class 4</option>
-                        <option value="Class 5">Class 5</option>
-                        <option value="Class 6">Class 6</option>
-                        <option value="Class 7">Class 7</option>
-                        <option value="Class 8">Class 8</option>
-                        <option value="Class 9">Class 9</option>
-                        <option value="Class 10">Class 10</option>
-                        <option value="Class 11">Class 11</option>
-                        <option value="Class 12">Class 12</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Filter by Syllabus</label>
-                    <select id="reportSyllabus">
-                        <option value="">All Syllabus</option>
-                        <option value="CBSE">CBSE</option>
-                        <option value="Matric">Matric</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
-
-            <div class="table-container" style="margin-top: 20px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Roll No.</th>
-                            <th>Student Name</th>
-                            <th>Class</th>
-                            <th>Syllabus</th>
-                            <th>Monthly Fee</th>
-                            <th>Status</th>
-                            <th>Last Payment</th>
-                        </tr>
-                    </thead>
-                    <tbody id="reportTableBody">
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -561,62 +579,204 @@
         </div>
     </div>
 
-    <script>
-        // Data storage
-        let students = [];
-        let payments = [];
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // Initialize with current month
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDwn-JoS8oItPiQjETsJ9pqlDgRTrsASQ",
+            authDomain: "fee-collection-57e8b.firebaseapp.com",
+            projectId: "fee-collection-57e8b",
+            storageBucket: "fee-collection-57e8b.firebasestorage.app",
+            messagingSenderId: "1009610270668",
+            appId: "1:1009610270668:web:c7890359d8c35e325f9f69"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global variables
+        window.students = [];
+        window.payments = [];
+        let studentsListener = null;
+        let paymentsListener = null;
+
+        // Initialize dates
         document.getElementById('feeMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('reportMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('admissionDate').value = new Date().toISOString().slice(0, 10);
 
-        // Tab switching
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tabName).classList.add('active');
+        // Load data from Firebase with real-time updates
+        async function loadData() {
+            try {
+                // Listen to students collection
+                const studentsQuery = query(collection(db, 'students'), orderBy('rollNumber'));
+                studentsListener = onSnapshot(studentsQuery, (snapshot) => {
+                    window.students = [];
+                    snapshot.forEach((doc) => {
+                        window.students.push({ id: doc.id, ...doc.data() });
+                    });
+                    updateStudentTable();
+                    updateFeeStudentSelect();
+                    updateStats();
+                });
+
+                // Listen to payments collection
+                const paymentsQuery = query(collection(db, 'payments'), orderBy('date', 'desc'));
+                paymentsListener = onSnapshot(paymentsQuery, (snapshot) => {
+                    window.payments = [];
+                    snapshot.forEach((doc) => {
+                        window.payments.push({ id: doc.id, ...doc.data() });
+                    });
+                    updatePaymentTable();
+                    updateStats();
+                });
+
+                // Hide loading, show content
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading data from Firebase. Please check your internet connection.');
+            }
         }
 
-        // Add student
-        document.getElementById('studentForm').addEventListener('submit', function(e) {
+        // Add student to Firebase
+        document.getElementById('studentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const student = {
-                id: Date.now(),
-                name: document.getElementById('studentName').value,
-                rollNumber: document.getElementById('rollNumber').value,
-                course: document.getElementById('course').value,
-                syllabus: document.getElementById('syllabus').value,
-                phone: document.getElementById('phoneNumber').value,
-                monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
-                admissionDate: document.getElementById('admissionDate').value
-            };
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Adding...';
 
-            students.push(student);
-            updateStudentTable();
-            updateFeeStudentSelect();
-            updateStats();
-            this.reset();
-            document.getElementById('admissionDate').value = new Date().toISOString().slice(0, 10);
-            alert('Student added successfully!');
+            try {
+                const student = {
+                    name: document.getElementById('studentName').value,
+                    rollNumber: document.getElementById('rollNumber').value,
+                    course: document.getElementById('course').value,
+                    syllabus: document.getElementById('syllabus').value,
+                    phone: document.getElementById('phoneNumber').value,
+                    monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
+                    admissionDate: document.getElementById('admissionDate').value,
+                    createdAt: new Date().toISOString()
+                };
+
+                await addDoc(collection(db, 'students'), student);
+                
+                this.reset();
+                document.getElementById('admissionDate').value = new Date().toISOString().slice(0, 10);
+                alert('✅ Student added successfully!');
+            } catch (error) {
+                console.error('Error adding student:', error);
+                alert('Error adding student. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Student';
+            }
         });
 
+        // Collect fee and save to Firebase
+        window.collectFee = async function() {
+            const studentId = document.getElementById('feeStudent').value;
+            const month = document.getElementById('feeMonth').value;
+            const amount = parseFloat(document.getElementById('feeAmount').value);
+            const method = document.getElementById('paymentMethod').value;
+
+            if (!studentId || !month || !amount || !method) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            // Check if already paid for this month
+            const alreadyPaid = window.payments.some(p => p.studentId === studentId && p.month === month);
+            if (alreadyPaid) {
+                if (!confirm('Fee already collected for this month. Do you want to add another payment?')) {
+                    return;
+                }
+            }
+
+            try {
+                const payment = {
+                    receiptNo: 'REC' + Date.now().toString().slice(-6),
+                    studentId: studentId,
+                    month: month,
+                    amount: amount,
+                    method: method,
+                    date: new Date().toISOString().slice(0, 10),
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await addDoc(collection(db, 'payments'), payment);
+                
+                // Reset form
+                document.getElementById('feeStudent').value = '';
+                document.getElementById('feeAmount').value = '';
+                document.getElementById('paymentMethod').value = '';
+
+                // Show receipt
+                showReceipt({ id: docRef.id, ...payment });
+            } catch (error) {
+                console.error('Error collecting fee:', error);
+                alert('Error collecting fee. Please try again.');
+            }
+        };
+
+        // Delete student from Firebase
+        window.deleteStudent = async function(id) {
+            if (!confirm('Are you sure you want to delete this student? This will also delete all their payment records.')) {
+                return;
+            }
+
+            try {
+                // Delete student
+                await deleteDoc(doc(db, 'students', id));
+                
+                // Delete all payments for this student
+                const studentPayments = window.payments.filter(p => p.studentId === id);
+                for (const payment of studentPayments) {
+                    await deleteDoc(doc(db, 'payments', payment.id));
+                }
+                
+                alert('Student deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting student:', error);
+                alert('Error deleting student. Please try again.');
+            }
+        };
+
+        // Edit student
+        window.editStudent = function(id) {
+            const student = window.students.find(s => s.id === id);
+            if (student) {
+                document.getElementById('studentName').value = student.name;
+                document.getElementById('rollNumber').value = student.rollNumber;
+                document.getElementById('course').value = student.course;
+                document.getElementById('syllabus').value = student.syllabus;
+                document.getElementById('phoneNumber').value = student.phone;
+                document.getElementById('monthlyFee').value = student.monthlyFee;
+                document.getElementById('admissionDate').value = student.admissionDate;
+                
+                deleteStudent(id);
+                window.scrollTo(0, 0);
+            }
+        };
+
         // Update student table
-        function updateStudentTable() {
+        window.updateStudentTable = function() {
             const tbody = document.getElementById('studentTableBody');
             const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
             
-            const filteredStudents = students.filter(s => 
+            const filteredStudents = window.students.filter(s => 
                 s.name.toLowerCase().includes(searchTerm) || 
                 s.rollNumber.toLowerCase().includes(searchTerm)
             );
 
             tbody.innerHTML = filteredStudents.map(student => {
                 const currentMonth = new Date().toISOString().slice(0, 7);
-                const hasPaid = payments.some(p => 
+                const hasPaid = window.payments.some(p => 
                     p.studentId === student.id && p.month === currentMonth
                 );
                 
@@ -631,73 +791,29 @@
                         <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="btn btn-warning" onclick="editStudent(${student.id})" style="padding: 5px 15px;">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteStudent(${student.id})" style="padding: 5px 15px;">Delete</button>
+                                <button class="btn btn-warning" onclick="editStudent('${student.id}')" style="padding: 5px 15px;">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 15px;">Delete</button>
                             </div>
                         </td>
                     </tr>
                 `;
             }).join('');
-        }
+        };
 
         // Update fee student select
-        function updateFeeStudentSelect() {
+        window.updateFeeStudentSelect = function() {
             const select = document.getElementById('feeStudent');
             select.innerHTML = '<option value="">Choose student...</option>' + 
-                students.map(s => `<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');
-        }
-
-        // Collect fee
-        function collectFee() {
-            const studentId = parseInt(document.getElementById('feeStudent').value);
-            const month = document.getElementById('feeMonth').value;
-            const amount = parseFloat(document.getElementById('feeAmount').value);
-            const method = document.getElementById('paymentMethod').value;
-
-            if (!studentId || !month || !amount || !method) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            // Check if already paid for this month
-            const alreadyPaid = payments.some(p => p.studentId === studentId && p.month === month);
-            if (alreadyPaid) {
-                if (!confirm('Fee already collected for this month. Do you want to add another payment?')) {
-                    return;
-                }
-            }
-
-            const payment = {
-                id: Date.now(),
-                receiptNo: 'REC' + Date.now().toString().slice(-6),
-                studentId: studentId,
-                month: month,
-                amount: amount,
-                method: method,
-                date: new Date().toISOString().slice(0, 10)
-            };
-
-            payments.push(payment);
-            updatePaymentTable();
-            updateStats();
-            updateStudentTable();
-            
-            // Reset form
-            document.getElementById('feeStudent').value = '';
-            document.getElementById('feeAmount').value = '';
-            document.getElementById('paymentMethod').value = '';
-
-            // Show receipt
-            showReceipt(payment);
-        }
+                window.students.map(s => `<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');
+        };
 
         // Update payment table
-        function updatePaymentTable() {
+        window.updatePaymentTable = function() {
             const tbody = document.getElementById('paymentTableBody');
-            const recentPayments = [...payments].reverse().slice(0, 20);
+            const recentPayments = window.payments.slice(0, 20);
 
             tbody.innerHTML = recentPayments.map(payment => {
-                const student = students.find(s => s.id === payment.studentId);
+                const student = window.students.find(s => s.id === payment.studentId);
                 return `
                     <tr>
                         <td>${payment.receiptNo}</td>
@@ -707,16 +823,16 @@
                         <td>₹${payment.amount}</td>
                         <td>${payment.method}</td>
                         <td>
-                            <button class="btn btn-primary" onclick="showReceipt(${JSON.stringify(payment).replace(/"/g, '&quot;')})" style="padding: 5px 15px;">View Receipt</button>
+                            <button class="btn btn-primary" onclick='showReceipt(${JSON.stringify(payment).replace(/'/g, "&#39;")})' style="padding: 5px 15px;">View Receipt</button>
                         </td>
                     </tr>
                 `;
             }).join('');
-        }
+        };
 
         // Show receipt
-        function showReceipt(payment) {
-            const student = students.find(s => s.id === payment.studentId);
+        window.showReceipt = function(payment) {
+            const student = window.students.find(s => s.id === payment.studentId);
             const modal = document.getElementById('receiptModal');
             const content = document.getElementById('receiptContent');
 
@@ -772,21 +888,21 @@
             `;
 
             modal.classList.add('active');
-        }
+        };
 
         // Close receipt
-        function closeReceipt() {
+        window.closeReceipt = function() {
             document.getElementById('receiptModal').classList.remove('active');
-        }
+        };
 
         // Generate report
-        function generateReport() {
+        window.generateReport = function() {
             const month = document.getElementById('reportMonth').value;
             const course = document.getElementById('reportCourse').value;
             const syllabus = document.getElementById('reportSyllabus').value;
             const tbody = document.getElementById('reportTableBody');
 
-            let filteredStudents = students;
+            let filteredStudents = window.students;
             if (course) {
                 filteredStudents = filteredStudents.filter(s => s.course === course);
             }
@@ -795,8 +911,8 @@
             }
 
             tbody.innerHTML = filteredStudents.map(student => {
-                const hasPaid = payments.some(p => p.studentId === student.id && p.month === month);
-                const lastPayment = payments.filter(p => p.studentId === student.id).sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+                const hasPaid = window.payments.some(p => p.studentId === student.id && p.month === month);
+                const lastPayment = window.payments.filter(p => p.studentId === student.id).sort((a, b) => new Date(b.date) - new Date(a.date))[0];
 
                 return `
                     <tr>
@@ -810,67 +926,49 @@
                     </tr>
                 `;
             }).join('');
-        }
+        };
 
         // Update statistics
-        function updateStats() {
-            document.getElementById('totalStudents').textContent = students.length;
+        window.updateStats = function() {
+            document.getElementById('totalStudents').textContent = window.students.length;
             
-            const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0);
+            const totalCollected = window.payments.reduce((sum, p) => sum + p.amount, 0);
             document.getElementById('totalCollected').textContent = '₹' + totalCollected.toLocaleString();
 
             const currentMonth = new Date().toISOString().slice(0, 7);
-            const paidStudents = new Set(payments.filter(p => p.month === currentMonth).map(p => p.studentId));
-            const totalPending = students.filter(s => !paidStudents.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
+            const paidStudents = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
+            const totalPending = window.students.filter(s => !paidStudents.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
             document.getElementById('totalPending').textContent = '₹' + totalPending.toLocaleString();
 
-            const thisMonthCollection = payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
+            const thisMonthCollection = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
             document.getElementById('thisMonth').textContent = '₹' + thisMonthCollection.toLocaleString();
-        }
+        };
 
-        // Delete student
-        function deleteStudent(id) {
-            if (confirm('Are you sure you want to delete this student?')) {
-                students = students.filter(s => s.id !== id);
-                updateStudentTable();
-                updateFeeStudentSelect();
-                updateStats();
-            }
-        }
-
-        // Edit student
-        function editStudent(id) {
-            const student = students.find(s => s.id === id);
-            if (student) {
-                document.getElementById('studentName').value = student.name;
-                document.getElementById('rollNumber').value = student.rollNumber;
-                document.getElementById('course').value = student.course;
-                document.getElementById('syllabus').value = student.syllabus;
-                document.getElementById('phoneNumber').value = student.phone;
-                document.getElementById('monthlyFee').value = student.monthlyFee;
-                document.getElementById('admissionDate').value = student.admissionDate;
-                
-                deleteStudent(id);
-                window.scrollTo(0, 0);
-            }
-        }
+        // Tab switching
+        window.switchTab = function(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        };
 
         // Search functionality
         document.getElementById('studentSearch').addEventListener('input', updateStudentTable);
 
         // Auto-fill amount when student is selected
         document.getElementById('feeStudent').addEventListener('change', function() {
-            const studentId = parseInt(this.value);
+            const studentId = this.value;
             if (studentId) {
-                const student = students.find(s => s.id === studentId);
+                const student = window.students.find(s => s.id === studentId);
                 if (student) {
                     document.getElementById('feeAmount').value = student.monthlyFee;
                 }
             }
         });
 
-        // Initialize
-        updateStats();
+        // Initialize - Load data from Firebase
+        loadData();
     </script>
 </body>
 </html>
