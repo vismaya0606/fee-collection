@@ -640,7 +640,40 @@
                 <!-- Students Tab -->
                 <div id="students" class="tab-content active">
                     <div id="studentFormSection">
-                        <h2 style="margin-bottom: 20px;">Add New Student</h2>
+                        <h2 style="margin-bottom: 20px;">Add Students</h2>
+                        
+                        <!-- Upload Section -->
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                            <h3 style="margin-bottom: 15px; color: #667eea;">📤 Bulk Upload from Excel</h3>
+                            <p style="margin-bottom: 15px; color: #666;">Upload an Excel file (.xlsx or .xls) to add multiple students at once.</p>
+                            
+                            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                                <input type="file" id="excelFile" accept=".xlsx,.xls" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                                <button type="button" class="btn btn-success" onclick="uploadExcel()">Upload & Import</button>
+                                <button type="button" class="btn btn-primary" onclick="downloadTemplate()">📥 Download Template</button>
+                            </div>
+                            
+                            <div id="uploadStatus" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+                            
+                            <details style="margin-top: 15px;">
+                                <summary style="cursor: pointer; color: #667eea; font-weight: 600;">📋 Excel Format Instructions</summary>
+                                <div style="margin-top: 10px; padding: 15px; background: white; border-radius: 5px;">
+                                    <p style="margin-bottom: 10px;"><strong>Your Excel file should have these columns (in order):</strong></p>
+                                    <ol style="margin-left: 20px; line-height: 1.8;">
+                                        <li><strong>Student Name</strong> - Full name (Required)</li>
+                                        <li><strong>Roll Number</strong> - Unique ID (Required)</li>
+                                        <li><strong>Class</strong> - e.g., "Class 10", "Class 11" (Required)</li>
+                                        <li><strong>Syllabus</strong> - "CBSE" or "Matric" (Optional)</li>
+                                        <li><strong>Phone Number</strong> - Contact number (Required)</li>
+                                        <li><strong>Monthly Fee</strong> - Amount in rupees (Required)</li>
+                                        <li><strong>Admission Date</strong> - Format: DD/MM/YYYY or YYYY-MM-DD (Required)</li>
+                                    </ol>
+                                    <p style="margin-top: 10px; color: #dc3545;"><strong>Note:</strong> First row should be headers, data starts from row 2.</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <h3 style="margin-bottom: 20px;">➕ Add Single Student</h3>
                         <form id="studentForm">
                             <div class="form-grid">
                                 <div class="form-group">
@@ -844,6 +877,7 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.1/package/xlsx.mjs';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDwn-JoS8oItPiQjETsJ9pqlDgRTrsASQ",
