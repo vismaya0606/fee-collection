@@ -361,6 +361,16 @@
             font-weight: 600;
         }
 
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
         .badge-paid {
             background: #d4edda;
             color: #155724;
@@ -666,7 +676,8 @@
                                         <li><strong>Syllabus</strong> - "CBSE" or "Matric" (Optional)</li>
                                         <li><strong>Phone Number</strong> - Contact number (Required)</li>
                                         <li><strong>Monthly Fee</strong> - Amount in rupees (Required)</li>
-                                        <li><strong>Admission Date</strong> - Format: DD/MM/YYYY or YYYY-MM-DD (Required)</li>
+                                        <li><strong>Admission Date</strong> - Format: DD/MM/YYYY or YYYY-MM-DD (Optional)</li>
+                                        <li><strong>Status</strong> - "Active" or "Inactive" (Required)</li>
                                     </ol>
                                     <p style="margin-top: 10px; color: #dc3545;"><strong>Note:</strong> First row should be headers, data starts from row 2.</p>
                                 </div>
@@ -719,8 +730,16 @@
                                     <input type="number" id="monthlyFee" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Admission Date *</label>
-                                    <input type="date" id="admissionDate" required>
+                                    <label>Admission Date (Optional)</label>
+                                    <input type="date" id="admissionDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Status *</label>
+                                    <select id="studentStatus" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Add Student</button>
@@ -740,6 +759,7 @@
                                     <th>Phone</th>
                                     <th>Monthly Fee</th>
                                     <th>Status</th>
+                                    <th>Fee Status</th>
                                     <th id="actionsHeader">Actions</th>
                                 </tr>
                             </thead>
@@ -899,20 +919,16 @@
         let currentUser = null;
         let userRole = null;
 
-        // Page switching
         window.showPage = function(pageId) {
             ['loginPage', 'signupPage', 'resetPage', 'mainApp'].forEach(id => {
                 document.getElementById(id).style.display = 'none';
             });
             document.getElementById(pageId).style.display = 'block';
-            
-            // Clear error messages
             document.querySelectorAll('.error-message, .success-message').forEach(el => {
                 el.classList.remove('show');
             });
         };
 
-        // Login
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
@@ -934,7 +950,6 @@
             }
         });
 
-        // Signup
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('signupName').value;
@@ -954,7 +969,6 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Create user document
                 await setDoc(doc(db, 'users', user.uid), {
                     email: email,
                     name: name,
@@ -977,7 +991,6 @@
             }
         });
 
-        // Password Reset
         document.getElementById('resetForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('resetEmail').value;
@@ -1004,12 +1017,10 @@
             }
         });
 
-        // Auth state observer
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
                 
-                // Get user role
                 const userDoc = await getDoc(doc(db, 'users', user.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
@@ -1019,9 +1030,7 @@
                     document.getElementById('userEmail').textContent = user.email;
                     document.getElementById('userRole').textContent = userRole.toUpperCase();
                     
-                    // Apply role-based UI
                     applyRoleBasedUI(userRole);
-                    
                     showPage('mainApp');
                     loadData();
                 } else {
@@ -1033,7 +1042,6 @@
             }
         });
 
-        // Logout
         window.logout = async function() {
             if (confirm('Are you sure you want to logout?')) {
                 try {
@@ -1046,22 +1054,14 @@
             }
         };
 
-        // Apply role-based UI
         function applyRoleBasedUI(role) {
             const isStaff = role === 'staff';
-            
-            // Show/hide staff notice
             document.getElementById('staffNotice').style.display = isStaff ? 'block' : 'none';
-            
-            // Show/hide forms
             document.getElementById('studentFormSection').style.display = isStaff ? 'none' : 'block';
             document.getElementById('feeFormSection').style.display = isStaff ? 'none' : 'block';
-            
-            // Show/hide actions column
             document.getElementById('actionsHeader').style.display = isStaff ? 'none' : 'table-cell';
         }
 
-        // Load data
         async function loadData() {
             try {
                 const studentsQuery = query(collection(db, 'students'), orderBy('rollNumber'));
@@ -1093,12 +1093,9 @@
             }
         }
 
-        // Initialize dates
         document.getElementById('feeMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('reportMonth').value = new Date().toISOString().slice(0, 7);
-        document.getElementById('admissionDate').value = new Date().toISOString().slice(0, 10);
 
-        // Add student
         document.getElementById('studentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1119,14 +1116,14 @@
                     syllabus: document.getElementById('syllabus').value || '-',
                     phone: document.getElementById('phoneNumber').value,
                     monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
-                    admissionDate: document.getElementById('admissionDate').value,
+                    admissionDate: document.getElementById('admissionDate').value || '-',
+                    status: document.getElementById('studentStatus').value,
                     createdAt: new Date().toISOString()
                 };
 
                 await addDoc(collection(db, 'students'), student);
                 
                 this.reset();
-                document.getElementById('admissionDate').value = new Date().toISOString().slice(0, 10);
                 alert('✅ Student added successfully!');
             } catch (error) {
                 console.error('Error adding student:', error);
@@ -1137,7 +1134,6 @@
             }
         });
 
-        // Collect fee
         window.collectFee = async function() {
             if (userRole === 'staff') {
                 alert('You do not have permission to collect fees.');
@@ -1185,7 +1181,6 @@
             }
         };
 
-        // Delete student
         window.deleteStudent = async function(id) {
             if (userRole === 'staff') {
                 alert('You do not have permission to delete students.');
@@ -1211,7 +1206,6 @@
             }
         };
 
-        // Edit student
         window.editStudent = function(id) {
             if (userRole === 'staff') {
                 alert('You do not have permission to edit students.');
@@ -1223,17 +1217,17 @@
                 document.getElementById('studentName').value = student.name;
                 document.getElementById('rollNumber').value = student.rollNumber;
                 document.getElementById('course').value = student.course;
-                document.getElementById('syllabus').value = student.syllabus;
+                document.getElementById('syllabus').value = student.syllabus === '-' ? '' : student.syllabus;
                 document.getElementById('phoneNumber').value = student.phone;
                 document.getElementById('monthlyFee').value = student.monthlyFee;
-                document.getElementById('admissionDate').value = student.admissionDate;
+                document.getElementById('admissionDate').value = student.admissionDate === '-' ? '' : student.admissionDate;
+                document.getElementById('studentStatus').value = student.status;
                 
                 deleteStudent(id);
                 window.scrollTo(0, 0);
             }
         };
 
-        // Update student table
         window.updateStudentTable = function() {
             const tbody = document.getElementById('studentTableBody');
             const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
@@ -1266,6 +1260,7 @@
                         <td>${student.syllabus}</td>
                         <td>${student.phone}</td>
                         <td>₹${student.monthlyFee}</td>
+                        <td><span class="badge ${student.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${student.status}</span></td>
                         <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
                         ${actionsCell}
                     </tr>
@@ -1430,6 +1425,163 @@
                 }
             }
         });
+
+        // Excel Functions
+        window.downloadTemplate = function() {
+            const template = [
+                ['Student Name', 'Roll Number', 'Class', 'Syllabus', 'Phone Number', 'Monthly Fee', 'Admission Date', 'Status'],
+                ['John Doe', '001', 'Class 10', 'CBSE', '9876543210', '5000', '01/01/2024', 'Active'],
+                ['Jane Smith', '002', 'Class 11', 'Matric', '9876543211', '6000', '', 'Active'],
+                ['Sample Student', '003', 'Class 12', '', '9876543212', '7000', '', 'Inactive']
+            ];
+
+            const ws = XLSX.utils.aoa_to_sheet(template);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Students');
+            
+            ws['!cols'] = [
+                { wch: 20 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 15 },
+                { wch: 12 },
+                { wch: 15 },
+                { wch: 10 }
+            ];
+
+            XLSX.writeFile(wb, 'Student_Upload_Template.xlsx');
+        };
+
+        window.uploadExcel = async function() {
+            if (userRole === 'staff') {
+                alert('You do not have permission to upload students.');
+                return;
+            }
+
+            const fileInput = document.getElementById('excelFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select an Excel file first.');
+                return;
+            }
+
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#fff3cd';
+            statusDiv.style.color = '#856404';
+            statusDiv.textContent = '⏳ Reading Excel file...';
+
+            try {
+                const data = await file.arrayBuffer();
+                const workbook = XLSX.read(data);
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                if (jsonData.length < 2) {
+                    throw new Error('Excel file is empty or has no data rows.');
+                }
+
+                const rows = jsonData.slice(1);
+                let successCount = 0;
+                let errorCount = 0;
+                const errors = [];
+
+                statusDiv.textContent = `⏳ Uploading ${rows.length} students...`;
+
+                for (let i = 0; i < rows.length; i++) {
+                    const row = rows[i];
+                    
+                    if (!row || row.length === 0 || !row[0]) continue;
+
+                    try {
+                        let admissionDate = row[6];
+                        if (admissionDate) {
+                            if (typeof admissionDate === 'number') {
+                                const excelEpoch = new Date(1900, 0, 1);
+                                const days = admissionDate - 2;
+                                admissionDate = new Date(excelEpoch.getTime() + days * 24 * 60 * 60 * 1000);
+                                admissionDate = admissionDate.toISOString().slice(0, 10);
+                            } else if (typeof admissionDate === 'string') {
+                                if (admissionDate.includes('/')) {
+                                    const parts = admissionDate.split('/');
+                                    if (parts.length === 3) {
+                                        admissionDate = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                                    }
+                                }
+                            }
+                        } else {
+                            admissionDate = '-';
+                        }
+
+                        const student = {
+                            name: String(row[0] || '').trim(),
+                            rollNumber: String(row[1] || '').trim(),
+                            course: String(row[2] || '').trim(),
+                            syllabus: String(row[3] || '').trim() || '-',
+                            phone: String(row[4] || '').trim(),
+                            monthlyFee: parseFloat(row[5]) || 0,
+                            admissionDate: admissionDate,
+                            status: String(row[7] || '').trim() || 'Active',
+                            createdAt: new Date().toISOString()
+                        };
+
+                        if (!student.name || !student.rollNumber || !student.course || !student.phone || !student.monthlyFee || !student.status) {
+                            errors.push(`Row ${i + 2}: Missing required fields`);
+                            errorCount++;
+                            continue;
+                        }
+
+                        if (student.status !== 'Active' && student.status !== 'Inactive') {
+                            errors.push(`Row ${i + 2}: Status must be "Active" or "Inactive"`);
+                            errorCount++;
+                            continue;
+                        }
+
+                        const duplicate = window.students.find(s => s.rollNumber === student.rollNumber);
+                        if (duplicate) {
+                            errors.push(`Row ${i + 2}: Roll number ${student.rollNumber} already exists`);
+                            errorCount++;
+                            continue;
+                        }
+
+                        await addDoc(collection(db, 'students'), student);
+                        successCount++;
+                        
+                        statusDiv.textContent = `⏳ Uploaded ${successCount} of ${rows.length} students...`;
+
+                    } catch (error) {
+                        errors.push(`Row ${i + 2}: ${error.message}`);
+                        errorCount++;
+                    }
+                }
+
+                if (successCount > 0 && errorCount === 0) {
+                    statusDiv.style.background = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusDiv.innerHTML = `✅ Successfully uploaded ${successCount} student(s)!`;
+                } else if (successCount > 0 && errorCount > 0) {
+                    statusDiv.style.background = '#fff3cd';
+                    statusDiv.style.color = '#856404';
+                    statusDiv.innerHTML = `⚠️ Uploaded ${successCount} student(s). ${errorCount} failed.<br>` + 
+                        `<details style="margin-top: 10px;"><summary>View Errors</summary><pre style="margin-top: 5px; font-size: 0.85em;">${errors.join('\n')}</pre></details>`;
+                } else {
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.innerHTML = `❌ Upload failed. ${errorCount} error(s).<br>` + 
+                        `<details style="margin-top: 10px;"><summary>View Errors</summary><pre style="margin-top: 5px; font-size: 0.85em;">${errors.join('\n')}</pre></details>`;
+                }
+
+                fileInput.value = '';
+
+            } catch (error) {
+                console.error('Error uploading Excel:', error);
+                statusDiv.style.background = '#f8d7da';
+                statusDiv.style.color = '#721c24';
+                statusDiv.textContent = `❌ Error: ${error.message}`;
+            }
+        };
 
         function getErrorMessage(code) {
             const messages = {
