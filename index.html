@@ -312,6 +312,19 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
         .btn-success {
             background: #28a745;
             color: white;
@@ -747,7 +760,12 @@
                     </div>
 
                     <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
-                    <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                        <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch" style="margin-bottom: 0;">
+                        <button class="btn btn-whatsapp" onclick="sendBulkWhatsAppReminders()" style="padding: 10px 20px;">
+                            📱 Send Reminders to Pending Students
+                        </button>
+                    </div>
                     <div class="table-container">
                         <table>
                             <thead>
@@ -761,6 +779,7 @@
                                     <th>Status</th>
                                     <th>Fee Status</th>
                                     <th id="actionsHeader">Actions</th>
+                                    <th id="whatsappHeader">WhatsApp</th>
                                 </tr>
                             </thead>
                             <tbody id="studentTableBody">
@@ -1060,6 +1079,7 @@
             document.getElementById('studentFormSection').style.display = isStaff ? 'none' : 'block';
             document.getElementById('feeFormSection').style.display = isStaff ? 'none' : 'block';
             document.getElementById('actionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+            // WhatsApp column is visible for both admin and staff
         }
 
         async function loadData() {
@@ -1303,6 +1323,14 @@
                     </td>
                 `;
 
+                const whatsappCell = `
+                    <td>
+                        <button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.phone}', '${student.name.replace(/'/g, "\\'")}', ${student.monthlyFee})" style="padding: 5px 15px;">
+                            📱 Remind
+                        </button>
+                    </td>
+                `;
+
                 return `
                     <tr>
                         <td>${student.rollNumber}</td>
@@ -1314,6 +1342,7 @@
                         <td><span class="badge ${student.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${student.status}</span></td>
                         <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
                         ${actionsCell}
+                        ${whatsappCell}
                     </tr>
                 `;
             }).join('');
@@ -1476,6 +1505,78 @@
                 }
             }
         });
+
+        // WhatsApp Reminder Function
+        window.sendWhatsAppReminder = function(phone, studentName, monthlyFee) {
+            // Clean phone number - remove spaces, dashes, and add country code if needed
+            let cleanPhone = phone.replace(/\D/g, '');
+            
+            // If phone doesn't start with country code, assume India (+91)
+            if (cleanPhone.length === 10) {
+                cleanPhone = '91' + cleanPhone;
+            }
+            
+            // Get current month name
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            const currentMonth = monthNames[new Date().getMonth()];
+            
+            // Create reminder message
+            const message = `Dear ${studentName},
+
+This is a friendly reminder from Vismaya Education regarding your fee payment.
+
+📚 *Fee Details:*
+• Month: ${currentMonth}
+• Amount: ₹${monthlyFee}
+
+Please make the payment at your earliest convenience.
+
+For any queries, feel free to contact us.
+
+Thank you!
+*Vismaya Education*`;
+
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank');
+        };
+
+        // Bulk WhatsApp Reminder Function
+        window.sendBulkWhatsAppReminders = function() {
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            
+            // Find all students who haven't paid this month
+            const unpaidStudents = window.students.filter(student => {
+                const hasPaid = window.payments.some(p => 
+                    p.studentId === student.id && p.month === currentMonth
+                );
+                return !hasPaid && student.status === 'Active';
+            });
+
+            if (unpaidStudents.length === 0) {
+                alert('✅ All active students have paid for this month!');
+                return;
+            }
+
+            if (confirm(`Send WhatsApp reminders to ${unpaidStudents.length} students with pending fees?`)) {
+                let count = 0;
+                unpaidStudents.forEach((student, index) => {
+                    setTimeout(() => {
+                        sendWhatsAppReminder(student.phone, student.name, student.monthlyFee);
+                        count++;
+                        if (count === unpaidStudents.length) {
+                            alert(`✅ Opened WhatsApp for ${count} students. Please send messages manually.`);
+                        }
+                    }, index * 2000); // 2 second delay between each
+                });
+            }
+        };
 
         // Excel Functions
         window.downloadTemplate = function() {
