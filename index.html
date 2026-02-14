@@ -896,7 +896,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, getDoc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
         import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.1/package/xlsx.mjs';
 
         const firebaseConfig = {
@@ -1106,10 +1106,12 @@
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Adding...';
+            
+            const isEditing = editingStudentId !== null;
+            submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
 
             try {
-                const student = {
+                const studentData = {
                     name: document.getElementById('studentName').value,
                     rollNumber: document.getElementById('rollNumber').value,
                     course: document.getElementById('course').value,
@@ -1117,20 +1119,33 @@
                     phone: document.getElementById('phoneNumber').value,
                     monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
                     admissionDate: document.getElementById('admissionDate').value || '-',
-                    status: document.getElementById('studentStatus').value,
-                    createdAt: new Date().toISOString()
+                    status: document.getElementById('studentStatus').value
                 };
 
-                await addDoc(collection(db, 'students'), student);
+                if (isEditing) {
+                    // Update existing student
+                    await updateDoc(doc(db, 'students', editingStudentId), {
+                        ...studentData,
+                        updatedAt: new Date().toISOString()
+                    });
+                    alert('✅ Student updated successfully!');
+                    cancelEdit();
+                } else {
+                    // Add new student
+                    await addDoc(collection(db, 'students'), {
+                        ...studentData,
+                        createdAt: new Date().toISOString()
+                    });
+                    alert('✅ Student added successfully!');
+                }
                 
                 this.reset();
-                alert('✅ Student added successfully!');
             } catch (error) {
-                console.error('Error adding student:', error);
-                alert('Error adding student: ' + error.message);
+                console.error('Error saving student:', error);
+                alert('Error saving student: ' + error.message);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Add Student';
+                submitBtn.textContent = isEditing ? 'Update Student' : 'Add Student';
             }
         });
 
@@ -1206,6 +1221,8 @@
             }
         };
 
+        let editingStudentId = null;
+
         window.editStudent = function(id) {
             if (userRole === 'staff') {
                 alert('You do not have permission to edit students.');
@@ -1214,6 +1231,8 @@
 
             const student = window.students.find(s => s.id === id);
             if (student) {
+                editingStudentId = id;
+                
                 document.getElementById('studentName').value = student.name;
                 document.getElementById('rollNumber').value = student.rollNumber;
                 document.getElementById('course').value = student.course;
@@ -1223,10 +1242,42 @@
                 document.getElementById('admissionDate').value = student.admissionDate === '-' ? '' : student.admissionDate;
                 document.getElementById('studentStatus').value = student.status;
                 
-                deleteStudent(id);
+                // Change button text to indicate editing mode
+                const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+                submitBtn.textContent = 'Update Student';
+                submitBtn.classList.add('btn-warning');
+                submitBtn.classList.remove('btn-primary');
+                
+                // Add cancel button
+                if (!document.getElementById('cancelEditBtn')) {
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.type = 'button';
+                    cancelBtn.id = 'cancelEditBtn';
+                    cancelBtn.className = 'btn btn-danger';
+                    cancelBtn.textContent = 'Cancel Edit';
+                    cancelBtn.onclick = cancelEdit;
+                    cancelBtn.style.marginLeft = '10px';
+                    submitBtn.parentNode.appendChild(cancelBtn);
+                }
+                
                 window.scrollTo(0, 0);
             }
         };
+
+        function cancelEdit() {
+            editingStudentId = null;
+            document.getElementById('studentForm').reset();
+            
+            const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+            submitBtn.textContent = 'Add Student';
+            submitBtn.classList.remove('btn-warning');
+            submitBtn.classList.add('btn-primary');
+            
+            const cancelBtn = document.getElementById('cancelEditBtn');
+            if (cancelBtn) {
+                cancelBtn.remove();
+            }
+        }
 
         window.updateStudentTable = function() {
             const tbody = document.getElementById('studentTableBody');
