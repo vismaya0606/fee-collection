@@ -347,6 +347,11 @@
             color: white;
         }
 
+        .btn-success:hover:not(:disabled) {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
         .btn-danger {
             background: #dc3545;
             color: white;
@@ -855,6 +860,9 @@
                                 <option value="desc">Descending (Z-A, 9-1)</option>
                             </select>
                         </div>
+                        <button class="btn btn-success" onclick="exportStudentsToExcel()" style="padding: 10px 20px;">
+                            📥 Export to Excel
+                        </button>
                         <button class="btn btn-whatsapp" onclick="sendBulkWhatsAppReminders()" style="padding: 10px 20px;">
                             📱 Send Reminders to Pending
                         </button>
@@ -930,6 +938,9 @@
                                 <option value="asc">Ascending</option>
                             </select>
                         </div>
+                        <button class="btn btn-success" onclick="exportPaymentsToExcel()" style="padding: 10px 20px;">
+                            📥 Export to Excel
+                        </button>
                     </div>
                     <div class="table-container">
                         <table>
@@ -1231,7 +1242,6 @@
             document.getElementById('feeFormSection').style.display = isStaff ? 'none' : 'block';
             document.getElementById('actionsHeader').style.display = isStaff ? 'none' : 'table-cell';
             document.getElementById('paymentActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-            // WhatsApp column is visible for both admin and staff
         }
 
         async function loadData() {
@@ -1304,7 +1314,6 @@
                 };
 
                 if (isEditing) {
-                    // Update existing student
                     await updateDoc(doc(db, 'students', editingStudentId), {
                         ...studentData,
                         updatedAt: new Date().toISOString()
@@ -1312,7 +1321,6 @@
                     alert('✅ Student updated successfully!');
                     cancelEdit();
                 } else {
-                    // Add new student
                     await addDoc(collection(db, 'students'), {
                         ...studentData,
                         createdAt: new Date().toISOString()
@@ -1346,7 +1354,6 @@
                 return;
             }
 
-            // Check if already paid for this month
             const alreadyPaid = window.payments.some(p => p.studentId === studentId && p.month === month);
             if (alreadyPaid) {
                 const student = window.students.find(s => s.id === studentId);
@@ -1403,7 +1410,6 @@
             }
         };
 
-        // Delete Payment Function
         window.deletePayment = async function(paymentId, studentName, month, amount) {
             if (userRole === 'staff') {
                 alert('You do not have permission to delete payments.');
@@ -1454,13 +1460,11 @@ Are you sure you want to delete this payment?`;
                 document.getElementById('admissionDate').value = student.admissionDate === '-' ? '' : student.admissionDate;
                 document.getElementById('studentStatus').value = student.status;
                 
-                // Change button text to indicate editing mode
                 const submitBtn = document.querySelector('#studentForm button[type="submit"]');
                 submitBtn.textContent = 'Update Student';
                 submitBtn.classList.add('btn-warning');
                 submitBtn.classList.remove('btn-primary');
                 
-                // Add cancel button
                 if (!document.getElementById('cancelEditBtn')) {
                     const cancelBtn = document.createElement('button');
                     cancelBtn.type = 'button';
@@ -1497,18 +1501,15 @@ Are you sure you want to delete this payment?`;
             const sortField = document.getElementById('sortField').value;
             const sortOrder = document.getElementById('sortOrder').value;
             
-            // Filter students
             let filteredStudents = window.students.filter(s => 
                 s.name.toLowerCase().includes(searchTerm) || 
                 s.rollNumber.toLowerCase().includes(searchTerm)
             );
 
-            // Sort students
             filteredStudents.sort((a, b) => {
                 let valueA, valueB;
                 
                 if (sortField === 'rollNumber') {
-                    // Smart sort for roll numbers (handles numbers properly)
                     valueA = a.rollNumber.match(/\d+/) ? parseInt(a.rollNumber.match(/\d+/)[0]) : a.rollNumber;
                     valueB = b.rollNumber.match(/\d+/) ? parseInt(b.rollNumber.match(/\d+/)[0]) : b.rollNumber;
                 } else if (sortField === 'monthlyFee') {
@@ -1530,7 +1531,6 @@ Are you sure you want to delete this payment?`;
                     p.studentId === student.id && p.month === currentMonth
                 );
                 
-                // Get reminder count and last reminder date for this month
                 const monthReminders = window.reminders.filter(r => 
                     r.studentId === student.id && r.month === currentMonth
                 );
@@ -1601,10 +1601,8 @@ Are you sure you want to delete this payment?`;
             const sortField = document.getElementById('paymentSortField')?.value || 'date';
             const sortOrder = document.getElementById('paymentSortOrder')?.value || 'desc';
             
-            // Create a copy of payments array to sort
             let sortedPayments = [...window.payments];
 
-            // Sort payments
             sortedPayments.sort((a, b) => {
                 const studentA = window.students.find(s => s.id === a.studentId);
                 const studentB = window.students.find(s => s.id === b.studentId);
@@ -1615,7 +1613,6 @@ Are you sure you want to delete this payment?`;
                     valueA = new Date(a.date);
                     valueB = new Date(b.date);
                 } else if (sortField === 'rollNumber') {
-                    // Smart sort for roll numbers
                     const rollA = studentA?.rollNumber || '';
                     const rollB = studentB?.rollNumber || '';
                     valueA = rollA.match(/\d+/) ? parseInt(rollA.match(/\d+/)[0]) : rollA;
@@ -1633,7 +1630,6 @@ Are you sure you want to delete this payment?`;
                 return 0;
             });
 
-            // Take only first 20
             const recentPayments = sortedPayments.slice(0, 20);
 
             tbody.innerHTML = recentPayments.map(payment => {
@@ -1735,23 +1731,19 @@ Are you sure you want to delete this payment?`;
 
             let filteredStudents = window.students;
             
-            // Filter by class
             if (course) {
                 filteredStudents = filteredStudents.filter(s => s.course === course);
             }
             
-            // Filter by syllabus
             if (syllabus) {
                 filteredStudents = filteredStudents.filter(s => s.syllabus === syllabus);
             }
 
-            // Calculate payment status for each student
             const studentsWithStatus = filteredStudents.map(student => {
                 const hasPaid = window.payments.some(p => p.studentId === student.id && p.month === month);
                 return { ...student, hasPaid };
             });
 
-            // Filter by fee status
             let finalStudents = studentsWithStatus;
             if (feeStatus === 'paid') {
                 finalStudents = studentsWithStatus.filter(s => s.hasPaid);
@@ -1759,7 +1751,6 @@ Are you sure you want to delete this payment?`;
                 finalStudents = studentsWithStatus.filter(s => !s.hasPaid);
             }
 
-            // Calculate summary statistics
             const totalStudents = finalStudents.length;
             const paidCount = finalStudents.filter(s => s.hasPaid).length;
             const pendingCount = finalStudents.filter(s => !s.hasPaid).length;
@@ -1767,7 +1758,6 @@ Are you sure you want to delete this payment?`;
             const collectedAmount = finalStudents.filter(s => s.hasPaid).reduce((sum, s) => sum + s.monthlyFee, 0);
             const pendingAmount = finalStudents.filter(s => !s.hasPaid).reduce((sum, s) => sum + s.monthlyFee, 0);
 
-            // Update summary cards
             document.getElementById('reportTotalStudents').textContent = totalStudents;
             document.getElementById('reportPaidCount').textContent = paidCount;
             document.getElementById('reportPendingCount').textContent = pendingCount;
@@ -1775,10 +1765,8 @@ Are you sure you want to delete this payment?`;
             document.getElementById('reportCollectedAmount').textContent = '₹' + collectedAmount.toLocaleString();
             document.getElementById('reportPendingAmount').textContent = '₹' + pendingAmount.toLocaleString();
             
-            // Show summary
             document.getElementById('reportSummary').style.display = 'block';
 
-            // Generate table rows
             tbody.innerHTML = finalStudents.map(student => {
                 const lastPayment = window.payments.filter(p => p.studentId === student.id).sort((a, b) => new Date(b.date) - new Date(a.date))[0];
 
@@ -1795,7 +1783,6 @@ Are you sure you want to delete this payment?`;
                 `;
             }).join('');
 
-            // Show message if no results
             if (finalStudents.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #999;">No students found matching the selected filters.</td></tr>';
             }
@@ -1804,11 +1791,9 @@ Are you sure you want to delete this payment?`;
         window.updateStats = function() {
             const currentMonth = new Date().toISOString().slice(0, 7);
             
-            // Total students
             const totalStudentsCount = window.students.length;
             document.getElementById('totalStudents').textContent = totalStudentsCount;
             
-            // Calculate paid and pending students for current month
             const paidStudents = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
             const paidCount = paidStudents.size;
             const pendingCount = totalStudentsCount - paidCount;
@@ -1816,15 +1801,12 @@ Are you sure you want to delete this payment?`;
             document.getElementById('paidStudents').textContent = paidCount;
             document.getElementById('pendingStudents').textContent = pendingCount;
             
-            // Collected this month
             const thisMonthCollection = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
             document.getElementById('totalCollected').textContent = '₹' + thisMonthCollection.toLocaleString();
 
-            // Pending fees (for current month)
             const totalPending = window.students.filter(s => !paidStudents.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
             document.getElementById('totalPending').textContent = '₹' + totalPending.toLocaleString();
 
-            // Total Expected This Month (Sum of all students' monthly fees)
             const totalExpected = window.students.reduce((sum, s) => sum + s.monthlyFee, 0);
             document.getElementById('thisMonth').textContent = '₹' + totalExpected.toLocaleString();
         };
@@ -1849,23 +1831,18 @@ Are you sure you want to delete this payment?`;
             }
         });
 
-        // WhatsApp Reminder Function with Tracking
         window.sendWhatsAppReminder = async function(studentId, phone, studentName, monthlyFee) {
-            // Clean phone number - remove spaces, dashes, and add country code if needed
             let cleanPhone = phone.replace(/\D/g, '');
             
-            // If phone doesn't start with country code, assume India (+91)
             if (cleanPhone.length === 10) {
                 cleanPhone = '91' + cleanPhone;
             }
             
-            // Get current month name
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
             const currentMonth = monthNames[new Date().getMonth()];
             const currentMonthCode = new Date().toISOString().slice(0, 7);
             
-            // Create reminder message
             const message = `Dear ${studentName},
 
 This is a friendly reminder from Vismaya Education regarding your fee payment.
@@ -1881,13 +1858,9 @@ For any queries, feel free to contact us.
 Thank you!
 *Vismaya Education*`;
 
-            // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
-            
-            // Create WhatsApp URL
             const whatsappURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
             
-            // Save reminder to database
             try {
                 await addDoc(collection(db, 'reminders'), {
                     studentId: studentId,
@@ -1898,20 +1871,16 @@ Thank you!
                     studentName: studentName
                 });
                 
-                // Open WhatsApp in new tab
                 window.open(whatsappURL, '_blank');
             } catch (error) {
                 console.error('Error saving reminder:', error);
-                // Still open WhatsApp even if save fails
                 window.open(whatsappURL, '_blank');
             }
         };
 
-        // Bulk WhatsApp Reminder Function with Tracking
         window.sendBulkWhatsAppReminders = function() {
             const currentMonth = new Date().toISOString().slice(0, 7);
             
-            // Find all students who haven't paid this month
             const unpaidStudents = window.students.filter(student => {
                 const hasPaid = window.payments.some(p => 
                     p.studentId === student.id && p.month === currentMonth
@@ -1933,12 +1902,90 @@ Thank you!
                         if (count === unpaidStudents.length) {
                             alert(`✅ Opened WhatsApp for ${count} students. Please send messages manually.`);
                         }
-                    }, index * 2000); // 2 second delay between each
+                    }, index * 2000);
                 });
             }
         };
 
-        // Excel Functions
+        // Excel Export Functions
+        window.exportStudentsToExcel = function() {
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            
+            const data = window.students.map(student => {
+                const hasPaid = window.payments.some(p => 
+                    p.studentId === student.id && p.month === currentMonth
+                );
+                
+                return {
+                    'Roll Number': student.rollNumber,
+                    'Name': student.name,
+                    'Class': student.course,
+                    'Syllabus': student.syllabus,
+                    'Phone': student.phone,
+                    'Monthly Fee': student.monthlyFee,
+                    'Admission Date': student.admissionDate,
+                    'Status': student.status,
+                    'Fee Status (This Month)': hasPaid ? 'Paid' : 'Pending'
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(data);
+            
+            ws['!cols'] = [
+                { wch: 12 },
+                { wch: 25 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 15 },
+                { wch: 12 },
+                { wch: 15 },
+                { wch: 10 },
+                { wch: 20 }
+            ];
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Students');
+            
+            const date = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Students_${date}.xlsx`);
+        };
+
+        window.exportPaymentsToExcel = function() {
+            const data = window.payments.map(payment => {
+                const student = window.students.find(s => s.id === payment.studentId);
+                
+                return {
+                    'Receipt No': payment.receiptNo,
+                    'Date': payment.date,
+                    'Roll Number': student ? student.rollNumber : 'N/A',
+                    'Student Name': student ? student.name : 'Unknown',
+                    'Class': student ? student.course : 'N/A',
+                    'Fee Month': payment.month,
+                    'Amount': payment.amount,
+                    'Payment Method': payment.method
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(data);
+            
+            ws['!cols'] = [
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 25 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 12 },
+                { wch: 15 }
+            ];
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Fee Collection');
+            
+            const date = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Fee_Collection_${date}.xlsx`);
+        };
+
         window.downloadTemplate = function() {
             const template = [
                 ['Student Name', 'Roll Number', 'Class', 'Syllabus', 'Phone Number', 'Monthly Fee', 'Admission Date', 'Status'],
