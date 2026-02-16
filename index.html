@@ -1329,11 +1329,12 @@
                 return;
             }
 
+            // Check if already paid for this month
             const alreadyPaid = window.payments.some(p => p.studentId === studentId && p.month === month);
             if (alreadyPaid) {
-                if (!confirm('Fee already collected for this month. Do you want to add another payment?')) {
-                    return;
-                }
+                const student = window.students.find(s => s.id === studentId);
+                alert(`❌ Fee Already Collected!\n\nStudent: ${student ? student.name : 'Unknown'}\nMonth: ${month}\n\nThis student has already paid for this month. Duplicate payments are not allowed.`);
+                return;
             }
 
             try {
