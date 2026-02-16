@@ -710,6 +710,14 @@
                         <p>Total Students</p>
                     </div>
                     <div class="stat-card">
+                        <h3 id="paidStudents">0</h3>
+                        <p>Students Paid</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="pendingStudents">0</h3>
+                        <p>Students Pending</p>
+                    </div>
+                    <div class="stat-card">
                         <h3 id="totalCollected">₹0</h3>
                         <p>Total Collected</p>
                     </div>
@@ -961,8 +969,46 @@
                                 <option value="Matric">Matric</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Filter by Fee Status</label>
+                            <select id="reportFeeStatus">
+                                <option value="">All Students</option>
+                                <option value="paid">Paid Only</option>
+                                <option value="pending">Pending Only</option>
+                            </select>
+                        </div>
                     </div>
                     <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+
+                    <div id="reportSummary" style="display: none; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="margin-bottom: 15px; color: #667eea;">Report Summary</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Total Students</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #667eea;" id="reportTotalStudents">0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Paid</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #28a745;" id="reportPaidCount">0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Pending</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #ffc107;" id="reportPendingCount">0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Total Amount</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #667eea;" id="reportTotalAmount">₹0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Collected</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #28a745;" id="reportCollectedAmount">₹0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Pending Amount</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #dc3545;" id="reportPendingAmount">₹0</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-container" style="margin-top: 20px;">
                         <table>
@@ -1591,18 +1637,56 @@
             const month = document.getElementById('reportMonth').value;
             const course = document.getElementById('reportCourse').value;
             const syllabus = document.getElementById('reportSyllabus').value;
+            const feeStatus = document.getElementById('reportFeeStatus').value;
             const tbody = document.getElementById('reportTableBody');
 
             let filteredStudents = window.students;
+            
+            // Filter by class
             if (course) {
                 filteredStudents = filteredStudents.filter(s => s.course === course);
             }
+            
+            // Filter by syllabus
             if (syllabus) {
                 filteredStudents = filteredStudents.filter(s => s.syllabus === syllabus);
             }
 
-            tbody.innerHTML = filteredStudents.map(student => {
+            // Calculate payment status for each student
+            const studentsWithStatus = filteredStudents.map(student => {
                 const hasPaid = window.payments.some(p => p.studentId === student.id && p.month === month);
+                return { ...student, hasPaid };
+            });
+
+            // Filter by fee status
+            let finalStudents = studentsWithStatus;
+            if (feeStatus === 'paid') {
+                finalStudents = studentsWithStatus.filter(s => s.hasPaid);
+            } else if (feeStatus === 'pending') {
+                finalStudents = studentsWithStatus.filter(s => !s.hasPaid);
+            }
+
+            // Calculate summary statistics
+            const totalStudents = finalStudents.length;
+            const paidCount = finalStudents.filter(s => s.hasPaid).length;
+            const pendingCount = finalStudents.filter(s => !s.hasPaid).length;
+            const totalAmount = finalStudents.reduce((sum, s) => sum + s.monthlyFee, 0);
+            const collectedAmount = finalStudents.filter(s => s.hasPaid).reduce((sum, s) => sum + s.monthlyFee, 0);
+            const pendingAmount = finalStudents.filter(s => !s.hasPaid).reduce((sum, s) => sum + s.monthlyFee, 0);
+
+            // Update summary cards
+            document.getElementById('reportTotalStudents').textContent = totalStudents;
+            document.getElementById('reportPaidCount').textContent = paidCount;
+            document.getElementById('reportPendingCount').textContent = pendingCount;
+            document.getElementById('reportTotalAmount').textContent = '₹' + totalAmount.toLocaleString();
+            document.getElementById('reportCollectedAmount').textContent = '₹' + collectedAmount.toLocaleString();
+            document.getElementById('reportPendingAmount').textContent = '₹' + pendingAmount.toLocaleString();
+            
+            // Show summary
+            document.getElementById('reportSummary').style.display = 'block';
+
+            // Generate table rows
+            tbody.innerHTML = finalStudents.map(student => {
                 const lastPayment = window.payments.filter(p => p.studentId === student.id).sort((a, b) => new Date(b.date) - new Date(a.date))[0];
 
                 return `
@@ -1612,24 +1696,41 @@
                         <td>${student.course}</td>
                         <td>${student.syllabus}</td>
                         <td>₹${student.monthlyFee}</td>
-                        <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
+                        <td><span class="badge ${student.hasPaid ? 'badge-paid' : 'badge-pending'}">${student.hasPaid ? 'Paid' : 'Pending'}</span></td>
                         <td>${lastPayment ? lastPayment.date : 'No payment yet'}</td>
                     </tr>
                 `;
             }).join('');
+
+            // Show message if no results
+            if (finalStudents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #999;">No students found matching the selected filters.</td></tr>';
+            }
         };
 
         window.updateStats = function() {
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            
+            // Total students
             document.getElementById('totalStudents').textContent = window.students.length;
             
+            // Calculate paid and pending students for current month
+            const paidStudents = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
+            const paidCount = paidStudents.size;
+            const pendingCount = window.students.length - paidCount;
+            
+            document.getElementById('paidStudents').textContent = paidCount;
+            document.getElementById('pendingStudents').textContent = pendingCount;
+            
+            // Total collected (all time)
             const totalCollected = window.payments.reduce((sum, p) => sum + p.amount, 0);
             document.getElementById('totalCollected').textContent = '₹' + totalCollected.toLocaleString();
 
-            const currentMonth = new Date().toISOString().slice(0, 7);
-            const paidStudents = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
+            // Pending fees (for current month)
             const totalPending = window.students.filter(s => !paidStudents.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
             document.getElementById('totalPending').textContent = '₹' + totalPending.toLocaleString();
 
+            // This month collection
             const thisMonthCollection = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
             document.getElementById('thisMonth').textContent = '₹' + thisMonthCollection.toLocaleString();
         };
