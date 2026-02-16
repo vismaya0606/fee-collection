@@ -922,6 +922,7 @@
                                 <tr>
                                     <th>Receipt No.</th>
                                     <th>Date</th>
+                                    <th>Roll No.</th>
                                     <th>Student</th>
                                     <th>Month</th>
                                     <th>Amount</th>
@@ -1559,6 +1560,7 @@
                     <tr>
                         <td>${payment.receiptNo}</td>
                         <td>${payment.date}</td>
+                        <td>${student ? student.rollNumber : 'N/A'}</td>
                         <td>${student ? student.name : 'Unknown'}</td>
                         <td>${payment.month}</td>
                         <td>₹${payment.amount}</td>
