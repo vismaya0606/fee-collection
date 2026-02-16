@@ -923,7 +923,99 @@
                         <button class="btn btn-success" onclick="collectFee()">Collect Fee</button>
                     </div>
 
-                    <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments</h2>
+                    <!-- Paid Students Report Section -->
+                    <h2 style="margin-top: 40px; margin-bottom: 20px;">📊 Paid Students Report</h2>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                        <div class="form-grid" style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label>Select Month</label>
+                                <input type="month" id="paidReportMonth">
+                            </div>
+                            <div class="form-group">
+                                <label>Filter by Class</label>
+                                <select id="paidReportClass">
+                                    <option value="">All Classes</option>
+                                    <option value="Class 1">Class 1</option>
+                                    <option value="Class 2">Class 2</option>
+                                    <option value="Class 3">Class 3</option>
+                                    <option value="Class 4">Class 4</option>
+                                    <option value="Class 5">Class 5</option>
+                                    <option value="Class 6">Class 6</option>
+                                    <option value="Class 7">Class 7</option>
+                                    <option value="Class 8">Class 8</option>
+                                    <option value="Class 9">Class 9</option>
+                                    <option value="Class 10">Class 10</option>
+                                    <option value="Class 11">Class 11</option>
+                                    <option value="Class 12">Class 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Filter by Payment Method</label>
+                                <select id="paidReportMethod">
+                                    <option value="">All Methods</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Card">Card</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="generatePaidStudentsReport()">Generate Report</button>
+                            <button class="btn btn-success" onclick="exportPaidStudentsReport()" style="display: none;" id="exportPaidReportBtn">
+                                📥 Export Report to Excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Paid Students Summary -->
+                    <div id="paidReportSummary" style="display: none; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="margin-bottom: 15px; color: #667eea;">Report Summary</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Total Paid Students</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #28a745;" id="paidReportCount">0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Total Amount Collected</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #667eea;" id="paidReportTotal">₹0</p>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 5px;">Average Fee</p>
+                                <p style="font-size: 1.8em; font-weight: 700; color: #764ba2;" id="paidReportAverage">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paid Students Table -->
+                    <div id="paidStudentsTableContainer" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3 style="color: #667eea;">Students Who Paid Fees</h3>
+                            <input type="text" class="search-box" placeholder="Search by name or roll number..." id="paidStudentsSearch" onkeyup="filterPaidStudentsTable()" style="margin-bottom: 0; max-width: 300px;">
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Roll No.</th>
+                                        <th>Student Name</th>
+                                        <th>Class</th>
+                                        <th>Phone</th>
+                                        <th>Amount Paid</th>
+                                        <th>Payment Date</th>
+                                        <th>Payment Method</th>
+                                        <th>Receipt No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paidStudentsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments (Last 20)</h2>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
                         <div class="sort-controls">
                             <label>Sort By:</label>
@@ -938,7 +1030,7 @@
                                 <option value="asc">Ascending</option>
                             </select>
                         </div>
-                        <button class="btn btn-success" onclick="exportPaymentsToExcel()" style="padding: 10px 20px;">
+                        <button class="btn btn-success" onclick="exportRecentPaymentsToExcel()" style="padding: 10px 20px;">
                             📥 Export to Excel
                         </button>
                     </div>
@@ -1286,6 +1378,7 @@
 
         document.getElementById('feeMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('reportMonth').value = new Date().toISOString().slice(0, 7);
+        document.getElementById('paidReportMonth').value = new Date().toISOString().slice(0, 7);
 
         document.getElementById('studentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1950,8 +2043,8 @@ Thank you!
             XLSX.writeFile(wb, `Students_${date}.xlsx`);
         };
 
-        window.exportPaymentsToExcel = function() {
-            const data = window.payments.map(payment => {
+        window.exportRecentPaymentsToExcel = function() {
+            const data = window.payments.slice(0, 20).map(payment => {
                 const student = window.students.find(s => s.id === payment.studentId);
                 
                 return {
@@ -1980,10 +2073,151 @@ Thank you!
             ];
 
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Fee Collection');
+            XLSX.utils.book_append_sheet(wb, ws, 'Recent Payments');
             
             const date = new Date().toISOString().slice(0, 10);
-            XLSX.writeFile(wb, `Fee_Collection_${date}.xlsx`);
+            XLSX.writeFile(wb, `Recent_Payments_${date}.xlsx`);
+        };
+
+        // Store filtered paid students data globally for export
+        let filteredPaidStudents = [];
+
+        // Generate Paid Students Report
+        window.generatePaidStudentsReport = function() {
+            const month = document.getElementById('paidReportMonth').value;
+            const classFilter = document.getElementById('paidReportClass').value;
+            const methodFilter = document.getElementById('paidReportMethod').value;
+
+            // Get all payments for the selected month
+            let monthPayments = window.payments.filter(p => p.month === month);
+
+            // Apply payment method filter
+            if (methodFilter) {
+                monthPayments = monthPayments.filter(p => p.method === methodFilter);
+            }
+
+            // Get student details and apply class filter
+            const paidStudentsData = [];
+            monthPayments.forEach(payment => {
+                const student = window.students.find(s => s.id === payment.studentId);
+                if (student) {
+                    // Apply class filter
+                    if (!classFilter || student.course === classFilter) {
+                        paidStudentsData.push({
+                            student: student,
+                            payment: payment
+                        });
+                    }
+                }
+            });
+
+            // Store for export
+            filteredPaidStudents = paidStudentsData;
+
+            // Calculate summary
+            const totalPaid = paidStudentsData.length;
+            const totalAmount = paidStudentsData.reduce((sum, item) => sum + item.payment.amount, 0);
+            const averageFee = totalPaid > 0 ? totalAmount / totalPaid : 0;
+
+            // Update summary
+            document.getElementById('paidReportCount').textContent = totalPaid;
+            document.getElementById('paidReportTotal').textContent = '₹' + totalAmount.toLocaleString();
+            document.getElementById('paidReportAverage').textContent = '₹' + Math.round(averageFee).toLocaleString();
+            
+            // Show summary and table
+            document.getElementById('paidReportSummary').style.display = 'block';
+            document.getElementById('paidStudentsTableContainer').style.display = 'block';
+            document.getElementById('exportPaidReportBtn').style.display = 'inline-block';
+
+            // Update table
+            updatePaidStudentsTable(paidStudentsData);
+        };
+
+        // Update Paid Students Table
+        function updatePaidStudentsTable(data) {
+            const tbody = document.getElementById('paidStudentsTableBody');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 30px; color: #999;">No students found matching the selected filters.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map((item, index) => {
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.student.rollNumber}</td>
+                        <td>${item.student.name}</td>
+                        <td>${item.student.course}</td>
+                        <td>${item.student.phone}</td>
+                        <td>₹${item.payment.amount}</td>
+                        <td>${item.payment.date}</td>
+                        <td><span class="badge badge-active">${item.payment.method}</span></td>
+                        <td>${item.payment.receiptNo}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filter Paid Students Table by Search
+        window.filterPaidStudentsTable = function() {
+            const searchTerm = document.getElementById('paidStudentsSearch').value.toLowerCase();
+            
+            const filtered = filteredPaidStudents.filter(item => 
+                item.student.name.toLowerCase().includes(searchTerm) || 
+                item.student.rollNumber.toLowerCase().includes(searchTerm)
+            );
+            
+            updatePaidStudentsTable(filtered);
+        };
+
+        // Export Paid Students Report to Excel
+        window.exportPaidStudentsReport = function() {
+            if (filteredPaidStudents.length === 0) {
+                alert('Please generate a report first.');
+                return;
+            }
+
+            const month = document.getElementById('paidReportMonth').value;
+            const monthName = new Date(month + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const data = filteredPaidStudents.map((item, index) => {
+                return {
+                    'S.No': index + 1,
+                    'Roll Number': item.student.rollNumber,
+                    'Student Name': item.student.name,
+                    'Class': item.student.course,
+                    'Syllabus': item.student.syllabus,
+                    'Phone': item.student.phone,
+                    'Monthly Fee': item.student.monthlyFee,
+                    'Amount Paid': item.payment.amount,
+                    'Payment Date': item.payment.date,
+                    'Payment Method': item.payment.method,
+                    'Receipt No': item.payment.receiptNo
+                };
+            });
+
+            const ws = XLSX.utils.json_to_sheet(data);
+            
+            ws['!cols'] = [
+                { wch: 6 },   // S.No
+                { wch: 12 },  // Roll Number
+                { wch: 25 },  // Student Name
+                { wch: 12 },  // Class
+                { wch: 12 },  // Syllabus
+                { wch: 15 },  // Phone
+                { wch: 12 },  // Monthly Fee
+                { wch: 12 },  // Amount Paid
+                { wch: 12 },  // Payment Date
+                { wch: 15 },  // Payment Method
+                { wch: 12 }   // Receipt No
+            ];
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Paid Students');
+            
+            const date = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Paid_Students_${month}_${date}.xlsx`);
         };
 
         window.downloadTemplate = function() {
