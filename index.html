@@ -719,7 +719,7 @@
                     </div>
                     <div class="stat-card">
                         <h3 id="totalCollected">₹0</h3>
-                        <p>Total Collected</p>
+                        <p>Collected This Month</p>
                     </div>
                     <div class="stat-card">
                         <h3 id="totalPending">₹0</h3>
@@ -727,7 +727,7 @@
                     </div>
                     <div class="stat-card">
                         <h3 id="thisMonth">₹0</h3>
-                        <p>This Month</p>
+                        <p>Total Expected (This Month)</p>
                     </div>
                 </div>
 
@@ -1712,27 +1712,28 @@
             const currentMonth = new Date().toISOString().slice(0, 7);
             
             // Total students
-            document.getElementById('totalStudents').textContent = window.students.length;
+            const totalStudentsCount = window.students.length;
+            document.getElementById('totalStudents').textContent = totalStudentsCount;
             
             // Calculate paid and pending students for current month
             const paidStudents = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
             const paidCount = paidStudents.size;
-            const pendingCount = window.students.length - paidCount;
+            const pendingCount = totalStudentsCount - paidCount;
             
             document.getElementById('paidStudents').textContent = paidCount;
             document.getElementById('pendingStudents').textContent = pendingCount;
             
-            // Total collected (all time)
-            const totalCollected = window.payments.reduce((sum, p) => sum + p.amount, 0);
-            document.getElementById('totalCollected').textContent = '₹' + totalCollected.toLocaleString();
+            // Collected this month
+            const thisMonthCollection = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
+            document.getElementById('totalCollected').textContent = '₹' + thisMonthCollection.toLocaleString();
 
             // Pending fees (for current month)
             const totalPending = window.students.filter(s => !paidStudents.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
             document.getElementById('totalPending').textContent = '₹' + totalPending.toLocaleString();
 
-            // This month collection
-            const thisMonthCollection = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
-            document.getElementById('thisMonth').textContent = '₹' + thisMonthCollection.toLocaleString();
+            // Total Expected This Month (Sum of all students' monthly fees)
+            const totalExpected = window.students.reduce((sum, s) => sum + s.monthlyFee, 0);
+            document.getElementById('thisMonth').textContent = '₹' + totalExpected.toLocaleString();
         };
 
         window.switchTab = function(tabName) {
