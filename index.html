@@ -421,6 +421,58 @@
             margin-bottom: 20px;
         }
 
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .sort-controls label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .sort-controls select {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 25px;
+        }
+
+        th.sortable:hover {
+            background: #e9ecef;
+        }
+
+        th.sortable::after {
+            content: '↕️';
+            position: absolute;
+            right: 8px;
+            font-size: 0.8em;
+            opacity: 0.5;
+        }
+
+        th.sortable.sort-asc::after {
+            content: '↑';
+            opacity: 1;
+            color: #667eea;
+        }
+
+        th.sortable.sort-desc::after {
+            content: '↓';
+            opacity: 1;
+            color: #667eea;
+        }
+
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -777,10 +829,26 @@
                     </div>
 
                     <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                        <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch" style="margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                        <div style="flex: 1; min-width: 250px;">
+                            <input type="text" class="search-box" placeholder="Search by name or roll number..." id="studentSearch" style="margin-bottom: 0; max-width: 100%;">
+                        </div>
+                        <div class="sort-controls">
+                            <label>Sort By:</label>
+                            <select id="sortField" onchange="updateStudentTable()">
+                                <option value="rollNumber">Roll Number</option>
+                                <option value="name">Name</option>
+                                <option value="course">Class</option>
+                                <option value="monthlyFee">Fee Amount</option>
+                                <option value="status">Status</option>
+                            </select>
+                            <select id="sortOrder" onchange="updateStudentTable()">
+                                <option value="asc">Ascending (A-Z, 1-9)</option>
+                                <option value="desc">Descending (Z-A, 9-1)</option>
+                            </select>
+                        </div>
                         <button class="btn btn-whatsapp" onclick="sendBulkWhatsAppReminders()" style="padding: 10px 20px;">
-                            📱 Send Reminders to Pending Students
+                            📱 Send Reminders to Pending
                         </button>
                     </div>
                     <div class="table-container">
@@ -951,8 +1019,10 @@
 
         window.students = [];
         window.payments = [];
+        window.reminders = [];
         let studentsListener = null;
         let paymentsListener = null;
+        let remindersListener = null;
         let currentUser = null;
         let userRole = null;
 
@@ -1084,6 +1154,7 @@
                 try {
                     if (studentsListener) studentsListener();
                     if (paymentsListener) paymentsListener();
+                    if (remindersListener) remindersListener();
                     await signOut(auth);
                 } catch (error) {
                     alert('Error logging out: ' + error.message);
@@ -1121,6 +1192,15 @@
                     });
                     updatePaymentTable();
                     updateStats();
+                });
+
+                const remindersQuery = query(collection(db, 'reminders'), orderBy('sentAt', 'desc'));
+                remindersListener = onSnapshot(remindersQuery, (snapshot) => {
+                    window.reminders = [];
+                    snapshot.forEach((doc) => {
+                        window.reminders.push({ id: doc.id, ...doc.data() });
+                    });
+                    updateStudentTable();
                 });
 
                 document.getElementById('loadingIndicator').style.display = 'none';
@@ -1320,17 +1400,66 @@
         window.updateStudentTable = function() {
             const tbody = document.getElementById('studentTableBody');
             const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
+            const sortField = document.getElementById('sortField').value;
+            const sortOrder = document.getElementById('sortOrder').value;
             
-            const filteredStudents = window.students.filter(s => 
+            // Filter students
+            let filteredStudents = window.students.filter(s => 
                 s.name.toLowerCase().includes(searchTerm) || 
                 s.rollNumber.toLowerCase().includes(searchTerm)
             );
+
+            // Sort students
+            filteredStudents.sort((a, b) => {
+                let valueA, valueB;
+                
+                if (sortField === 'rollNumber') {
+                    // Smart sort for roll numbers (handles numbers properly)
+                    valueA = a.rollNumber.match(/\d+/) ? parseInt(a.rollNumber.match(/\d+/)[0]) : a.rollNumber;
+                    valueB = b.rollNumber.match(/\d+/) ? parseInt(b.rollNumber.match(/\d+/)[0]) : b.rollNumber;
+                } else if (sortField === 'monthlyFee') {
+                    valueA = parseFloat(a[sortField]) || 0;
+                    valueB = parseFloat(b[sortField]) || 0;
+                } else {
+                    valueA = (a[sortField] || '').toString().toLowerCase();
+                    valueB = (b[sortField] || '').toString().toLowerCase();
+                }
+                
+                if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+                if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+                return 0;
+            });
 
             tbody.innerHTML = filteredStudents.map(student => {
                 const currentMonth = new Date().toISOString().slice(0, 7);
                 const hasPaid = window.payments.some(p => 
                     p.studentId === student.id && p.month === currentMonth
                 );
+                
+                // Get reminder count and last reminder date for this month
+                const monthReminders = window.reminders.filter(r => 
+                    r.studentId === student.id && r.month === currentMonth
+                );
+                const reminderCount = monthReminders.length;
+                const lastReminder = monthReminders.length > 0 ? monthReminders[0] : null;
+                
+                let reminderCell = '<td class="reminder-info">';
+                if (reminderCount > 0) {
+                    reminderCell += `<span class="reminder-count">${reminderCount} sent</span>`;
+                    if (lastReminder) {
+                        const reminderDate = new Date(lastReminder.sentAt);
+                        const formattedDate = reminderDate.toLocaleDateString('en-IN', { 
+                            day: '2-digit', 
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        reminderCell += `<span class="reminder-date">Last: ${formattedDate}</span>`;
+                    }
+                } else {
+                    reminderCell += '<span style="color: #999;">None</span>';
+                }
+                reminderCell += '</td>';
                 
                 const actionsCell = userRole === 'staff' ? '' : `
                     <td>
@@ -1343,7 +1472,7 @@
 
                 const whatsappCell = `
                     <td>
-                        <button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.phone}', '${student.name.replace(/'/g, "\\'")}', ${student.monthlyFee})" style="padding: 5px 15px;">
+                        <button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.id}', '${student.phone}', '${student.name.replace(/'/g, "\\'")}', ${student.monthlyFee})" style="padding: 5px 15px;">
                             📱 Remind
                         </button>
                     </td>
@@ -1359,6 +1488,7 @@
                         <td>₹${student.monthlyFee}</td>
                         <td><span class="badge ${student.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${student.status}</span></td>
                         <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
+                        ${reminderCell}
                         ${actionsCell}
                         ${whatsappCell}
                     </tr>
@@ -1524,8 +1654,8 @@
             }
         });
 
-        // WhatsApp Reminder Function
-        window.sendWhatsAppReminder = function(phone, studentName, monthlyFee) {
+        // WhatsApp Reminder Function with Tracking
+        window.sendWhatsAppReminder = async function(studentId, phone, studentName, monthlyFee) {
             // Clean phone number - remove spaces, dashes, and add country code if needed
             let cleanPhone = phone.replace(/\D/g, '');
             
@@ -1538,6 +1668,7 @@
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
             const currentMonth = monthNames[new Date().getMonth()];
+            const currentMonthCode = new Date().toISOString().slice(0, 7);
             
             // Create reminder message
             const message = `Dear ${studentName},
@@ -1561,11 +1692,27 @@ Thank you!
             // Create WhatsApp URL
             const whatsappURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
             
-            // Open WhatsApp in new tab
-            window.open(whatsappURL, '_blank');
+            // Save reminder to database
+            try {
+                await addDoc(collection(db, 'reminders'), {
+                    studentId: studentId,
+                    month: currentMonthCode,
+                    sentAt: new Date().toISOString(),
+                    sentBy: currentUser.email,
+                    phone: phone,
+                    studentName: studentName
+                });
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappURL, '_blank');
+            } catch (error) {
+                console.error('Error saving reminder:', error);
+                // Still open WhatsApp even if save fails
+                window.open(whatsappURL, '_blank');
+            }
         };
 
-        // Bulk WhatsApp Reminder Function
+        // Bulk WhatsApp Reminder Function with Tracking
         window.sendBulkWhatsAppReminders = function() {
             const currentMonth = new Date().toISOString().slice(0, 7);
             
@@ -1586,7 +1733,7 @@ Thank you!
                 let count = 0;
                 unpaidStudents.forEach((student, index) => {
                     setTimeout(() => {
-                        sendWhatsAppReminder(student.phone, student.name, student.monthlyFee);
+                        sendWhatsAppReminder(student.id, student.phone, student.name, student.monthlyFee);
                         count++;
                         if (count === unpaidStudents.length) {
                             alert(`✅ Opened WhatsApp for ${count} students. Please send messages manually.`);
