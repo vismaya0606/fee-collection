@@ -916,6 +916,21 @@
                     </div>
 
                     <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <div class="sort-controls">
+                            <label>Sort By:</label>
+                            <select id="paymentSortField" onchange="updatePaymentTable()">
+                                <option value="date">Recent First (Date)</option>
+                                <option value="rollNumber">Roll Number</option>
+                                <option value="studentName">Student Name</option>
+                                <option value="amount">Amount</option>
+                            </select>
+                            <select id="paymentSortOrder" onchange="updatePaymentTable()">
+                                <option value="desc">Descending</option>
+                                <option value="asc">Ascending</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="table-container">
                         <table>
                             <thead>
@@ -1552,7 +1567,43 @@
 
         window.updatePaymentTable = function() {
             const tbody = document.getElementById('paymentTableBody');
-            const recentPayments = window.payments.slice(0, 20);
+            const sortField = document.getElementById('paymentSortField')?.value || 'date';
+            const sortOrder = document.getElementById('paymentSortOrder')?.value || 'desc';
+            
+            // Create a copy of payments array to sort
+            let sortedPayments = [...window.payments];
+
+            // Sort payments
+            sortedPayments.sort((a, b) => {
+                const studentA = window.students.find(s => s.id === a.studentId);
+                const studentB = window.students.find(s => s.id === b.studentId);
+                
+                let valueA, valueB;
+                
+                if (sortField === 'date') {
+                    valueA = new Date(a.date);
+                    valueB = new Date(b.date);
+                } else if (sortField === 'rollNumber') {
+                    // Smart sort for roll numbers
+                    const rollA = studentA?.rollNumber || '';
+                    const rollB = studentB?.rollNumber || '';
+                    valueA = rollA.match(/\d+/) ? parseInt(rollA.match(/\d+/)[0]) : rollA;
+                    valueB = rollB.match(/\d+/) ? parseInt(rollB.match(/\d+/)[0]) : rollB;
+                } else if (sortField === 'studentName') {
+                    valueA = (studentA?.name || '').toLowerCase();
+                    valueB = (studentB?.name || '').toLowerCase();
+                } else if (sortField === 'amount') {
+                    valueA = parseFloat(a.amount) || 0;
+                    valueB = parseFloat(b.amount) || 0;
+                }
+                
+                if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+                if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Take only first 20
+            const recentPayments = sortedPayments.slice(0, 20);
 
             tbody.innerHTML = recentPayments.map(payment => {
                 const student = window.students.find(s => s.id === payment.studentId);
