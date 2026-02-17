@@ -591,6 +591,201 @@
                 top: 0;
             }
         }
+
+        /* Accounts Tab Styles */
+        .accounts-month-selector {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .accounts-month-selector label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1em;
+        }
+
+        .accounts-month-selector input[type="month"] {
+            padding: 10px 15px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .accounts-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .accounts-card {
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accounts-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+
+        .accounts-card.income { background: #f0fff4; }
+        .accounts-card.income::before { background: #28a745; }
+
+        .accounts-card.expense-card { background: #fff5f5; }
+        .accounts-card.expense-card::before { background: #dc3545; }
+
+        .accounts-card.salary-card { background: #fff8f0; }
+        .accounts-card.salary-card::before { background: #fd7e14; }
+
+        .accounts-card.profit { background: #f0f4ff; }
+        .accounts-card.profit::before { background: #667eea; }
+
+        .accounts-card.loss { background: #fff0f0; }
+        .accounts-card.loss::before { background: #dc3545; }
+
+        .accounts-card-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .accounts-card-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .accounts-card-value {
+            font-size: 1.9em;
+            font-weight: 700;
+        }
+
+        .accounts-card.income .accounts-card-value { color: #28a745; }
+        .accounts-card.expense-card .accounts-card-value { color: #dc3545; }
+        .accounts-card.salary-card .accounts-card-value { color: #fd7e14; }
+        .accounts-card.profit .accounts-card-value { color: #667eea; }
+        .accounts-card.loss .accounts-card-value { color: #dc3545; }
+
+        .accounts-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .accounts-breakdown { grid-template-columns: 1fr; }
+        }
+
+        .accounts-breakdown-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .accounts-breakdown-header {
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 1em;
+            color: white;
+        }
+
+        .accounts-breakdown-header.green { background: linear-gradient(135deg, #28a745, #20c997); }
+        .accounts-breakdown-header.red { background: linear-gradient(135deg, #dc3545, #e83e8c); }
+        .accounts-breakdown-header.orange { background: linear-gradient(135deg, #fd7e14, #ffc107); }
+
+        .accounts-breakdown-body { padding: 10px 0; }
+
+        .accounts-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.92em;
+        }
+
+        .accounts-breakdown-row:last-child { border-bottom: none; }
+        .accounts-breakdown-row:hover { background: #f8f9fa; }
+
+        .accounts-breakdown-row .row-label { color: #444; }
+        .accounts-breakdown-row .row-amount { font-weight: 600; }
+        .accounts-breakdown-row .row-amount.green { color: #28a745; }
+        .accounts-breakdown-row .row-amount.red { color: #dc3545; }
+        .accounts-breakdown-row .row-amount.orange { color: #fd7e14; }
+
+        .accounts-breakdown-empty {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .accounts-breakdown-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: #f8f9fa;
+            font-weight: 700;
+            font-size: 1em;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .net-result-banner {
+            border-radius: 12px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .net-result-banner.profit-banner {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .net-result-banner.loss-banner {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+        }
+
+        .net-result-banner .net-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .net-result-banner .net-value {
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .net-result-banner .net-formula {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .monthly-history-table th { background: #f8f9fa; }
+        .monthly-history-table tr.profit-row td { background: #f0fff4; }
+        .monthly-history-table tr.loss-row td { background: #fff5f5; }
     </style>
 </head>
 <body>
@@ -741,6 +936,7 @@
                     <button class="tab" onclick="switchTab('fees')">Fee Collection</button>
                     <button class="tab" onclick="switchTab('teachers')">Teachers</button>
                     <button class="tab" onclick="switchTab('expenses')">Expenses</button>
+                    <button class="tab" onclick="switchTab('accounts')">Accounts</button>
                     <button class="tab" onclick="switchTab('reports')">Reports</button>
                 </div>
 
@@ -1329,6 +1525,113 @@
                     </div>
                 </div>
 
+                <!-- Accounts Tab -->
+                <div id="accounts" class="tab-content">
+                    <h2 style="margin-bottom: 5px;">📒 Accounts Overview</h2>
+                    <p style="color: #666; margin-bottom: 25px;">Monthly income vs expenses breakdown</p>
+
+                    <!-- Month Selector -->
+                    <div class="accounts-month-selector">
+                        <label>📅 Select Month:</label>
+                        <input type="month" id="accountsMonth">
+                        <button class="btn btn-primary" onclick="generateAccountsSummary()">View Summary</button>
+                        <button class="btn btn-success" onclick="exportAccountsToExcel()" id="exportAccountsBtn" style="display:none;">📥 Export to Excel</button>
+                    </div>
+
+                    <!-- Net Result Banner -->
+                    <div id="netResultBanner" style="display:none;"></div>
+
+                    <!-- 4 Summary Cards -->
+                    <div class="accounts-summary-grid" id="accountsSummaryGrid" style="display:none;">
+                        <div class="accounts-card income">
+                            <div class="accounts-card-icon">💰</div>
+                            <div class="accounts-card-label">Total Fees Collected</div>
+                            <div class="accounts-card-value" id="accTotalFees">₹0</div>
+                        </div>
+                        <div class="accounts-card salary-card">
+                            <div class="accounts-card-icon">👨‍🏫</div>
+                            <div class="accounts-card-label">Salary Paid</div>
+                            <div class="accounts-card-value" id="accTotalSalary">₹0</div>
+                        </div>
+                        <div class="accounts-card expense-card">
+                            <div class="accounts-card-icon">🏢</div>
+                            <div class="accounts-card-label">Other Expenses</div>
+                            <div class="accounts-card-value" id="accTotalExpenses">₹0</div>
+                        </div>
+                        <div class="accounts-card expense-card">
+                            <div class="accounts-card-icon">📊</div>
+                            <div class="accounts-card-label">Total Expenditure</div>
+                            <div class="accounts-card-value" id="accTotalExpenditure">₹0</div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Section -->
+                    <div class="accounts-breakdown" id="accountsBreakdown" style="display:none;">
+                        
+                        <!-- Fee Collections Breakdown -->
+                        <div class="accounts-breakdown-card">
+                            <div class="accounts-breakdown-header green">💰 Fee Collections</div>
+                            <div class="accounts-breakdown-body" id="feeBreakdownBody"></div>
+                            <div class="accounts-breakdown-total">
+                                <span>Total Collected</span>
+                                <span id="feeBreakdownTotal" style="color:#28a745;">₹0</span>
+                            </div>
+                        </div>
+
+                        <!-- Expenses Breakdown -->
+                        <div class="accounts-breakdown-card">
+                            <div class="accounts-breakdown-header red">🏢 Expenses</div>
+                            <div class="accounts-breakdown-body" id="expenseBreakdownBody"></div>
+                            <div class="accounts-breakdown-total">
+                                <span>Total Expenses</span>
+                                <span id="expenseBreakdownTotal" style="color:#dc3545;">₹0</span>
+                            </div>
+                        </div>
+
+                        <!-- Salary Breakdown -->
+                        <div class="accounts-breakdown-card">
+                            <div class="accounts-breakdown-header orange">👨‍🏫 Salary Payments</div>
+                            <div class="accounts-breakdown-body" id="salaryBreakdownBody"></div>
+                            <div class="accounts-breakdown-total">
+                                <span>Total Salary</span>
+                                <span id="salaryBreakdownTotal" style="color:#fd7e14;">₹0</span>
+                            </div>
+                        </div>
+
+                        <!-- Expense by Category Breakdown -->
+                        <div class="accounts-breakdown-card">
+                            <div class="accounts-breakdown-header red">📂 Expense by Category</div>
+                            <div class="accounts-breakdown-body" id="categoryBreakdownBody"></div>
+                            <div class="accounts-breakdown-total">
+                                <span>Total</span>
+                                <span id="categoryBreakdownTotal" style="color:#dc3545;">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monthly History Table -->
+                    <div id="monthlyHistorySection" style="display:none;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                            <h3 style="color:#667eea;">📅 Month-wise History (All Months)</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="monthly-history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Fees Collected</th>
+                                        <th>Salary Paid</th>
+                                        <th>Other Expenses</th>
+                                        <th>Total Expenditure</th>
+                                        <th>Net Profit / Loss</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="monthlyHistoryBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Reports Tab -->
                 <div id="reports" class="tab-content">
                     <h2 style="margin-bottom: 20px;">Fee Status Report</h2>
@@ -1710,6 +2013,7 @@
         document.getElementById('paidReportMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('salaryMonth').value = new Date().toISOString().slice(0, 7);
         document.getElementById('expenseDate').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('accountsMonth').value = new Date().toISOString().slice(0, 7);
 
         document.getElementById('studentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -2754,7 +3058,256 @@ Thank you!
             }
         };
 
+        // =============================================
+        // ACCOUNTS TAB FUNCTIONS
+        // =============================================
+
+        // Store current accounts data for export
+        let currentAccountsData = null;
+
+        window.generateAccountsSummary = function() {
+            const month = document.getElementById('accountsMonth').value;
+            if (!month) {
+                alert('Please select a month.');
+                return;
+            }
+
+            // --- Fee Collections for selected month ---
+            const monthPayments = window.payments.filter(p => p.month === month);
+            const totalFees = monthPayments.reduce((sum, p) => sum + p.amount, 0);
+
+            // --- Salary Payments for selected month ---
+            const monthSalaries = window.salaries.filter(s => s.month === month);
+            const totalSalary = monthSalaries.reduce((sum, s) => sum + s.amount, 0);
+
+            // --- Expenses for selected month (by date OR forMonth) ---
+            const monthExpenses = window.expenses.filter(e =>
+                e.date.startsWith(month) || e.forMonth === month
+            );
+            const totalExpenses = monthExpenses.reduce((sum, e) => sum + e.amount, 0);
+
+            // --- Totals ---
+            const totalExpenditure = totalSalary + totalExpenses;
+            const netResult = totalFees - totalExpenditure;
+            const isProfit = netResult >= 0;
+
+            // Store for export
+            currentAccountsData = {
+                month, monthPayments, monthSalaries, monthExpenses,
+                totalFees, totalSalary, totalExpenses, totalExpenditure, netResult
+            };
+
+            // --- Update summary cards ---
+            document.getElementById('accTotalFees').textContent = '₹' + totalFees.toLocaleString();
+            document.getElementById('accTotalSalary').textContent = '₹' + totalSalary.toLocaleString();
+            document.getElementById('accTotalExpenses').textContent = '₹' + totalExpenses.toLocaleString();
+            document.getElementById('accTotalExpenditure').textContent = '₹' + totalExpenditure.toLocaleString();
+
+            // --- Net Result Banner ---
+            const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+            const banner = document.getElementById('netResultBanner');
+            banner.innerHTML = `
+                <div class="net-result-banner ${isProfit ? 'profit-banner' : 'loss-banner'}">
+                    <div>
+                        <div class="net-label">${monthLabel} — ${isProfit ? '🟢 Net Profit' : '🔴 Net Loss'}</div>
+                        <div class="net-formula">
+                            ₹${totalFees.toLocaleString()} (Fees) − ₹${totalSalary.toLocaleString()} (Salary) − ₹${totalExpenses.toLocaleString()} (Expenses)
+                        </div>
+                    </div>
+                    <div class="net-value">${isProfit ? '+' : ''}₹${Math.abs(netResult).toLocaleString()}</div>
+                </div>
+            `;
+
+            // --- Fee Breakdown (by student) ---
+            const feeBreakdownBody = document.getElementById('feeBreakdownBody');
+            if (monthPayments.length === 0) {
+                feeBreakdownBody.innerHTML = '<div class="accounts-breakdown-empty">No fees collected this month</div>';
+            } else {
+                feeBreakdownBody.innerHTML = monthPayments.map(p => {
+                    const student = window.students.find(s => s.id === p.studentId);
+                    return `
+                        <div class="accounts-breakdown-row">
+                            <span class="row-label">${student ? student.name : 'Unknown'} (${student ? student.rollNumber : 'N/A'})</span>
+                            <span class="row-amount green">₹${p.amount.toLocaleString()}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+            document.getElementById('feeBreakdownTotal').textContent = '₹' + totalFees.toLocaleString();
+
+            // --- Expense Breakdown (by description) ---
+            const expenseBreakdownBody = document.getElementById('expenseBreakdownBody');
+            if (monthExpenses.length === 0) {
+                expenseBreakdownBody.innerHTML = '<div class="accounts-breakdown-empty">No expenses this month</div>';
+            } else {
+                expenseBreakdownBody.innerHTML = monthExpenses.map(e => `
+                    <div class="accounts-breakdown-row">
+                        <span class="row-label">${e.description}</span>
+                        <span class="row-amount red">₹${e.amount.toLocaleString()}</span>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('expenseBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
+
+            // --- Salary Breakdown (by teacher) ---
+            const salaryBreakdownBody = document.getElementById('salaryBreakdownBody');
+            if (monthSalaries.length === 0) {
+                salaryBreakdownBody.innerHTML = '<div class="accounts-breakdown-empty">No salary paid this month</div>';
+            } else {
+                salaryBreakdownBody.innerHTML = monthSalaries.map(s => {
+                    const teacher = window.teachers.find(t => t.id === s.teacherId);
+                    return `
+                        <div class="accounts-breakdown-row">
+                            <span class="row-label">${teacher ? teacher.name : 'Unknown'}</span>
+                            <span class="row-amount orange">₹${s.amount.toLocaleString()}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+            document.getElementById('salaryBreakdownTotal').textContent = '₹' + totalSalary.toLocaleString();
+
+            // --- Category Breakdown (group expenses by type) ---
+            const categoryMap = {};
+            monthExpenses.forEach(e => {
+                categoryMap[e.type] = (categoryMap[e.type] || 0) + e.amount;
+            });
+            const categoryBreakdownBody = document.getElementById('categoryBreakdownBody');
+            if (Object.keys(categoryMap).length === 0) {
+                categoryBreakdownBody.innerHTML = '<div class="accounts-breakdown-empty">No expenses this month</div>';
+            } else {
+                categoryBreakdownBody.innerHTML = Object.entries(categoryMap).map(([type, amount]) => `
+                    <div class="accounts-breakdown-row">
+                        <span class="row-label">${type}</span>
+                        <span class="row-amount red">₹${amount.toLocaleString()}</span>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('categoryBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
+
+            // --- Monthly History (all months combined) ---
+            generateMonthlyHistory();
+
+            // Show all sections
+            document.getElementById('netResultBanner').style.display = 'block';
+            document.getElementById('accountsSummaryGrid').style.display = 'grid';
+            document.getElementById('accountsBreakdown').style.display = 'grid';
+            document.getElementById('monthlyHistorySection').style.display = 'block';
+            document.getElementById('exportAccountsBtn').style.display = 'inline-block';
+        };
+
+        function generateMonthlyHistory() {
+            // Collect all unique months from payments, salaries, and expenses
+            const allMonths = new Set();
+            window.payments.forEach(p => allMonths.add(p.month));
+            window.salaries.forEach(s => allMonths.add(s.month));
+            window.expenses.forEach(e => {
+                if (e.forMonth && e.forMonth !== '-') allMonths.add(e.forMonth);
+                else allMonths.add(e.date.slice(0, 7));
+            });
+
+            // Sort months descending
+            const sortedMonths = Array.from(allMonths).sort((a, b) => b.localeCompare(a));
+
+            const tbody = document.getElementById('monthlyHistoryBody');
+            if (sortedMonths.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:#999;">No data available</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = sortedMonths.map(m => {
+                const fees = window.payments.filter(p => p.month === m).reduce((sum, p) => sum + p.amount, 0);
+                const salary = window.salaries.filter(s => s.month === m).reduce((sum, s) => sum + s.amount, 0);
+                const expenses = window.expenses.filter(e =>
+                    e.date.startsWith(m) || e.forMonth === m
+                ).reduce((sum, e) => sum + e.amount, 0);
+                const expenditure = salary + expenses;
+                const net = fees - expenditure;
+                const isProfit = net >= 0;
+                const monthLabel = new Date(m + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+
+                return `
+                    <tr class="${isProfit ? 'profit-row' : 'loss-row'}">
+                        <td><strong>${monthLabel}</strong></td>
+                        <td style="color:#28a745; font-weight:600;">₹${fees.toLocaleString()}</td>
+                        <td style="color:#fd7e14; font-weight:600;">₹${salary.toLocaleString()}</td>
+                        <td style="color:#dc3545; font-weight:600;">₹${expenses.toLocaleString()}</td>
+                        <td style="color:#dc3545; font-weight:700;">₹${expenditure.toLocaleString()}</td>
+                        <td style="font-weight:700; color:${isProfit ? '#28a745' : '#dc3545'};">
+                            ${isProfit ? '🟢 +' : '🔴 '}₹${Math.abs(net).toLocaleString()}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.exportAccountsToExcel = function() {
+            if (!currentAccountsData) {
+                alert('Please generate a summary first.');
+                return;
+            }
+
+            const { month, monthPayments, monthSalaries, monthExpenses,
+                    totalFees, totalSalary, totalExpenses, totalExpenditure, netResult } = currentAccountsData;
+
+            const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+            const wb = XLSX.utils.book_new();
+
+            // Sheet 1: Summary
+            const summaryData = [
+                ['Vismaya Education - Monthly Accounts Summary'],
+                ['Month:', monthLabel],
+                ['Generated On:', new Date().toLocaleDateString('en-IN')],
+                [],
+                ['Category', 'Amount (₹)'],
+                ['Total Fees Collected', totalFees],
+                ['Salary Paid', totalSalary],
+                ['Other Expenses', totalExpenses],
+                ['Total Expenditure', totalExpenditure],
+                ['Net Profit / Loss', netResult],
+            ];
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            wsSummary['!cols'] = [{ wch: 30 }, { wch: 20 }];
+            XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
+
+            // Sheet 2: Fee Collections
+            const feeData = [['Receipt No', 'Student Name', 'Roll No', 'Class', 'Amount', 'Payment Method', 'Date']];
+            monthPayments.forEach(p => {
+                const student = window.students.find(s => s.id === p.studentId);
+                feeData.push([p.receiptNo, student ? student.name : 'Unknown', student ? student.rollNumber : 'N/A', student ? student.course : 'N/A', p.amount, p.method, p.date]);
+            });
+            feeData.push([], ['', '', '', '', totalFees, '', '']);
+            const wsFees = XLSX.utils.aoa_to_sheet(feeData);
+            wsFees['!cols'] = [{ wch: 12 }, { wch: 25 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 15 }, { wch: 12 }];
+            XLSX.utils.book_append_sheet(wb, wsFees, 'Fee Collections');
+
+            // Sheet 3: Salary Payments
+            const salaryData = [['Receipt No', 'Teacher Name', 'Employee ID', 'Amount', 'Payment Method', 'Date']];
+            monthSalaries.forEach(s => {
+                const teacher = window.teachers.find(t => t.id === s.teacherId);
+                salaryData.push([s.receiptNo, teacher ? teacher.name : 'Unknown', teacher ? teacher.employeeId : 'N/A', s.amount, s.method, s.date]);
+            });
+            salaryData.push([], ['', '', '', totalSalary, '', '']);
+            const wsSalary = XLSX.utils.aoa_to_sheet(salaryData);
+            wsSalary['!cols'] = [{ wch: 12 }, { wch: 25 }, { wch: 12 }, { wch: 12 }, { wch: 15 }, { wch: 12 }];
+            XLSX.utils.book_append_sheet(wb, wsSalary, 'Salary Payments');
+
+            // Sheet 4: Expenses
+            const expData = [['Date', 'Type', 'Description', 'Paid To', 'Amount', 'Payment Method', 'Notes']];
+            monthExpenses.forEach(e => {
+                expData.push([e.date, e.type, e.description, e.paidTo, e.amount, e.paymentMethod, e.notes]);
+            });
+            expData.push([], ['', '', '', '', totalExpenses, '', '']);
+            const wsExp = XLSX.utils.aoa_to_sheet(expData);
+            wsExp['!cols'] = [{ wch: 12 }, { wch: 15 }, { wch: 25 }, { wch: 20 }, { wch: 12 }, { wch: 15 }, { wch: 25 }];
+            XLSX.utils.book_append_sheet(wb, wsExp, 'Expenses');
+
+            const date = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Accounts_${month}_${date}.xlsx`);
+        };
+
+        // =============================================
         // Excel Export Functions
+        // =============================================
         window.exportStudentsToExcel = function() {
             const currentMonth = new Date().toISOString().slice(0, 7);
             
