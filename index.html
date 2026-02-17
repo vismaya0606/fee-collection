@@ -1471,6 +1471,8 @@
         let expensesListener = null;
         let currentUser = null;
         let userRole = null;
+        let editingStudentId = null;
+        let editingExpenseId = null;
 
         window.showPage = function(pageId) {
             ['loginPage', 'signupPage', 'resetPage', 'mainApp'].forEach(id => {
@@ -1690,6 +1692,7 @@
                     snapshot.forEach((doc) => {
                         window.expenses.push({ id: doc.id, ...doc.data() });
                     });
+                    console.log('Loaded expenses:', window.expenses.length);
                     updateExpenseTable();
                     updateExpenseSummary();
                 });
@@ -1859,8 +1862,6 @@ Are you sure you want to delete this payment?`;
                 alert('❌ Error deleting payment: ' + error.message);
             }
         };
-
-        let editingStudentId = null;
 
         window.editStudent = function(id) {
             if (userRole === 'staff') {
@@ -2301,7 +2302,9 @@ Are you sure you want to delete this payment?`;
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Adding...';
+            
+            const isEditing = editingExpenseId !== null;
+            submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
 
             try {
                 const expenseData = {
@@ -2312,20 +2315,34 @@ Are you sure you want to delete this payment?`;
                     paymentMethod: document.getElementById('expensePaymentMethod').value,
                     paidTo: document.getElementById('expensePaidTo').value || '-',
                     forMonth: document.getElementById('expenseForMonth').value || '-',
-                    notes: document.getElementById('expenseNotes').value || '-',
-                    createdAt: new Date().toISOString()
+                    notes: document.getElementById('expenseNotes').value || '-'
                 };
 
-                await addDoc(collection(db, 'expenses'), expenseData);
-                alert('✅ Expense added successfully!');
+                if (isEditing) {
+                    // Update existing expense
+                    await updateDoc(doc(db, 'expenses', editingExpenseId), {
+                        ...expenseData,
+                        updatedAt: new Date().toISOString()
+                    });
+                    alert('✅ Expense updated successfully!');
+                    cancelExpenseEdit();
+                } else {
+                    // Add new expense
+                    await addDoc(collection(db, 'expenses'), {
+                        ...expenseData,
+                        createdAt: new Date().toISOString()
+                    });
+                    alert('✅ Expense added successfully!');
+                }
+                
                 this.reset();
                 document.getElementById('expenseDate').value = new Date().toISOString().slice(0, 10);
             } catch (error) {
-                console.error('Error adding expense:', error);
-                alert('Error adding expense: ' + error.message);
+                console.error('Error saving expense:', error);
+                alert('Error saving expense: ' + error.message);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Add Expense';
+                submitBtn.textContent = isEditing ? 'Update Expense' : 'Add Expense';
             }
         });
 
@@ -2514,20 +2531,31 @@ Are you sure you want to delete this salary payment?`;
             const typeFilter = document.getElementById('expenseFilterType')?.value || '';
             const monthFilter = document.getElementById('expenseFilterMonth')?.value || '';
             
-            let filteredExpenses = window.expenses.filter(e => {
+            // Start with all expenses (don't filter yet)
+            let filteredExpenses = [...window.expenses];
+            
+            // Apply filters
+            filteredExpenses = filteredExpenses.filter(e => {
                 const matchesSearch = e.description.toLowerCase().includes(searchTerm) || 
                                      e.type.toLowerCase().includes(searchTerm) ||
-                                     e.paidTo.toLowerCase().includes(searchTerm);
+                                     (e.paidTo && e.paidTo.toLowerCase().includes(searchTerm));
                 const matchesType = !typeFilter || e.type === typeFilter;
                 const matchesMonth = !monthFilter || e.forMonth === monthFilter || e.date.startsWith(monthFilter);
                 
                 return matchesSearch && matchesType && matchesMonth;
             });
 
+            // Show message if no expenses found
+            if (filteredExpenses.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 30px; color: #999;">No expenses found. Add your first expense above!</td></tr>';
+                return;
+            }
+
             tbody.innerHTML = filteredExpenses.map(expense => {
                 const actionsCell = userRole === 'staff' ? '' : `
                     <td>
                         <div class="action-buttons">
+                            <button class="btn btn-warning" onclick="editExpense('${expense.id}')" style="padding: 5px 15px;">Edit</button>
                             <button class="btn btn-danger" onclick="deleteExpense('${expense.id}')" style="padding: 5px 15px;">Delete</button>
                         </div>
                     </td>
@@ -2556,6 +2584,65 @@ Are you sure you want to delete this salary payment?`;
             document.getElementById('expenseFilterMonth').value = '';
             updateExpenseTable();
         };
+
+        window.editExpense = function(id) {
+            if (userRole === 'staff') {
+                alert('You do not have permission to edit expenses.');
+                return;
+            }
+
+            const expense = window.expenses.find(e => e.id === id);
+            if (expense) {
+                editingExpenseId = id;
+                
+                // Populate form fields
+                document.getElementById('expenseType').value = expense.type;
+                document.getElementById('expenseDescription').value = expense.description;
+                document.getElementById('expenseAmount').value = expense.amount;
+                document.getElementById('expenseDate').value = expense.date;
+                document.getElementById('expensePaymentMethod').value = expense.paymentMethod;
+                document.getElementById('expensePaidTo').value = expense.paidTo === '-' ? '' : expense.paidTo;
+                document.getElementById('expenseForMonth').value = expense.forMonth === '-' ? '' : expense.forMonth;
+                document.getElementById('expenseNotes').value = expense.notes === '-' ? '' : expense.notes;
+                
+                // Change button text and style
+                const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
+                submitBtn.textContent = 'Update Expense';
+                submitBtn.classList.add('btn-warning');
+                submitBtn.classList.remove('btn-primary');
+                
+                // Add cancel button if it doesn't exist
+                if (!document.getElementById('cancelExpenseEditBtn')) {
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.type = 'button';
+                    cancelBtn.id = 'cancelExpenseEditBtn';
+                    cancelBtn.className = 'btn btn-danger';
+                    cancelBtn.textContent = 'Cancel Edit';
+                    cancelBtn.onclick = cancelExpenseEdit;
+                    cancelBtn.style.marginLeft = '10px';
+                    submitBtn.parentNode.appendChild(cancelBtn);
+                }
+                
+                // Scroll to form
+                document.getElementById('expenseFormSection').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        function cancelExpenseEdit() {
+            editingExpenseId = null;
+            document.getElementById('expenseForm').reset();
+            document.getElementById('expenseDate').value = new Date().toISOString().slice(0, 10);
+            
+            const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
+            submitBtn.textContent = 'Add Expense';
+            submitBtn.classList.remove('btn-warning');
+            submitBtn.classList.add('btn-primary');
+            
+            const cancelBtn = document.getElementById('cancelExpenseEditBtn');
+            if (cancelBtn) {
+                cancelBtn.remove();
+            }
+        }
 
         window.deleteExpense = async function(id) {
             if (userRole === 'staff') {
