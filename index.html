@@ -103,6 +103,8 @@
         .badge-interested { background: #d4edda; color: #155724; }
         .badge-notinterested { background: #f8d7da; color: #721c24; }
         .badge-converted { background: #d1ecf1; color: #0c5460; }
+        .badge-sent { background: #d4edda; color: #155724; }
+        .badge-notsent { background: #fff3cd; color: #856404; }
         .search-box { padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1em; width: 100%; max-width: 400px; margin-bottom: 20px; }
         .sort-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
         .sort-controls label { font-weight: 600; color: #333; }
@@ -138,6 +140,31 @@
         .inquiry-stat.interested-color h3 { color: #28a745; }
         .inquiry-stat.notinterested-color h3 { color: #dc3545; }
         .inquiry-stat.converted-color h3 { color: #667eea; }
+
+        /* Important Questions Tab */
+        .iq-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .iq-stat { background: white; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
+        .iq-stat.c10 { border-top-color: #17a2b8; }
+        .iq-stat.c12 { border-top-color: #764ba2; }
+        .iq-stat.sent-color { border-top-color: #28a745; }
+        .iq-stat.pending-color { border-top-color: #ffc107; }
+        .iq-stat h3 { font-size: 1.8em; font-weight: 700; margin-bottom: 4px; }
+        .iq-stat p { font-size: 0.8em; color: #666; }
+        .iq-stat h3 { color: #667eea; }
+        .iq-stat.c10 h3 { color: #17a2b8; }
+        .iq-stat.c12 h3 { color: #764ba2; }
+        .iq-stat.sent-color h3 { color: #28a745; }
+        .iq-stat.pending-color h3 { color: #ffc107; }
+        .iq-tab-header { background: linear-gradient(135deg, rgba(102,126,234,0.08) 0%, rgba(118,75,162,0.08) 100%); border: 1px solid rgba(102,126,234,0.2); border-radius: 12px; padding: 20px 25px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: space-between; }
+        .iq-tab-header-left h2 { font-size: 1.5em; color: #333; margin-bottom: 4px; }
+        .iq-tab-header-left p { color: #666; font-size: 0.9em; }
+        .iq-class-badge-10 { background: #cce5ff; color: #004085; padding: 4px 12px; border-radius: 12px; font-size: 0.85em; font-weight: 700; }
+        .iq-class-badge-12 { background: #e2d9f3; color: #4a148c; padding: 4px 12px; border-radius: 12px; font-size: 0.85em; font-weight: 700; }
+        .iq-form-section { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .iq-form-section h3 { margin-bottom: 20px; color: #667eea; font-size: 1.1em; }
+        .iq-filter-bar { background: #f8f9fa; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .iq-bulk-bar { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; color: white; }
+        .iq-bulk-bar p { font-size: 0.9em; opacity: 0.9; }
 
         .convert-modal-content { background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 95%; max-height: 90vh; overflow-y: auto; }
         .convert-notice { background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; border-left: 4px solid #17a2b8; }
@@ -313,6 +340,7 @@
                 <button class="tab" onclick="switchTab('expenses', this)">Expenses</button>
                 <button class="tab" onclick="switchTab('accounts', this)">Accounts</button>
                 <button class="tab" onclick="switchTab('inquiries', this)">🔍 Inquiry Form</button>
+                <button class="tab" onclick="switchTab('importantquestions', this)">📝 Important Questions</button>
                 <button class="tab" onclick="switchTab('reports', this)">Reports</button>
             </div>
 
@@ -330,7 +358,6 @@
                         </div>
                         <div id="uploadStatus" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
                     </div>
-
                     <h3 style="margin-bottom: 20px;">➕ Add Single Student</h3>
                     <form id="studentForm">
                         <div class="form-grid">
@@ -368,7 +395,6 @@
                         <button type="submit" class="btn btn-primary">Add Student</button>
                     </form>
                 </div>
-
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
                     <div style="flex: 1; min-width: 250px;">
@@ -424,7 +450,6 @@
                     </div>
                     <button class="btn btn-success" onclick="collectFee()">Collect Fee</button>
                 </div>
-
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">📊 Paid Students Report</h2>
                 <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
                     <div class="form-grid" style="margin-bottom: 20px;">
@@ -472,7 +497,6 @@
                         </table>
                     </div>
                 </div>
-
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments (Last 20)</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
                     <div class="sort-controls">
@@ -529,7 +553,6 @@
                         <tbody id="teacherTableBody"></tbody>
                     </table>
                 </div>
-
                 <div id="salaryFormSection" style="margin-top: 40px;">
                     <h2 style="margin-bottom: 20px;">💰 Pay Salary</h2>
                     <div class="form-grid">
@@ -684,9 +707,7 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- INQUIRY FORM TAB -->
-            <!-- ============================================================ -->
+            <!-- Inquiry Tab -->
             <div id="inquiries" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
                     <div>
@@ -695,8 +716,6 @@
                     </div>
                     <button class="btn btn-success" onclick="exportInquiriesToExcel()" style="padding: 10px 20px;">📥 Export to Excel</button>
                 </div>
-
-                <!-- Inquiry Stats -->
                 <div class="inquiry-stats" id="inquiryStats">
                     <div class="inquiry-stat"><h3 id="inqTotal">0</h3><p>Total Inquiries</p></div>
                     <div class="inquiry-stat new-color"><h3 id="inqNew">0</h3><p>New</p></div>
@@ -705,8 +724,6 @@
                     <div class="inquiry-stat notinterested-color"><h3 id="inqNotInterested">0</h3><p>Not Interested</p></div>
                     <div class="inquiry-stat converted-color"><h3 id="inqConverted">0</h3><p>Converted</p></div>
                 </div>
-
-                <!-- Add Inquiry Form -->
                 <div id="inquiryFormSection" style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                     <h3 style="margin-bottom: 20px; color: #667eea;">➕ Add New Inquiry</h3>
                     <form id="inquiryForm">
@@ -764,8 +781,6 @@
                         <button type="submit" class="btn btn-primary" id="inqSubmitBtn">Add Inquiry</button>
                     </form>
                 </div>
-
-                <!-- Inquiry Filters -->
                 <div style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px;">
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                         <input type="text" class="search-box" placeholder="Search by name or phone..." id="inquirySearch" style="margin-bottom: 0; max-width: 280px; flex: 1;">
@@ -792,26 +807,156 @@
                         <button class="btn btn-primary" onclick="clearInquiryFilters()" style="padding: 10px 18px;">Clear Filters</button>
                     </div>
                 </div>
-
-                <!-- Inquiry Table -->
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Class</th>
-                                <th>Syllabus</th>
-                                <th>Source</th>
-                                <th>Expected Fee</th>
-                                <th>Status</th>
-                                <th>Follow Up</th>
-                                <th>Notes</th>
-                                <th id="inquiryActionsHeader">Actions</th>
+                                <th>Date</th><th>Name</th><th>Phone</th><th>Class</th><th>Syllabus</th>
+                                <th>Source</th><th>Expected Fee</th><th>Status</th><th>Follow Up</th>
+                                <th>Notes</th><th id="inquiryActionsHeader">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="inquiryTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- IMPORTANT QUESTIONS TAB -->
+            <!-- ============================================================ -->
+            <div id="importantquestions" class="tab-content">
+                <div class="iq-tab-header">
+                    <div class="iq-tab-header-left">
+                        <h2>📝 Important Questions Inquiry</h2>
+                        <p>Track students requesting important questions for Class 10 &amp; Class 12. Send via WhatsApp instantly.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="exportIQInquiriesToExcel()" style="padding: 10px 20px;">📥 Export to Excel</button>
+                        <button class="btn btn-whatsapp" onclick="sendBulkIQWhatsApp()" style="padding: 10px 20px;">📱 Send Bulk WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="iq-stats">
+                    <div class="iq-stat"><h3 id="iqTotal">0</h3><p>Total Requests</p></div>
+                    <div class="iq-stat c10"><h3 id="iqClass10">0</h3><p>Class 10</p></div>
+                    <div class="iq-stat c12"><h3 id="iqClass12">0</h3><p>Class 12</p></div>
+                    <div class="iq-stat sent-color"><h3 id="iqSent">0</h3><p>WhatsApp Sent</p></div>
+                    <div class="iq-stat pending-color"><h3 id="iqPending">0</h3><p>Pending Send</p></div>
+                </div>
+
+                <!-- Add Form -->
+                <div id="iqFormSection" class="iq-form-section">
+                    <h3>➕ Add New Request</h3>
+                    <form id="iqForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Student / Parent Name *</label>
+                                <input type="text" id="iqName" required placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Number *</label>
+                                <input type="tel" id="iqMobile" required placeholder="10-digit mobile number">
+                            </div>
+                            <div class="form-group">
+                                <label>Class *</label>
+                                <select id="iqClass" required>
+                                    <option value="">Select Class</option>
+                                    <option value="Class 10">Class 10</option>
+                                    <option value="Class 12">Class 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Syllabus</label>
+                                <select id="iqSyllabus">
+                                    <option value="">Not Specified</option>
+                                    <option value="CBSE">CBSE</option>
+                                    <option value="Matric">Matric</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject (Optional)</label>
+                                <input type="text" id="iqSubject" placeholder="e.g., Maths, Science, All Subjects">
+                            </div>
+                            <div class="form-group">
+                                <label>Request Date *</label>
+                                <input type="date" id="iqDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp Status</label>
+                                <select id="iqWAStatus">
+                                    <option value="Pending">Pending</option>
+                                    <option value="Sent">Sent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Notes (Optional)</label>
+                                <input type="text" id="iqNotes" placeholder="Any additional notes">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <button type="submit" class="btn btn-primary" id="iqSubmitBtn">Add Request</button>
+                            <button type="button" class="btn btn-whatsapp" onclick="submitAndSendIQ()" id="iqSubmitSendBtn">➕ Add &amp; Send WhatsApp</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bulk Send Banner -->
+                <div class="iq-bulk-bar">
+                    <div style="flex:1;">
+                        <strong>📱 Bulk WhatsApp Sender</strong>
+                        <p>Filter by class below, then click "Send Bulk WhatsApp" to send important questions message to all pending entries.</p>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <select id="iqBulkClassFilter" style="padding:10px 14px; border-radius:8px; border:none; font-size:0.95em; font-weight:600;">
+                            <option value="">All Classes</option>
+                            <option value="Class 10">Class 10 Only</option>
+                            <option value="Class 12">Class 12 Only</option>
+                        </select>
+                        <button class="btn" onclick="sendBulkIQWhatsApp()" style="background:white;color:#128C7E;font-weight:700;padding:10px 20px;">📱 Send to Pending</button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="iq-filter-bar">
+                    <input type="text" class="search-box" placeholder="Search by name or mobile..." id="iqSearch" style="margin-bottom:0; max-width:280px; flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <label style="font-weight:600; color:#333; white-space:nowrap;">Class:</label>
+                        <select id="iqClassFilter" onchange="updateIQTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em;">
+                            <option value="">All Classes</option>
+                            <option value="Class 10">Class 10</option>
+                            <option value="Class 12">Class 12</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <label style="font-weight:600; color:#333; white-space:nowrap;">Status:</label>
+                        <select id="iqStatusFilter" onchange="updateIQTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em;">
+                            <option value="">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Sent">Sent</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="clearIQFilters()" style="padding:10px 18px;">Clear Filters</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Class</th>
+                                <th>Syllabus</th>
+                                <th>Subject</th>
+                                <th>WA Status</th>
+                                <th>Notes</th>
+                                <th id="iqActionsHeader">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="iqTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -952,27 +1097,18 @@
     window.salaries = [];
     window.expenses = [];
     window.inquiries = [];
+    window.iqInquiries = []; // Important Questions collection
 
-    let studentsListener = null;
-    let paymentsListener = null;
-    let remindersListener = null;
-    let teachersListener = null;
-    let salariesListener = null;
-    let expensesListener = null;
-    let inquiriesListener = null;
-    let currentUser = null;
-    let userRole = null;
-    let editingStudentId = null;
-    let editingExpenseId = null;
-    let editingInquiryId = null;
-    let convertingInquiryId = null;
-    let filteredPaidStudents = [];
-    let currentAccountsData = null;
+    let studentsListener = null, paymentsListener = null, remindersListener = null;
+    let teachersListener = null, salariesListener = null, expensesListener = null;
+    let inquiriesListener = null, iqListener = null;
+    let currentUser = null, userRole = null;
+    let editingStudentId = null, editingExpenseId = null, editingInquiryId = null;
+    let convertingInquiryId = null, editingIQId = null;
+    let filteredPaidStudents = [], currentAccountsData = null;
 
     window.showPage = function(pageId) {
-        ['loginPage','signupPage','resetPage','mainApp'].forEach(id => {
-            document.getElementById(id).style.display = 'none';
-        });
+        ['loginPage','signupPage','resetPage','mainApp'].forEach(id => document.getElementById(id).style.display = 'none');
         document.getElementById(pageId).style.display = 'block';
         document.querySelectorAll('.error-message, .success-message').forEach(el => el.classList.remove('show'));
     };
@@ -985,13 +1121,8 @@
         const errorDiv = document.getElementById('loginError');
         btn.disabled = true; btn.textContent = 'Logging in...';
         errorDiv.classList.remove('show');
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
-            errorDiv.classList.add('show');
-            btn.disabled = false; btn.textContent = 'Login';
-        }
+        try { await signInWithEmailAndPassword(auth, email, password); }
+        catch (error) { errorDiv.textContent = '❌ ' + getErrorMessage(error.code); errorDiv.classList.add('show'); btn.disabled = false; btn.textContent = 'Login'; }
     });
 
     document.getElementById('signupForm').addEventListener('submit', async (e) => {
@@ -1013,8 +1144,7 @@
             setTimeout(() => { showPage('loginPage'); document.getElementById('loginEmail').value = email; }, 2000);
         } catch (error) {
             errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
-            errorDiv.classList.add('show');
-            btn.disabled = false; btn.textContent = 'Create Account';
+            errorDiv.classList.add('show'); btn.disabled = false; btn.textContent = 'Create Account';
         }
     });
 
@@ -1028,15 +1158,10 @@
         errorDiv.classList.remove('show'); successDiv.classList.remove('show');
         try {
             await sendPasswordResetEmail(auth, email);
-            successDiv.textContent = '✅ Password reset email sent!';
-            successDiv.classList.add('show');
+            successDiv.textContent = '✅ Password reset email sent!'; successDiv.classList.add('show');
             document.getElementById('resetEmail').value = '';
-        } catch (error) {
-            errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
-            errorDiv.classList.add('show');
-        } finally {
-            btn.disabled = false; btn.textContent = 'Send Reset Link';
-        }
+        } catch (error) { errorDiv.textContent = '❌ ' + getErrorMessage(error.code); errorDiv.classList.add('show'); }
+        finally { btn.disabled = false; btn.textContent = 'Send Reset Link'; }
     });
 
     onAuthStateChanged(auth, async (user) => {
@@ -1052,24 +1177,14 @@
                 applyRoleBasedUI(userRole);
                 showPage('mainApp');
                 loadData();
-            } else {
-                alert('User profile not found.'); signOut(auth);
-            }
-        } else {
-            showPage('loginPage');
-        }
+            } else { alert('User profile not found.'); signOut(auth); }
+        } else { showPage('loginPage'); }
     });
 
     window.logout = async function() {
         if (confirm('Are you sure you want to logout?')) {
             try {
-                if (studentsListener) studentsListener();
-                if (paymentsListener) paymentsListener();
-                if (remindersListener) remindersListener();
-                if (teachersListener) teachersListener();
-                if (salariesListener) salariesListener();
-                if (expensesListener) expensesListener();
-                if (inquiriesListener) inquiriesListener();
+                [studentsListener, paymentsListener, remindersListener, teachersListener, salariesListener, expensesListener, inquiriesListener, iqListener].forEach(l => { if (l) l(); });
                 await signOut(auth);
             } catch (error) { alert('Error logging out: ' + error.message); }
         }
@@ -1078,18 +1193,12 @@
     function applyRoleBasedUI(role) {
         const isStaff = role === 'staff';
         document.getElementById('staffNotice').style.display = isStaff ? 'block' : 'none';
-        document.getElementById('studentFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('feeFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('actionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-        document.getElementById('paymentActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-        document.getElementById('teacherFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('salaryFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('teacherActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-        document.getElementById('salaryActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-        document.getElementById('expenseFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('expenseActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
-        document.getElementById('inquiryFormSection').style.display = isStaff ? 'none' : 'block';
-        document.getElementById('inquiryActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','iqFormSection'].forEach(id => {
+            document.getElementById(id).style.display = isStaff ? 'none' : 'block';
+        });
+        ['actionsHeader','paymentActionsHeader','teacherActionsHeader','salaryActionsHeader','expenseActionsHeader','inquiryActionsHeader','iqActionsHeader'].forEach(id => {
+            document.getElementById(id).style.display = isStaff ? 'none' : 'table-cell';
+        });
     }
 
     async function loadData() {
@@ -1122,37 +1231,284 @@
                 window.inquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 updateInquiryTable(); updateInquiryStats();
             });
+            // Important Questions listener
+            iqListener = onSnapshot(query(collection(db, 'iqInquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
+                window.iqInquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateIQTable(); updateIQStats();
+            });
 
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-        } catch (error) {
-            console.error('Error loading data:', error);
-            alert('Error loading data: ' + error.message);
-        }
+        } catch (error) { console.error('Error loading data:', error); alert('Error loading data: ' + error.message); }
     }
 
     // Set default dates
-    document.getElementById('feeMonth').value = new Date().toISOString().slice(0,7);
-    document.getElementById('reportMonth').value = new Date().toISOString().slice(0,7);
-    document.getElementById('paidReportMonth').value = new Date().toISOString().slice(0,7);
-    document.getElementById('salaryMonth').value = new Date().toISOString().slice(0,7);
-    document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
-    document.getElementById('accountsMonth').value = new Date().toISOString().slice(0,7);
-    document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
+    const todayStr = new Date().toISOString().slice(0,10);
+    const monthStr = new Date().toISOString().slice(0,7);
+    document.getElementById('feeMonth').value = monthStr;
+    document.getElementById('reportMonth').value = monthStr;
+    document.getElementById('paidReportMonth').value = monthStr;
+    document.getElementById('salaryMonth').value = monthStr;
+    document.getElementById('expenseDate').value = todayStr;
+    document.getElementById('accountsMonth').value = monthStr;
+    document.getElementById('inqDate').value = todayStr;
+    document.getElementById('iqDate').value = todayStr;
 
     // ============================================================
-    // INQUIRY FUNCTIONS
+    // IMPORTANT QUESTIONS FUNCTIONS
+    // ============================================================
+
+    document.getElementById('iqForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (userRole === 'staff') { alert('You do not have permission.'); return; }
+        const submitBtn = document.getElementById('iqSubmitBtn');
+        const isEditing = editingIQId !== null;
+        submitBtn.disabled = true;
+        submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
+        try {
+            const data = buildIQData();
+            if (isEditing) {
+                await updateDoc(doc(db, 'iqInquiries', editingIQId), { ...data, updatedAt: new Date().toISOString() });
+                alert('✅ Request updated!');
+                cancelIQEdit();
+            } else {
+                await addDoc(collection(db, 'iqInquiries'), { ...data, createdAt: new Date().toISOString() });
+                alert('✅ Request added!');
+            }
+            document.getElementById('iqForm').reset();
+            document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Request' : 'Add Request'; }
+    });
+
+    function buildIQData() {
+        return {
+            name: document.getElementById('iqName').value.trim(),
+            mobile: document.getElementById('iqMobile').value.trim(),
+            studentClass: document.getElementById('iqClass').value,
+            syllabus: document.getElementById('iqSyllabus').value || '-',
+            subject: document.getElementById('iqSubject').value.trim() || '-',
+            date: document.getElementById('iqDate').value,
+            waStatus: document.getElementById('iqWAStatus').value,
+            notes: document.getElementById('iqNotes').value.trim() || '-'
+        };
+    }
+
+    // Add and immediately send WhatsApp
+    window.submitAndSendIQ = async function() {
+        if (userRole === 'staff') { alert('You do not have permission.'); return; }
+        const name = document.getElementById('iqName').value.trim();
+        const mobile = document.getElementById('iqMobile').value.trim();
+        const studentClass = document.getElementById('iqClass').value;
+        const syllabus = document.getElementById('iqSyllabus').value || '';
+        const subject = document.getElementById('iqSubject').value.trim() || 'All Subjects';
+        if (!name || !mobile || !studentClass) { alert('Please fill Name, Mobile, and Class first.'); return; }
+
+        const btn = document.getElementById('iqSubmitSendBtn');
+        btn.disabled = true; btn.textContent = 'Processing...';
+        try {
+            const data = buildIQData();
+            data.waStatus = 'Sent';
+            const docRef = await addDoc(collection(db, 'iqInquiries'), { ...data, createdAt: new Date().toISOString() });
+            document.getElementById('iqForm').reset();
+            document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+            sendIQWhatsApp(mobile, name, studentClass, syllabus, subject);
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { btn.disabled = false; btn.textContent = '➕ Add & Send WhatsApp'; }
+    };
+
+    window.sendIQWhatsApp = function(mobile, name, studentClass, syllabus, subject) {
+        let cleanPhone = String(mobile).replace(/\D/g, '');
+        if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+        const syllabusText = syllabus && syllabus !== '-' ? ` (${syllabus})` : '';
+        const subjectText = subject && subject !== '-' ? subject : 'all subjects';
+        const message = `Dear ${name},
+
+Greetings from *Vismaya Education*! 📚
+
+We have your request for *Important Questions* for *${studentClass}${syllabusText}*.
+
+📝 *Subject(s):* ${subjectText}
+
+We are preparing the important questions and will send them to you shortly. 
+
+For any queries, please feel free to contact us.
+
+Best regards,
+*Vismaya Education Team* 🎓`;
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    };
+
+    // Mark as sent and open WhatsApp
+    window.sendAndMarkIQ = async function(id, mobile, name, studentClass, syllabus, subject) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        try {
+            await updateDoc(doc(db, 'iqInquiries', id), { waStatus: 'Sent', sentAt: new Date().toISOString() });
+            sendIQWhatsApp(mobile, name, studentClass, syllabus, subject);
+        } catch (error) { sendIQWhatsApp(mobile, name, studentClass, syllabus, subject); }
+    };
+
+    window.sendBulkIQWhatsApp = function() {
+        const classFilter = document.getElementById('iqBulkClassFilter')?.value || '';
+        let pending = window.iqInquiries.filter(iq => iq.waStatus !== 'Sent');
+        if (classFilter) pending = pending.filter(iq => iq.studentClass === classFilter);
+        if (pending.length === 0) { alert(`✅ No pending entries${classFilter ? ' for ' + classFilter : ''}!`); return; }
+        if (!confirm(`Send WhatsApp to ${pending.length} pending student(s)${classFilter ? ' in ' + classFilter : ''}?`)) return;
+        pending.forEach((iq, i) => {
+            setTimeout(() => {
+                sendAndMarkIQ(iq.id, iq.mobile, iq.name, iq.studentClass, iq.syllabus, iq.subject);
+            }, i * 2500);
+        });
+    };
+
+    window.updateIQTable = function() {
+        const tbody = document.getElementById('iqTableBody');
+        const searchTerm = document.getElementById('iqSearch')?.value.toLowerCase() || '';
+        const classFilter = document.getElementById('iqClassFilter')?.value || '';
+        const statusFilter = document.getElementById('iqStatusFilter')?.value || '';
+
+        let filtered = window.iqInquiries.filter(iq => {
+            const matchSearch = iq.name.toLowerCase().includes(searchTerm) || iq.mobile.includes(searchTerm);
+            const matchClass = !classFilter || iq.studentClass === classFilter;
+            const matchStatus = !statusFilter || iq.waStatus === statusFilter;
+            return matchSearch && matchClass && matchStatus;
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999;">No requests found. Add your first request above!</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = filtered.map((iq, idx) => {
+            const classBadge = iq.studentClass === 'Class 10'
+                ? `<span class="iq-class-badge-10">Class 10</span>`
+                : `<span class="iq-class-badge-12">Class 12</span>`;
+            const waBadge = iq.waStatus === 'Sent'
+                ? `<span class="badge badge-sent">✅ Sent</span>`
+                : `<span class="badge badge-notsent">⏳ Pending</span>`;
+
+            const actionsCell = userRole === 'staff' ? '' : `<td>
+                <div class="action-buttons">
+                    <button class="btn btn-whatsapp" onclick="sendAndMarkIQ('${iq.id}','${iq.mobile}','${iq.name.replace(/'/g,"\\'")}','${iq.studentClass}','${iq.syllabus}','${iq.subject}')" style="padding:5px 10px;font-size:0.82em;">📱 Send</button>
+                    <button class="btn btn-warning" onclick="editIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Delete</button>
+                </div>
+            </td>`;
+
+            return `<tr style="${iq.waStatus === 'Sent' ? 'background:#f0fff4;' : ''}">
+                <td>${idx + 1}</td>
+                <td>${iq.date}</td>
+                <td><strong>${iq.name}</strong></td>
+                <td>${iq.mobile}</td>
+                <td>${classBadge}</td>
+                <td style="font-size:0.9em;">${iq.syllabus === '-' ? '-' : iq.syllabus}</td>
+                <td style="font-size:0.9em;">${iq.subject === '-' ? '-' : iq.subject}</td>
+                <td>${waBadge}</td>
+                <td style="font-size:0.85em;color:#666;max-width:140px;word-break:break-word;">${iq.notes === '-' ? '-' : iq.notes}</td>
+                ${actionsCell}
+            </tr>`;
+        }).join('');
+    };
+
+    window.updateIQStats = function() {
+        const total = window.iqInquiries.length;
+        const c10 = window.iqInquiries.filter(iq => iq.studentClass === 'Class 10').length;
+        const c12 = window.iqInquiries.filter(iq => iq.studentClass === 'Class 12').length;
+        const sent = window.iqInquiries.filter(iq => iq.waStatus === 'Sent').length;
+        const pending = total - sent;
+        document.getElementById('iqTotal').textContent = total;
+        document.getElementById('iqClass10').textContent = c10;
+        document.getElementById('iqClass12').textContent = c12;
+        document.getElementById('iqSent').textContent = sent;
+        document.getElementById('iqPending').textContent = pending;
+    };
+
+    window.editIQEntry = function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const iq = window.iqInquiries.find(i => i.id === id);
+        if (!iq) return;
+        editingIQId = id;
+        document.getElementById('iqName').value = iq.name;
+        document.getElementById('iqMobile').value = iq.mobile;
+        document.getElementById('iqClass').value = iq.studentClass;
+        document.getElementById('iqSyllabus').value = iq.syllabus === '-' ? '' : iq.syllabus;
+        document.getElementById('iqSubject').value = iq.subject === '-' ? '' : iq.subject;
+        document.getElementById('iqDate').value = iq.date;
+        document.getElementById('iqWAStatus').value = iq.waStatus;
+        document.getElementById('iqNotes').value = iq.notes === '-' ? '' : iq.notes;
+
+        const submitBtn = document.getElementById('iqSubmitBtn');
+        submitBtn.textContent = 'Update Request';
+        submitBtn.classList.add('btn-warning'); submitBtn.classList.remove('btn-primary');
+
+        if (!document.getElementById('cancelIQEditBtn')) {
+            const cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button'; cancelBtn.id = 'cancelIQEditBtn';
+            cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
+            cancelBtn.onclick = cancelIQEdit; cancelBtn.style.marginLeft = '10px';
+            submitBtn.parentNode.appendChild(cancelBtn);
+        }
+        document.getElementById('iqFormSection').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    function cancelIQEdit() {
+        editingIQId = null;
+        document.getElementById('iqForm').reset();
+        document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+        const submitBtn = document.getElementById('iqSubmitBtn');
+        submitBtn.textContent = 'Add Request';
+        submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
+        const cancelBtn = document.getElementById('cancelIQEditBtn');
+        if (cancelBtn) cancelBtn.remove();
+    }
+
+    window.deleteIQEntry = async function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (!confirm('Delete this request?')) return;
+        try { await deleteDoc(doc(db, 'iqInquiries', id)); alert('Deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.clearIQFilters = function() {
+        document.getElementById('iqSearch').value = '';
+        document.getElementById('iqClassFilter').value = '';
+        document.getElementById('iqStatusFilter').value = '';
+        updateIQTable();
+    };
+
+    window.exportIQInquiriesToExcel = function() {
+        if (window.iqInquiries.length === 0) { alert('No data to export.'); return; }
+        const data = window.iqInquiries.map((iq, i) => ({
+            'S.No': i + 1,
+            'Date': iq.date,
+            'Name': iq.name,
+            'Mobile': iq.mobile,
+            'Class': iq.studentClass,
+            'Syllabus': iq.syllabus,
+            'Subject': iq.subject,
+            'WhatsApp Status': iq.waStatus,
+            'Notes': iq.notes
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        ws['!cols'] = [{ wch:5 },{ wch:12 },{ wch:25 },{ wch:15 },{ wch:10 },{ wch:10 },{ wch:20 },{ wch:15 },{ wch:25 }];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'IQ Inquiries');
+        XLSX.writeFile(wb, `ImportantQuestions_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    document.getElementById('iqSearch').addEventListener('input', updateIQTable);
+
+    // ============================================================
+    // INQUIRY FUNCTIONS (original)
     // ============================================================
 
     document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         if (userRole === 'staff') { alert('You do not have permission to add inquiries.'); return; }
-
         const submitBtn = document.getElementById('inqSubmitBtn');
         const isEditing = editingInquiryId !== null;
         submitBtn.disabled = true;
         submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
-
         try {
             const inquiryData = {
                 name: document.getElementById('inqName').value.trim(),
@@ -1167,7 +1523,6 @@
                 expectedFee: parseFloat(document.getElementById('inqExpectedFee').value) || 0,
                 notes: document.getElementById('inqNotes').value.trim() || '-'
             };
-
             if (isEditing) {
                 await updateDoc(doc(db, 'inquiries', editingInquiryId), { ...inquiryData, updatedAt: new Date().toISOString() });
                 alert('✅ Inquiry updated successfully!');
@@ -1178,12 +1533,8 @@
             }
             this.reset();
             document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
-        } catch (error) {
-            alert('Error saving inquiry: ' + error.message);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = isEditing ? 'Update Inquiry' : 'Add Inquiry';
-        }
+        } catch (error) { alert('Error saving inquiry: ' + error.message); }
+        finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Inquiry' : 'Add Inquiry'; }
     });
 
     window.updateInquiryTable = function() {
@@ -1191,104 +1542,74 @@
         const searchTerm = document.getElementById('inquirySearch')?.value.toLowerCase() || '';
         const statusFilter = document.getElementById('inquiryStatusFilter')?.value || '';
         const classFilter = document.getElementById('inquiryClassFilter')?.value || '';
-
         let filtered = window.inquiries.filter(inq => {
             const matchSearch = inq.name.toLowerCase().includes(searchTerm) || inq.phone.includes(searchTerm);
             const matchStatus = !statusFilter || inq.status === statusFilter;
             const matchClass = !classFilter || inq.interestedClass === classFilter;
             return matchSearch && matchStatus && matchClass;
         });
-
         if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 30px; color: #999;">No inquiries found. Add your first inquiry above!</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:30px;color:#999;">No inquiries found.</td></tr>';
             return;
         }
-
         tbody.innerHTML = filtered.map(inq => {
-            const statusBadgeClass = {
-                'New': 'badge-new',
-                'Follow Up': 'badge-followup',
-                'Interested': 'badge-interested',
-                'Not Interested': 'badge-notinterested',
-                'Converted': 'badge-converted'
-            }[inq.status] || 'badge-pending';
-
+            const statusBadgeClass = {'New':'badge-new','Follow Up':'badge-followup','Interested':'badge-interested','Not Interested':'badge-notinterested','Converted':'badge-converted'}[inq.status] || 'badge-pending';
             const isConverted = inq.status === 'Converted';
-
-            const actionsCell = userRole === 'staff' ? '' : `
-                <td>
-                    <div class="action-buttons">
-                        ${!isConverted ? `<button class="btn btn-success" onclick="openConvertModal('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">🎓 Convert</button>` : `<span style="color:#0c5460; font-size:0.85em; font-weight:600;">✅ Converted</span>`}
-                        <button class="btn btn-whatsapp" onclick="sendInquiryWhatsApp('${inq.phone}', '${inq.name.replace(/'/g,"\\'")}', '${inq.interestedClass}')" style="padding: 5px 10px; font-size: 0.85em;">📱</button>
-                        ${!isConverted ? `<button class="btn btn-warning" onclick="editInquiry('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">Edit</button>` : ''}
-                        <button class="btn btn-danger" onclick="deleteInquiry('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">Delete</button>
-                    </div>
-                </td>
-            `;
-
-            return `
-                <tr style="${isConverted ? 'background: #f0fff4;' : ''}">
-                    <td>${inq.date}</td>
-                    <td><strong>${inq.name}</strong></td>
-                    <td>${inq.phone}${inq.altPhone !== '-' ? '<br><small style="color:#999;">' + inq.altPhone + '</small>' : ''}</td>
-                    <td>${inq.interestedClass}</td>
-                    <td>${inq.syllabus}</td>
-                    <td>${inq.source}</td>
-                    <td>${inq.expectedFee > 0 ? '₹' + inq.expectedFee.toLocaleString() : '-'}</td>
-                    <td><span class="badge ${statusBadgeClass}">${inq.status}</span></td>
-                    <td style="font-size:0.9em; color:${inq.followUpDate !== '-' ? '#856404' : '#999'};">${inq.followUpDate !== '-' ? '📅 ' + inq.followUpDate : '-'}</td>
-                    <td style="font-size:0.85em; color:#666; max-width:150px; word-break:break-word;">${inq.notes}</td>
-                    ${actionsCell}
-                </tr>
-            `;
+            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
+                ${!isConverted ? `<button class="btn btn-success" onclick="openConvertModal('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">🎓 Convert</button>` : `<span style="color:#0c5460;font-size:0.85em;font-weight:600;">✅ Converted</span>`}
+                <button class="btn btn-whatsapp" onclick="sendInquiryWhatsApp('${inq.phone}','${inq.name.replace(/'/g,"\\'")}','${inq.interestedClass}')" style="padding:5px 10px;font-size:0.85em;">📱</button>
+                ${!isConverted ? `<button class="btn btn-warning" onclick="editInquiry('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">Edit</button>` : ''}
+                <button class="btn btn-danger" onclick="deleteInquiry('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">Delete</button>
+            </div></td>`;
+            return `<tr style="${isConverted?'background:#f0fff4;':''}">
+                <td>${inq.date}</td><td><strong>${inq.name}</strong></td>
+                <td>${inq.phone}${inq.altPhone!=='-'?'<br><small style="color:#999;">'+inq.altPhone+'</small>':''}</td>
+                <td>${inq.interestedClass}</td><td>${inq.syllabus}</td><td>${inq.source}</td>
+                <td>${inq.expectedFee>0?'₹'+inq.expectedFee.toLocaleString():'-'}</td>
+                <td><span class="badge ${statusBadgeClass}">${inq.status}</span></td>
+                <td style="font-size:0.9em;color:${inq.followUpDate!=='-'?'#856404':'#999'};">${inq.followUpDate!=='-'?'📅 '+inq.followUpDate:'-'}</td>
+                <td style="font-size:0.85em;color:#666;max-width:150px;word-break:break-word;">${inq.notes}</td>
+                ${actionsCell}
+            </tr>`;
         }).join('');
     };
 
     window.updateInquiryStats = function() {
-        const total = window.inquiries.length;
-        const newCount = window.inquiries.filter(i => i.status === 'New').length;
-        const followup = window.inquiries.filter(i => i.status === 'Follow Up').length;
-        const interested = window.inquiries.filter(i => i.status === 'Interested').length;
-        const notInterested = window.inquiries.filter(i => i.status === 'Not Interested').length;
-        const converted = window.inquiries.filter(i => i.status === 'Converted').length;
-        document.getElementById('inqTotal').textContent = total;
-        document.getElementById('inqNew').textContent = newCount;
-        document.getElementById('inqFollowup').textContent = followup;
-        document.getElementById('inqInterested').textContent = interested;
-        document.getElementById('inqNotInterested').textContent = notInterested;
-        document.getElementById('inqConverted').textContent = converted;
+        document.getElementById('inqTotal').textContent = window.inquiries.length;
+        document.getElementById('inqNew').textContent = window.inquiries.filter(i=>i.status==='New').length;
+        document.getElementById('inqFollowup').textContent = window.inquiries.filter(i=>i.status==='Follow Up').length;
+        document.getElementById('inqInterested').textContent = window.inquiries.filter(i=>i.status==='Interested').length;
+        document.getElementById('inqNotInterested').textContent = window.inquiries.filter(i=>i.status==='Not Interested').length;
+        document.getElementById('inqConverted').textContent = window.inquiries.filter(i=>i.status==='Converted').length;
     };
 
     window.editInquiry = function(id) {
-        if (userRole === 'staff') { alert('You do not have permission to edit inquiries.'); return; }
-        const inq = window.inquiries.find(i => i.id === id);
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const inq = window.inquiries.find(i=>i.id===id);
         if (!inq) return;
         editingInquiryId = id;
         document.getElementById('inqName').value = inq.name;
         document.getElementById('inqPhone').value = inq.phone;
-        document.getElementById('inqAltPhone').value = inq.altPhone === '-' ? '' : inq.altPhone;
+        document.getElementById('inqAltPhone').value = inq.altPhone==='-'?'':inq.altPhone;
         document.getElementById('inqClass').value = inq.interestedClass;
-        document.getElementById('inqSyllabus').value = inq.syllabus === '-' ? '' : inq.syllabus;
-        document.getElementById('inqSource').value = inq.source === '-' ? '' : inq.source;
+        document.getElementById('inqSyllabus').value = inq.syllabus==='-'?'':inq.syllabus;
+        document.getElementById('inqSource').value = inq.source==='-'?'':inq.source;
         document.getElementById('inqDate').value = inq.date;
         document.getElementById('inqStatus').value = inq.status;
-        document.getElementById('inqFollowUpDate').value = inq.followUpDate === '-' ? '' : inq.followUpDate;
-        document.getElementById('inqExpectedFee').value = inq.expectedFee || '';
-        document.getElementById('inqNotes').value = inq.notes === '-' ? '' : inq.notes;
-
+        document.getElementById('inqFollowUpDate').value = inq.followUpDate==='-'?'':inq.followUpDate;
+        document.getElementById('inqExpectedFee').value = inq.expectedFee||'';
+        document.getElementById('inqNotes').value = inq.notes==='-'?'':inq.notes;
         const submitBtn = document.getElementById('inqSubmitBtn');
         submitBtn.textContent = 'Update Inquiry';
-        submitBtn.classList.add('btn-warning');
-        submitBtn.classList.remove('btn-primary');
-
+        submitBtn.classList.add('btn-warning'); submitBtn.classList.remove('btn-primary');
         if (!document.getElementById('cancelInquiryEditBtn')) {
             const cancelBtn = document.createElement('button');
-            cancelBtn.type = 'button'; cancelBtn.id = 'cancelInquiryEditBtn';
-            cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
-            cancelBtn.onclick = cancelInquiryEdit; cancelBtn.style.marginLeft = '10px';
+            cancelBtn.type='button'; cancelBtn.id='cancelInquiryEditBtn';
+            cancelBtn.className='btn btn-danger'; cancelBtn.textContent='Cancel Edit';
+            cancelBtn.onclick=cancelInquiryEdit; cancelBtn.style.marginLeft='10px';
             submitBtn.parentNode.appendChild(cancelBtn);
         }
-        document.getElementById('inquiryFormSection').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('inquiryFormSection').scrollIntoView({behavior:'smooth'});
     };
 
     function cancelInquiryEdit() {
@@ -1297,53 +1618,38 @@
         document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
         const submitBtn = document.getElementById('inqSubmitBtn');
         submitBtn.textContent = 'Add Inquiry';
-        submitBtn.classList.remove('btn-warning');
-        submitBtn.classList.add('btn-primary');
+        submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
         const cancelBtn = document.getElementById('cancelInquiryEditBtn');
         if (cancelBtn) cancelBtn.remove();
     }
 
     window.deleteInquiry = async function(id) {
-        if (userRole === 'staff') { alert('You do not have permission to delete inquiries.'); return; }
-        if (!confirm('Are you sure you want to delete this inquiry?')) return;
-        try {
-            await deleteDoc(doc(db, 'inquiries', id));
-            alert('Inquiry deleted successfully!');
-        } catch (error) { alert('Error deleting inquiry: ' + error.message); }
+        if (userRole==='staff') { alert('No permission.'); return; }
+        if (!confirm('Delete this inquiry?')) return;
+        try { await deleteDoc(doc(db,'inquiries',id)); alert('Inquiry deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
     };
 
     window.clearInquiryFilters = function() {
-        document.getElementById('inquirySearch').value = '';
-        document.getElementById('inquiryStatusFilter').value = '';
-        document.getElementById('inquiryClassFilter').value = '';
+        document.getElementById('inquirySearch').value='';
+        document.getElementById('inquiryStatusFilter').value='';
+        document.getElementById('inquiryClassFilter').value='';
         updateInquiryTable();
     };
 
-    // ---- Convert Inquiry to Student ----
-
     window.openConvertModal = function(inquiryId) {
-        if (userRole === 'staff') { alert('You do not have permission to convert inquiries.'); return; }
-        const inq = window.inquiries.find(i => i.id === inquiryId);
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const inq = window.inquiries.find(i=>i.id===inquiryId);
         if (!inq) return;
         convertingInquiryId = inquiryId;
-
-        // Pre-fill modal with inquiry data
         document.getElementById('convName').value = inq.name;
         document.getElementById('convPhone').value = inq.phone;
         document.getElementById('convClass').value = inq.interestedClass;
-        document.getElementById('convSyllabus').value = inq.syllabus === '-' ? '' : inq.syllabus;
-        document.getElementById('convFee').value = inq.expectedFee > 0 ? inq.expectedFee : '';
+        document.getElementById('convSyllabus').value = inq.syllabus==='-'?'':inq.syllabus;
+        document.getElementById('convFee').value = inq.expectedFee>0?inq.expectedFee:'';
         document.getElementById('convAdmissionDate').value = new Date().toISOString().slice(0,10);
-        document.getElementById('convRollNumber').value = '';
-
-        // Show inquiry info
-        document.getElementById('convertInquiryInfo').innerHTML = `
-            <strong>Inquiry Details:</strong><br>
-            📋 Name: ${inq.name} &nbsp;|&nbsp; 📞 Phone: ${inq.phone}<br>
-            🏫 Class: ${inq.interestedClass} &nbsp;|&nbsp; 📅 Inquiry Date: ${inq.date}<br>
-            📝 Notes: ${inq.notes}
-        `;
-
+        document.getElementById('convRollNumber').value='';
+        document.getElementById('convertInquiryInfo').innerHTML=`<strong>Inquiry Details:</strong><br>📋 Name: ${inq.name} &nbsp;|&nbsp; 📞 Phone: ${inq.phone}<br>🏫 Class: ${inq.interestedClass} &nbsp;|&nbsp; 📅 Date: ${inq.date}<br>📝 Notes: ${inq.notes}`;
         document.getElementById('convertModal').classList.add('active');
     };
 
@@ -1357,88 +1663,39 @@
         e.preventDefault();
         const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.disabled = true; submitBtn.textContent = 'Converting...';
-
         try {
             const studentData = {
                 name: document.getElementById('convName').value.trim(),
                 rollNumber: document.getElementById('convRollNumber').value.trim(),
                 course: document.getElementById('convClass').value,
-                syllabus: document.getElementById('convSyllabus').value || '-',
+                syllabus: document.getElementById('convSyllabus').value||'-',
                 phone: document.getElementById('convPhone').value.trim(),
                 monthlyFee: parseFloat(document.getElementById('convFee').value),
-                admissionDate: document.getElementById('convAdmissionDate').value || '-',
+                admissionDate: document.getElementById('convAdmissionDate').value||'-',
                 status: document.getElementById('convStatus').value,
                 convertedFromInquiry: convertingInquiryId,
                 createdAt: new Date().toISOString()
             };
-
-            // Check duplicate roll number
-            const duplicate = window.students.find(s => s.rollNumber === studentData.rollNumber);
-            if (duplicate) {
-                alert(`❌ Roll number "${studentData.rollNumber}" already exists. Please choose a different roll number.`);
-                submitBtn.disabled = false; submitBtn.textContent = '✅ Convert to Student';
-                return;
-            }
-
-            // Add student
-            await addDoc(collection(db, 'students'), studentData);
-
-            // Update inquiry status to Converted
-            await updateDoc(doc(db, 'inquiries', convertingInquiryId), {
-                status: 'Converted',
-                convertedAt: new Date().toISOString(),
-                convertedStudentName: studentData.name,
-                convertedRollNumber: studentData.rollNumber
-            });
-
-            alert(`🎉 Success!\n\n"${studentData.name}" has been converted to a student!\nRoll Number: ${studentData.rollNumber}\nClass: ${studentData.course}`);
+            const duplicate = window.students.find(s=>s.rollNumber===studentData.rollNumber);
+            if (duplicate) { alert(`❌ Roll number "${studentData.rollNumber}" already exists.`); submitBtn.disabled=false; submitBtn.textContent='✅ Convert to Student'; return; }
+            await addDoc(collection(db,'students'), studentData);
+            await updateDoc(doc(db,'inquiries',convertingInquiryId), { status:'Converted', convertedAt:new Date().toISOString(), convertedStudentName:studentData.name, convertedRollNumber:studentData.rollNumber });
+            alert(`🎉 "${studentData.name}" converted to student!\nRoll: ${studentData.rollNumber}\nClass: ${studentData.course}`);
             closeConvertModal();
-        } catch (error) {
-            alert('Error converting inquiry: ' + error.message);
-            submitBtn.disabled = false; submitBtn.textContent = '✅ Convert to Student';
-        }
+        } catch (error) { alert('Error: ' + error.message); submitBtn.disabled=false; submitBtn.textContent='✅ Convert to Student'; }
     });
 
     window.sendInquiryWhatsApp = function(phone, name, interestedClass) {
-        let cleanPhone = phone.replace(/\D/g, '');
-        if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
-
-        const message = `Dear ${name},
-
-Thank you for your inquiry at *Vismaya Education*! 🎓
-
-We are happy to inform you about our ${interestedClass} program. We offer quality education with experienced teachers.
-
-📍 Please visit us or call to know more about:
-• Class timings
-• Fee structure
-• Admission process
-
-We look forward to welcoming you!
-
-*Vismaya Education Team*`;
-
+        let cleanPhone = phone.replace(/\D/g,'');
+        if (cleanPhone.length===10) cleanPhone='91'+cleanPhone;
+        const message = `Dear ${name},\n\nThank you for your inquiry at *Vismaya Education*! 🎓\n\nWe are happy to inform you about our ${interestedClass} program.\n\nPlease visit us or call to know more about:\n• Class timings\n• Fee structure\n• Admission process\n\nWe look forward to welcoming you!\n\n*Vismaya Education Team*`;
         window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
     };
 
     window.exportInquiriesToExcel = function() {
-        if (window.inquiries.length === 0) { alert('No inquiries to export.'); return; }
-        const data = window.inquiries.map((inq, i) => ({
-            'S.No': i + 1,
-            'Date': inq.date,
-            'Name': inq.name,
-            'Phone': inq.phone,
-            'Alt Phone': inq.altPhone,
-            'Class': inq.interestedClass,
-            'Syllabus': inq.syllabus,
-            'Source': inq.source,
-            'Expected Fee': inq.expectedFee,
-            'Status': inq.status,
-            'Follow Up Date': inq.followUpDate,
-            'Notes': inq.notes
-        }));
+        if (window.inquiries.length===0) { alert('No inquiries to export.'); return; }
+        const data = window.inquiries.map((inq,i) => ({'S.No':i+1,'Date':inq.date,'Name':inq.name,'Phone':inq.phone,'Alt Phone':inq.altPhone,'Class':inq.interestedClass,'Syllabus':inq.syllabus,'Source':inq.source,'Expected Fee':inq.expectedFee,'Status':inq.status,'Follow Up Date':inq.followUpDate,'Notes':inq.notes}));
         const ws = XLSX.utils.json_to_sheet(data);
-        ws['!cols'] = [{ wch: 5 },{ wch: 12 },{ wch: 25 },{ wch: 15 },{ wch: 15 },{ wch: 12 },{ wch: 10 },{ wch: 15 },{ wch: 14 },{ wch: 15 },{ wch: 15 },{ wch: 30 }];
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Inquiries');
         XLSX.writeFile(wb, `Inquiries_${new Date().toISOString().slice(0,10)}.xlsx`);
@@ -1447,12 +1704,12 @@ We look forward to welcoming you!
     document.getElementById('inquirySearch').addEventListener('input', updateInquiryTable);
 
     // ============================================================
-    // STUDENT FUNCTIONS (original)
+    // STUDENT FUNCTIONS
     // ============================================================
 
     document.getElementById('studentForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        if (userRole === 'staff') { alert('You do not have permission to add students.'); return; }
+        if (userRole==='staff') { alert('No permission.'); return; }
         const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         const isEditing = editingStudentId !== null;
@@ -1462,869 +1719,631 @@ We look forward to welcoming you!
                 name: document.getElementById('studentName').value,
                 rollNumber: document.getElementById('rollNumber').value,
                 course: document.getElementById('course').value,
-                syllabus: document.getElementById('syllabus').value || '-',
+                syllabus: document.getElementById('syllabus').value||'-',
                 phone: document.getElementById('phoneNumber').value,
                 monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
-                admissionDate: document.getElementById('admissionDate').value || '-',
+                admissionDate: document.getElementById('admissionDate').value||'-',
                 status: document.getElementById('studentStatus').value
             };
             if (isEditing) {
-                await updateDoc(doc(db, 'students', editingStudentId), { ...studentData, updatedAt: new Date().toISOString() });
-                alert('✅ Student updated successfully!');
-                cancelEdit();
+                await updateDoc(doc(db,'students',editingStudentId), {...studentData,updatedAt:new Date().toISOString()});
+                alert('✅ Student updated!'); cancelEdit();
             } else {
-                await addDoc(collection(db, 'students'), { ...studentData, createdAt: new Date().toISOString() });
-                alert('✅ Student added successfully!');
+                await addDoc(collection(db,'students'), {...studentData,createdAt:new Date().toISOString()});
+                alert('✅ Student added!');
             }
             this.reset();
-        } catch (error) { alert('Error saving student: ' + error.message); }
-        finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = isEditing ? 'Update Student' : 'Add Student';
-        }
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { submitBtn.disabled=false; submitBtn.textContent=isEditing?'Update Student':'Add Student'; }
     });
 
     window.collectFee = async function() {
-        if (userRole === 'staff') { alert('You do not have permission to collect fees.'); return; }
-        const studentId = document.getElementById('feeStudent').value;
-        const month = document.getElementById('feeMonth').value;
-        const amount = parseFloat(document.getElementById('feeAmount').value);
-        const method = document.getElementById('paymentMethod').value;
-        if (!studentId || !month || !amount || !method) { alert('Please fill all fields'); return; }
-        const alreadyPaid = window.payments.some(p => p.studentId === studentId && p.month === month);
-        if (alreadyPaid) {
-            const student = window.students.find(s => s.id === studentId);
-            alert(`❌ Fee Already Collected!\nStudent: ${student?.name}\nMonth: ${month}`);
-            return;
-        }
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const studentId=document.getElementById('feeStudent').value;
+        const month=document.getElementById('feeMonth').value;
+        const amount=parseFloat(document.getElementById('feeAmount').value);
+        const method=document.getElementById('paymentMethod').value;
+        if (!studentId||!month||!amount||!method) { alert('Please fill all fields'); return; }
+        const alreadyPaid = window.payments.some(p=>p.studentId===studentId&&p.month===month);
+        if (alreadyPaid) { const s=window.students.find(s=>s.id===studentId); alert(`❌ Fee Already Collected!\nStudent: ${s?.name}\nMonth: ${month}`); return; }
         try {
-            const payment = {
-                receiptNo: 'REC' + Date.now().toString().slice(-6),
-                studentId, month, amount, method,
-                date: new Date().toISOString().slice(0,10),
-                createdAt: new Date().toISOString()
-            };
-            const docRef = await addDoc(collection(db, 'payments'), payment);
-            document.getElementById('feeStudent').value = '';
-            document.getElementById('feeAmount').value = '';
-            document.getElementById('paymentMethod').value = '';
-            showReceipt({ id: docRef.id, ...payment });
-        } catch (error) { alert('Error collecting fee: ' + error.message); }
+            const payment = { receiptNo:'REC'+Date.now().toString().slice(-6), studentId, month, amount, method, date:new Date().toISOString().slice(0,10), createdAt:new Date().toISOString() };
+            const docRef = await addDoc(collection(db,'payments'), payment);
+            document.getElementById('feeStudent').value='';
+            document.getElementById('feeAmount').value='';
+            document.getElementById('paymentMethod').value='';
+            showReceipt({id:docRef.id,...payment});
+        } catch (error) { alert('Error: ' + error.message); }
     };
 
     window.deleteStudent = async function(id) {
-        if (userRole === 'staff') { alert('You do not have permission to delete students.'); return; }
-        if (!confirm('Are you sure you want to delete this student?')) return;
+        if (userRole==='staff') { alert('No permission.'); return; }
+        if (!confirm('Delete this student?')) return;
         try {
-            await deleteDoc(doc(db, 'students', id));
-            const sp = window.payments.filter(p => p.studentId === id);
-            for (const payment of sp) await deleteDoc(doc(db, 'payments', payment.id));
-            alert('Student deleted successfully!');
-        } catch (error) { alert('Error deleting student: ' + error.message); }
+            await deleteDoc(doc(db,'students',id));
+            const sp = window.payments.filter(p=>p.studentId===id);
+            for (const payment of sp) await deleteDoc(doc(db,'payments',payment.id));
+            alert('Student deleted!');
+        } catch (error) { alert('Error: ' + error.message); }
     };
 
     window.deletePayment = async function(paymentId, studentName, month, amount) {
-        if (userRole === 'staff') { alert('You do not have permission to delete payments.'); return; }
+        if (userRole==='staff') { alert('No permission.'); return; }
         if (!confirm(`⚠️ Delete payment?\nStudent: ${studentName}\nMonth: ${month}\nAmount: ₹${amount}`)) return;
-        try {
-            await deleteDoc(doc(db, 'payments', paymentId));
-            alert('✅ Payment deleted!');
-        } catch (error) { alert('Error deleting payment: ' + error.message); }
+        try { await deleteDoc(doc(db,'payments',paymentId)); alert('✅ Payment deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
     };
 
     window.editStudent = function(id) {
-        if (userRole === 'staff') { alert('You do not have permission to edit students.'); return; }
-        const student = window.students.find(s => s.id === id);
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const student = window.students.find(s=>s.id===id);
         if (student) {
             editingStudentId = id;
-            document.getElementById('studentName').value = student.name;
-            document.getElementById('rollNumber').value = student.rollNumber;
-            document.getElementById('course').value = student.course;
-            document.getElementById('syllabus').value = student.syllabus === '-' ? '' : student.syllabus;
-            document.getElementById('phoneNumber').value = student.phone;
-            document.getElementById('monthlyFee').value = student.monthlyFee;
-            document.getElementById('admissionDate').value = student.admissionDate === '-' ? '' : student.admissionDate;
-            document.getElementById('studentStatus').value = student.status;
-            const submitBtn = document.querySelector('#studentForm button[type="submit"]');
-            submitBtn.textContent = 'Update Student';
-            submitBtn.classList.add('btn-warning');
-            submitBtn.classList.remove('btn-primary');
+            document.getElementById('studentName').value=student.name;
+            document.getElementById('rollNumber').value=student.rollNumber;
+            document.getElementById('course').value=student.course;
+            document.getElementById('syllabus').value=student.syllabus==='-'?'':student.syllabus;
+            document.getElementById('phoneNumber').value=student.phone;
+            document.getElementById('monthlyFee').value=student.monthlyFee;
+            document.getElementById('admissionDate').value=student.admissionDate==='-'?'':student.admissionDate;
+            document.getElementById('studentStatus').value=student.status;
+            const submitBtn=document.querySelector('#studentForm button[type="submit"]');
+            submitBtn.textContent='Update Student';
+            submitBtn.classList.add('btn-warning'); submitBtn.classList.remove('btn-primary');
             if (!document.getElementById('cancelEditBtn')) {
-                const cancelBtn = document.createElement('button');
-                cancelBtn.type = 'button'; cancelBtn.id = 'cancelEditBtn';
-                cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
-                cancelBtn.onclick = cancelEdit; cancelBtn.style.marginLeft = '10px';
+                const cancelBtn=document.createElement('button');
+                cancelBtn.type='button'; cancelBtn.id='cancelEditBtn';
+                cancelBtn.className='btn btn-danger'; cancelBtn.textContent='Cancel Edit';
+                cancelBtn.onclick=cancelEdit; cancelBtn.style.marginLeft='10px';
                 submitBtn.parentNode.appendChild(cancelBtn);
             }
-            window.scrollTo(0, 0);
+            window.scrollTo(0,0);
         }
     };
 
     function cancelEdit() {
-        editingStudentId = null;
+        editingStudentId=null;
         document.getElementById('studentForm').reset();
-        const submitBtn = document.querySelector('#studentForm button[type="submit"]');
-        submitBtn.textContent = 'Add Student';
-        submitBtn.classList.remove('btn-warning');
-        submitBtn.classList.add('btn-primary');
-        const cancelBtn = document.getElementById('cancelEditBtn');
+        const submitBtn=document.querySelector('#studentForm button[type="submit"]');
+        submitBtn.textContent='Add Student';
+        submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
+        const cancelBtn=document.getElementById('cancelEditBtn');
         if (cancelBtn) cancelBtn.remove();
     }
 
     window.updateStudentTable = function() {
-        const tbody = document.getElementById('studentTableBody');
-        const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
-        const sortField = document.getElementById('sortField').value;
-        const sortOrder = document.getElementById('sortOrder').value;
-        let filteredStudents = window.students.filter(s =>
-            s.name.toLowerCase().includes(searchTerm) || s.rollNumber.toLowerCase().includes(searchTerm)
-        );
-        filteredStudents.sort((a, b) => {
-            let vA, vB;
-            if (sortField === 'rollNumber') {
-                vA = a.rollNumber.match(/\d+/) ? parseInt(a.rollNumber.match(/\d+/)[0]) : a.rollNumber;
-                vB = b.rollNumber.match(/\d+/) ? parseInt(b.rollNumber.match(/\d+/)[0]) : b.rollNumber;
-            } else if (sortField === 'monthlyFee') {
-                vA = parseFloat(a[sortField]) || 0; vB = parseFloat(b[sortField]) || 0;
-            } else {
-                vA = (a[sortField] || '').toString().toLowerCase();
-                vB = (b[sortField] || '').toString().toLowerCase();
-            }
-            if (vA < vB) return sortOrder === 'asc' ? -1 : 1;
-            if (vA > vB) return sortOrder === 'asc' ? 1 : -1;
+        const tbody=document.getElementById('studentTableBody');
+        const searchTerm=document.getElementById('studentSearch').value.toLowerCase();
+        const sortField=document.getElementById('sortField').value;
+        const sortOrder=document.getElementById('sortOrder').value;
+        let filteredStudents=window.students.filter(s=>s.name.toLowerCase().includes(searchTerm)||s.rollNumber.toLowerCase().includes(searchTerm));
+        filteredStudents.sort((a,b) => {
+            let vA,vB;
+            if (sortField==='rollNumber') { vA=a.rollNumber.match(/\d+/)?parseInt(a.rollNumber.match(/\d+/)[0]):a.rollNumber; vB=b.rollNumber.match(/\d+/)?parseInt(b.rollNumber.match(/\d+/)[0]):b.rollNumber; }
+            else if (sortField==='monthlyFee') { vA=parseFloat(a[sortField])||0; vB=parseFloat(b[sortField])||0; }
+            else { vA=(a[sortField]||'').toString().toLowerCase(); vB=(b[sortField]||'').toString().toLowerCase(); }
+            if (vA<vB) return sortOrder==='asc'?-1:1;
+            if (vA>vB) return sortOrder==='asc'?1:-1;
             return 0;
         });
-
         tbody.innerHTML = filteredStudents.map(student => {
-            const currentMonth = new Date().toISOString().slice(0,7);
-            const hasPaid = window.payments.some(p => p.studentId === student.id && p.month === currentMonth);
-            const monthReminders = window.reminders.filter(r => r.studentId === student.id && r.month === currentMonth);
-            const reminderCount = monthReminders.length;
-            const lastReminder = monthReminders[0] || null;
-
-            let reminderCell = '<td class="reminder-info">';
-            if (reminderCount > 0) {
-                reminderCell += `<span class="reminder-count">${reminderCount} sent</span>`;
-                if (lastReminder) {
-                    const d = new Date(lastReminder.sentAt);
-                    reminderCell += `<span class="reminder-date">Last: ${d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })}</span>`;
-                }
-            } else {
-                reminderCell += '<span style="color: #999;">None</span>';
-            }
-            reminderCell += '</td>';
-
-            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
-                <button class="btn btn-warning" onclick="editStudent('${student.id}')" style="padding: 5px 15px;">Edit</button>
-                <button class="btn btn-danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 15px;">Delete</button>
-            </div></td>`;
-
-            const whatsappCell = `<td><button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.id}','${student.phone}','${student.name.replace(/'/g,"\\'")}',${student.monthlyFee})" style="padding: 5px 15px;">📱 Remind</button></td>`;
-
-            return `<tr>
-                <td>${student.rollNumber}</td><td>${student.name}</td><td>${student.course}</td>
-                <td>${student.syllabus}</td><td>${student.phone}</td><td>₹${student.monthlyFee}</td>
-                <td><span class="badge ${student.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${student.status}</span></td>
-                <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
-                ${reminderCell}${actionsCell}${whatsappCell}
-            </tr>`;
+            const currentMonth=new Date().toISOString().slice(0,7);
+            const hasPaid=window.payments.some(p=>p.studentId===student.id&&p.month===currentMonth);
+            const monthReminders=window.reminders.filter(r=>r.studentId===student.id&&r.month===currentMonth);
+            const reminderCount=monthReminders.length;
+            const lastReminder=monthReminders[0]||null;
+            let reminderCell='<td class="reminder-info">';
+            if (reminderCount>0) {
+                reminderCell+=`<span class="reminder-count">${reminderCount} sent</span>`;
+                if (lastReminder) { const d=new Date(lastReminder.sentAt); reminderCell+=`<span class="reminder-date">Last: ${d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</span>`; }
+            } else { reminderCell+='<span style="color:#999;">None</span>'; }
+            reminderCell+='</td>';
+            const actionsCell=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-warning" onclick="editStudent('${student.id}')" style="padding:5px 15px;">Edit</button><button class="btn btn-danger" onclick="deleteStudent('${student.id}')" style="padding:5px 15px;">Delete</button></div></td>`;
+            const whatsappCell=`<td><button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.id}','${student.phone}','${student.name.replace(/'/g,"\\'")}',${student.monthlyFee})" style="padding:5px 15px;">📱 Remind</button></td>`;
+            return `<tr><td>${student.rollNumber}</td><td>${student.name}</td><td>${student.course}</td><td>${student.syllabus}</td><td>${student.phone}</td><td>₹${student.monthlyFee}</td><td><span class="badge ${student.status==='Active'?'badge-active':'badge-inactive'}">${student.status}</span></td><td><span class="badge ${hasPaid?'badge-paid':'badge-pending'}">${hasPaid?'Paid':'Pending'}</span></td>${reminderCell}${actionsCell}${whatsappCell}</tr>`;
         }).join('');
     };
 
     window.updateFeeStudentSelect = function() {
-        const select = document.getElementById('feeStudent');
-        select.innerHTML = '<option value="">Choose student...</option>' +
-            window.students.map(s => `<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');
+        const select=document.getElementById('feeStudent');
+        select.innerHTML='<option value="">Choose student...</option>'+window.students.map(s=>`<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');
     };
 
     window.updatePaymentTable = function() {
-        const tbody = document.getElementById('paymentTableBody');
-        const sortField = document.getElementById('paymentSortField')?.value || 'date';
-        const sortOrder = document.getElementById('paymentSortOrder')?.value || 'desc';
-        let sorted = [...window.payments];
-        sorted.sort((a, b) => {
-            const sA = window.students.find(s => s.id === a.studentId);
-            const sB = window.students.find(s => s.id === b.studentId);
-            let vA, vB;
-            if (sortField === 'date') { vA = new Date(a.date); vB = new Date(b.date); }
-            else if (sortField === 'rollNumber') {
-                const rA = sA?.rollNumber || ''; const rB = sB?.rollNumber || '';
-                vA = rA.match(/\d+/) ? parseInt(rA.match(/\d+/)[0]) : rA;
-                vB = rB.match(/\d+/) ? parseInt(rB.match(/\d+/)[0]) : rB;
-            } else if (sortField === 'studentName') { vA = (sA?.name || '').toLowerCase(); vB = (sB?.name || '').toLowerCase(); }
-            else if (sortField === 'amount') { vA = a.amount; vB = b.amount; }
-            if (vA < vB) return sortOrder === 'asc' ? -1 : 1;
-            if (vA > vB) return sortOrder === 'asc' ? 1 : -1;
+        const tbody=document.getElementById('paymentTableBody');
+        const sortField=document.getElementById('paymentSortField')?.value||'date';
+        const sortOrder=document.getElementById('paymentSortOrder')?.value||'desc';
+        let sorted=[...window.payments];
+        sorted.sort((a,b) => {
+            const sA=window.students.find(s=>s.id===a.studentId);
+            const sB=window.students.find(s=>s.id===b.studentId);
+            let vA,vB;
+            if (sortField==='date') { vA=new Date(a.date); vB=new Date(b.date); }
+            else if (sortField==='rollNumber') { const rA=sA?.rollNumber||''; const rB=sB?.rollNumber||''; vA=rA.match(/\d+/)?parseInt(rA.match(/\d+/)[0]):rA; vB=rB.match(/\d+/)?parseInt(rB.match(/\d+/)[0]):rB; }
+            else if (sortField==='studentName') { vA=(sA?.name||'').toLowerCase(); vB=(sB?.name||'').toLowerCase(); }
+            else if (sortField==='amount') { vA=a.amount; vB=b.amount; }
+            if (vA<vB) return sortOrder==='asc'?-1:1;
+            if (vA>vB) return sortOrder==='asc'?1:-1;
             return 0;
         });
-        tbody.innerHTML = sorted.slice(0,20).map(payment => {
-            const student = window.students.find(s => s.id === payment.studentId);
-            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
-                <button class="btn btn-primary" onclick='showReceipt(${JSON.stringify(payment).replace(/'/g,"&#39;")})' style="padding: 5px 15px;">View</button>
-                <button class="btn btn-danger" onclick="deletePayment('${payment.id}','${student ? student.name : 'Unknown'}','${payment.month}',${payment.amount})" style="padding: 5px 15px;">Delete</button>
-            </div></td>`;
-            return `<tr>
-                <td>${payment.receiptNo}</td><td>${payment.date}</td>
-                <td>${student ? student.rollNumber : 'N/A'}</td><td>${student ? student.name : 'Unknown'}</td>
-                <td>${payment.month}</td><td>₹${payment.amount}</td><td>${payment.method}</td>
-                ${actionsCell}
-            </tr>`;
+        tbody.innerHTML=sorted.slice(0,20).map(payment => {
+            const student=window.students.find(s=>s.id===payment.studentId);
+            const actionsCell=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-primary" onclick='showReceipt(${JSON.stringify(payment).replace(/'/g,"&#39;")})' style="padding:5px 15px;">View</button><button class="btn btn-danger" onclick="deletePayment('${payment.id}','${student?student.name:'Unknown'}','${payment.month}',${payment.amount})" style="padding:5px 15px;">Delete</button></div></td>`;
+            return `<tr><td>${payment.receiptNo}</td><td>${payment.date}</td><td>${student?student.rollNumber:'N/A'}</td><td>${student?student.name:'Unknown'}</td><td>${payment.month}</td><td>₹${payment.amount}</td><td>${payment.method}</td>${actionsCell}</tr>`;
         }).join('');
     };
 
     window.showReceipt = function(payment) {
-        const student = window.students.find(s => s.id === payment.studentId);
-        document.getElementById('receiptContent').innerHTML = `
-            <div class="receipt">
-                <div class="receipt-header"><h2>📚 Vismaya Education Dashboard</h2><p>Fee Receipt</p></div>
-                <div class="receipt-details">
-                    <div class="receipt-row"><strong>Receipt No:</strong><span>${payment.receiptNo}</span></div>
-                    <div class="receipt-row"><strong>Date:</strong><span>${payment.date}</span></div>
-                    <div class="receipt-row"><strong>Student Name:</strong><span>${student ? student.name : 'Unknown'}</span></div>
-                    <div class="receipt-row"><strong>Roll Number:</strong><span>${student ? student.rollNumber : 'N/A'}</span></div>
-                    <div class="receipt-row"><strong>Class:</strong><span>${student ? student.course : 'N/A'}</span></div>
-                    <div class="receipt-row"><strong>Syllabus:</strong><span>${student ? student.syllabus : 'N/A'}</span></div>
-                    <div class="receipt-row"><strong>Fee Month:</strong><span>${payment.month}</span></div>
-                    <div class="receipt-row"><strong>Payment Method:</strong><span>${payment.method}</span></div>
-                    <div class="receipt-row receipt-total"><strong>Amount Paid:</strong><span>₹${payment.amount}</span></div>
-                </div>
-                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px dashed #667eea;">
-                    <p style="font-size: 0.9em; color: #666;">Thank you for your payment!</p>
-                    <p style="font-size: 0.8em; color: #999; margin-top: 10px;">Computer-generated receipt</p>
-                </div>
-            </div>`;
+        const student=window.students.find(s=>s.id===payment.studentId);
+        document.getElementById('receiptContent').innerHTML=`<div class="receipt"><div class="receipt-header"><h2>📚 Vismaya Education Dashboard</h2><p>Fee Receipt</p></div><div class="receipt-details"><div class="receipt-row"><strong>Receipt No:</strong><span>${payment.receiptNo}</span></div><div class="receipt-row"><strong>Date:</strong><span>${payment.date}</span></div><div class="receipt-row"><strong>Student Name:</strong><span>${student?student.name:'Unknown'}</span></div><div class="receipt-row"><strong>Roll Number:</strong><span>${student?student.rollNumber:'N/A'}</span></div><div class="receipt-row"><strong>Class:</strong><span>${student?student.course:'N/A'}</span></div><div class="receipt-row"><strong>Syllabus:</strong><span>${student?student.syllabus:'N/A'}</span></div><div class="receipt-row"><strong>Fee Month:</strong><span>${payment.month}</span></div><div class="receipt-row"><strong>Payment Method:</strong><span>${payment.method}</span></div><div class="receipt-row receipt-total"><strong>Amount Paid:</strong><span>₹${payment.amount}</span></div></div><div style="text-align:center;margin-top:30px;padding-top:20px;border-top:2px dashed #667eea;"><p style="font-size:0.9em;color:#666;">Thank you for your payment!</p><p style="font-size:0.8em;color:#999;margin-top:10px;">Computer-generated receipt</p></div></div>`;
         document.getElementById('receiptModal').classList.add('active');
     };
 
     window.closeReceipt = function() { document.getElementById('receiptModal').classList.remove('active'); };
 
     window.updateStats = function() {
-        const currentMonth = new Date().toISOString().slice(0,7);
-        const total = window.students.length;
-        document.getElementById('totalStudents').textContent = total;
-        const paidSet = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
-        document.getElementById('paidStudents').textContent = paidSet.size;
-        document.getElementById('pendingStudents').textContent = total - paidSet.size;
-        const collected = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
-        document.getElementById('totalCollected').textContent = '₹' + collected.toLocaleString();
-        const pending = window.students.filter(s => !paidSet.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
-        document.getElementById('totalPending').textContent = '₹' + pending.toLocaleString();
-        const expected = window.students.reduce((sum, s) => sum + s.monthlyFee, 0);
-        document.getElementById('thisMonth').textContent = '₹' + expected.toLocaleString();
+        const currentMonth=new Date().toISOString().slice(0,7);
+        const total=window.students.length;
+        document.getElementById('totalStudents').textContent=total;
+        const paidSet=new Set(window.payments.filter(p=>p.month===currentMonth).map(p=>p.studentId));
+        document.getElementById('paidStudents').textContent=paidSet.size;
+        document.getElementById('pendingStudents').textContent=total-paidSet.size;
+        const collected=window.payments.filter(p=>p.month===currentMonth).reduce((sum,p)=>sum+p.amount,0);
+        document.getElementById('totalCollected').textContent='₹'+collected.toLocaleString();
+        const pending=window.students.filter(s=>!paidSet.has(s.id)).reduce((sum,s)=>sum+s.monthlyFee,0);
+        document.getElementById('totalPending').textContent='₹'+pending.toLocaleString();
+        const expected=window.students.reduce((sum,s)=>sum+s.monthlyFee,0);
+        document.getElementById('thisMonth').textContent='₹'+expected.toLocaleString();
     };
 
     window.switchTab = function(tabName, clickedTab) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
         if (clickedTab) clickedTab.classList.add('active');
         document.getElementById(tabName).classList.add('active');
     };
 
     window.generateReport = function() {
-        const month = document.getElementById('reportMonth').value;
-        const course = document.getElementById('reportCourse').value;
-        const syllabus = document.getElementById('reportSyllabus').value;
-        const feeStatus = document.getElementById('reportFeeStatus').value;
-        let filtered = window.students;
-        if (course) filtered = filtered.filter(s => s.course === course);
-        if (syllabus) filtered = filtered.filter(s => s.syllabus === syllabus);
-        const withStatus = filtered.map(s => ({ ...s, hasPaid: window.payments.some(p => p.studentId === s.id && p.month === month) }));
-        let final = withStatus;
-        if (feeStatus === 'paid') final = withStatus.filter(s => s.hasPaid);
-        else if (feeStatus === 'pending') final = withStatus.filter(s => !s.hasPaid);
-        const paid = final.filter(s => s.hasPaid);
-        const pending = final.filter(s => !s.hasPaid);
-        document.getElementById('reportTotalStudents').textContent = final.length;
-        document.getElementById('reportPaidCount').textContent = paid.length;
-        document.getElementById('reportPendingCount').textContent = pending.length;
-        document.getElementById('reportTotalAmount').textContent = '₹' + final.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
-        document.getElementById('reportCollectedAmount').textContent = '₹' + paid.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
-        document.getElementById('reportPendingAmount').textContent = '₹' + pending.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
-        document.getElementById('reportSummary').style.display = 'block';
-        const tbody = document.getElementById('reportTableBody');
-        tbody.innerHTML = final.map(s => {
-            const last = window.payments.filter(p => p.studentId === s.id).sort((a,b) => new Date(b.date) - new Date(a.date))[0];
-            return `<tr>
-                <td>${s.rollNumber}</td><td>${s.name}</td><td>${s.course}</td><td>${s.syllabus}</td>
-                <td>₹${s.monthlyFee}</td>
-                <td><span class="badge ${s.hasPaid ? 'badge-paid' : 'badge-pending'}">${s.hasPaid ? 'Paid' : 'Pending'}</span></td>
-                <td>${last ? last.date : 'No payment yet'}</td>
-            </tr>`;
-        }).join('') || '<tr><td colspan="7" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>';
+        const month=document.getElementById('reportMonth').value;
+        const course=document.getElementById('reportCourse').value;
+        const syllabus=document.getElementById('reportSyllabus').value;
+        const feeStatus=document.getElementById('reportFeeStatus').value;
+        let filtered=window.students;
+        if (course) filtered=filtered.filter(s=>s.course===course);
+        if (syllabus) filtered=filtered.filter(s=>s.syllabus===syllabus);
+        const withStatus=filtered.map(s=>({...s,hasPaid:window.payments.some(p=>p.studentId===s.id&&p.month===month)}));
+        let final=withStatus;
+        if (feeStatus==='paid') final=withStatus.filter(s=>s.hasPaid);
+        else if (feeStatus==='pending') final=withStatus.filter(s=>!s.hasPaid);
+        const paid=final.filter(s=>s.hasPaid);
+        const pending=final.filter(s=>!s.hasPaid);
+        document.getElementById('reportTotalStudents').textContent=final.length;
+        document.getElementById('reportPaidCount').textContent=paid.length;
+        document.getElementById('reportPendingCount').textContent=pending.length;
+        document.getElementById('reportTotalAmount').textContent='₹'+final.reduce((sum,s)=>sum+s.monthlyFee,0).toLocaleString();
+        document.getElementById('reportCollectedAmount').textContent='₹'+paid.reduce((sum,s)=>sum+s.monthlyFee,0).toLocaleString();
+        document.getElementById('reportPendingAmount').textContent='₹'+pending.reduce((sum,s)=>sum+s.monthlyFee,0).toLocaleString();
+        document.getElementById('reportSummary').style.display='block';
+        const tbody=document.getElementById('reportTableBody');
+        tbody.innerHTML=final.map(s=>{const last=window.payments.filter(p=>p.studentId===s.id).sort((a,b)=>new Date(b.date)-new Date(a.date))[0]; return `<tr><td>${s.rollNumber}</td><td>${s.name}</td><td>${s.course}</td><td>${s.syllabus}</td><td>₹${s.monthlyFee}</td><td><span class="badge ${s.hasPaid?'badge-paid':'badge-pending'}">${s.hasPaid?'Paid':'Pending'}</span></td><td>${last?last.date:'No payment yet'}</td></tr>`;}).join('')||'<tr><td colspan="7" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>';
     };
 
     document.getElementById('studentSearch').addEventListener('input', updateStudentTable);
     document.getElementById('feeStudent').addEventListener('change', function() {
-        const student = window.students.find(s => s.id === this.value);
-        if (student) document.getElementById('feeAmount').value = student.monthlyFee;
+        const student=window.students.find(s=>s.id===this.value);
+        if (student) document.getElementById('feeAmount').value=student.monthlyFee;
     });
 
     // ---- Teachers ----
     document.getElementById('teacherForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        submitBtn.disabled = true; submitBtn.textContent = 'Adding...';
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const submitBtn=e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled=true; submitBtn.textContent='Adding...';
         try {
-            await addDoc(collection(db, 'teachers'), {
-                name: document.getElementById('teacherName').value,
-                employeeId: document.getElementById('employeeId').value,
-                subject: document.getElementById('teacherSubject').value || '-',
-                phone: document.getElementById('teacherPhone').value,
-                email: document.getElementById('teacherEmail').value || '-',
-                salary: parseFloat(document.getElementById('teacherSalary').value),
-                joiningDate: document.getElementById('teacherJoiningDate').value || '-',
-                status: document.getElementById('teacherStatus').value,
-                createdAt: new Date().toISOString()
-            });
-            alert('✅ Teacher added!');
-            this.reset();
-        } catch (error) { alert('Error: ' + error.message); }
-        finally { submitBtn.disabled = false; submitBtn.textContent = 'Add Teacher'; }
+            await addDoc(collection(db,'teachers'), { name:document.getElementById('teacherName').value, employeeId:document.getElementById('employeeId').value, subject:document.getElementById('teacherSubject').value||'-', phone:document.getElementById('teacherPhone').value, email:document.getElementById('teacherEmail').value||'-', salary:parseFloat(document.getElementById('teacherSalary').value), joiningDate:document.getElementById('teacherJoiningDate').value||'-', status:document.getElementById('teacherStatus').value, createdAt:new Date().toISOString() });
+            alert('✅ Teacher added!'); this.reset();
+        } catch (error) { alert('Error: '+error.message); }
+        finally { submitBtn.disabled=false; submitBtn.textContent='Add Teacher'; }
     });
 
     window.updateTeacherTable = function() {
-        const tbody = document.getElementById('teacherTableBody');
-        const searchTerm = document.getElementById('teacherSearch')?.value.toLowerCase() || '';
-        const filtered = window.teachers.filter(t =>
-            t.name.toLowerCase().includes(searchTerm) || t.employeeId.toLowerCase().includes(searchTerm)
-        );
-        tbody.innerHTML = filtered.map(t => {
-            const actionsCell = userRole === 'staff' ? '' : `<td><button class="btn btn-danger" onclick="deleteTeacher('${t.id}')" style="padding:5px 15px;">Delete</button></td>`;
-            return `<tr>
-                <td>${t.employeeId}</td><td>${t.name}</td><td>${t.subject}</td><td>${t.phone}</td>
-                <td>${t.email}</td><td>₹${t.salary.toLocaleString()}</td><td>${t.joiningDate}</td>
-                <td><span class="badge ${t.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${t.status}</span></td>
-                ${actionsCell}
-            </tr>`;
+        const tbody=document.getElementById('teacherTableBody');
+        const searchTerm=document.getElementById('teacherSearch')?.value.toLowerCase()||'';
+        const filtered=window.teachers.filter(t=>t.name.toLowerCase().includes(searchTerm)||t.employeeId.toLowerCase().includes(searchTerm));
+        tbody.innerHTML=filtered.map(t => {
+            const actionsCell=userRole==='staff'?'':`<td><button class="btn btn-danger" onclick="deleteTeacher('${t.id}')" style="padding:5px 15px;">Delete</button></td>`;
+            return `<tr><td>${t.employeeId}</td><td>${t.name}</td><td>${t.subject}</td><td>${t.phone}</td><td>${t.email}</td><td>₹${t.salary.toLocaleString()}</td><td>${t.joiningDate}</td><td><span class="badge ${t.status==='Active'?'badge-active':'badge-inactive'}">${t.status}</span></td>${actionsCell}</tr>`;
         }).join('');
     };
 
     document.getElementById('teacherSearch')?.addEventListener('input', updateTeacherTable);
 
     window.deleteTeacher = async function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (userRole==='staff') { alert('No permission.'); return; }
         if (!confirm('Delete this teacher?')) return;
-        try { await deleteDoc(doc(db, 'teachers', id)); alert('Teacher deleted!'); }
-        catch (error) { alert('Error: ' + error.message); }
+        try { await deleteDoc(doc(db,'teachers',id)); alert('Teacher deleted!'); }
+        catch (error) { alert('Error: '+error.message); }
     };
 
     window.updateSalaryTeacherSelect = function() {
-        const select = document.getElementById('salaryTeacher');
-        select.innerHTML = '<option value="">Choose teacher...</option>' +
-            window.teachers.filter(t => t.status === 'Active').map(t => `<option value="${t.id}">${t.employeeId} - ${t.name}</option>`).join('');
+        const select=document.getElementById('salaryTeacher');
+        select.innerHTML='<option value="">Choose teacher...</option>'+window.teachers.filter(t=>t.status==='Active').map(t=>`<option value="${t.id}">${t.employeeId} - ${t.name}</option>`).join('');
     };
 
     document.getElementById('salaryTeacher')?.addEventListener('change', function() {
-        const teacher = window.teachers.find(t => t.id === this.value);
-        if (teacher) document.getElementById('salaryAmount').value = teacher.salary;
+        const teacher=window.teachers.find(t=>t.id===this.value);
+        if (teacher) document.getElementById('salaryAmount').value=teacher.salary;
     });
 
     window.paySalary = async function() {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const teacherId = document.getElementById('salaryTeacher').value;
-        const month = document.getElementById('salaryMonth').value;
-        const amount = parseFloat(document.getElementById('salaryAmount').value);
-        const method = document.getElementById('salaryPaymentMethod').value;
-        if (!teacherId || !month || !amount || !method) { alert('Please fill all fields'); return; }
-        if (window.salaries.some(s => s.teacherId === teacherId && s.month === month)) {
-            alert('❌ Salary already paid for this month!'); return;
-        }
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const teacherId=document.getElementById('salaryTeacher').value;
+        const month=document.getElementById('salaryMonth').value;
+        const amount=parseFloat(document.getElementById('salaryAmount').value);
+        const method=document.getElementById('salaryPaymentMethod').value;
+        if (!teacherId||!month||!amount||!method) { alert('Please fill all fields'); return; }
+        if (window.salaries.some(s=>s.teacherId===teacherId&&s.month===month)) { alert('❌ Salary already paid for this month!'); return; }
         try {
-            await addDoc(collection(db, 'salaries'), {
-                receiptNo: 'SAL' + Date.now().toString().slice(-6),
-                teacherId, month, amount, method,
-                date: new Date().toISOString().slice(0,10),
-                createdAt: new Date().toISOString()
-            });
-            document.getElementById('salaryTeacher').value = '';
-            document.getElementById('salaryAmount').value = '';
-            document.getElementById('salaryPaymentMethod').value = '';
+            await addDoc(collection(db,'salaries'), { receiptNo:'SAL'+Date.now().toString().slice(-6), teacherId, month, amount, method, date:new Date().toISOString().slice(0,10), createdAt:new Date().toISOString() });
+            document.getElementById('salaryTeacher').value='';
+            document.getElementById('salaryAmount').value='';
+            document.getElementById('salaryPaymentMethod').value='';
             alert('✅ Salary paid!');
-        } catch (error) { alert('Error: ' + error.message); }
+        } catch (error) { alert('Error: '+error.message); }
     };
 
     window.updateSalaryTable = function() {
-        const tbody = document.getElementById('salaryTableBody');
-        tbody.innerHTML = window.salaries.slice(0,20).map(salary => {
-            const teacher = window.teachers.find(t => t.id === salary.teacherId);
-            const actionsCell = userRole === 'staff' ? '' : `<td><button class="btn btn-danger" onclick="deleteSalary('${salary.id}','${teacher?.name||'Unknown'}','${salary.month}',${salary.amount})" style="padding:5px 15px;">Delete</button></td>`;
-            return `<tr>
-                <td>${salary.receiptNo}</td><td>${salary.date}</td>
-                <td>${teacher?.employeeId||'N/A'}</td><td>${teacher?.name||'Unknown'}</td>
-                <td>${salary.month}</td><td>₹${salary.amount.toLocaleString()}</td><td>${salary.method}</td>
-                ${actionsCell}
-            </tr>`;
+        const tbody=document.getElementById('salaryTableBody');
+        tbody.innerHTML=window.salaries.slice(0,20).map(salary => {
+            const teacher=window.teachers.find(t=>t.id===salary.teacherId);
+            const actionsCell=userRole==='staff'?'':`<td><button class="btn btn-danger" onclick="deleteSalary('${salary.id}','${teacher?.name||'Unknown'}','${salary.month}',${salary.amount})" style="padding:5px 15px;">Delete</button></td>`;
+            return `<tr><td>${salary.receiptNo}</td><td>${salary.date}</td><td>${teacher?.employeeId||'N/A'}</td><td>${teacher?.name||'Unknown'}</td><td>${salary.month}</td><td>₹${salary.amount.toLocaleString()}</td><td>${salary.method}</td>${actionsCell}</tr>`;
         }).join('');
     };
 
     window.deleteSalary = async function(id, name, month, amount) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        if (!confirm(`Delete salary payment?\nTeacher: ${name}\nMonth: ${month}\nAmount: ₹${amount}`)) return;
-        try { await deleteDoc(doc(db, 'salaries', id)); alert('✅ Deleted!'); }
-        catch (error) { alert('Error: ' + error.message); }
+        if (userRole==='staff') { alert('No permission.'); return; }
+        if (!confirm(`Delete salary?\nTeacher: ${name}\nMonth: ${month}\nAmount: ₹${amount}`)) return;
+        try { await deleteDoc(doc(db,'salaries',id)); alert('✅ Deleted!'); }
+        catch (error) { alert('Error: '+error.message); }
     };
 
     // ---- Expenses ----
     document.getElementById('expenseForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        const isEditing = editingExpenseId !== null;
-        submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const submitBtn=e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled=true;
+        const isEditing=editingExpenseId!==null;
+        submitBtn.textContent=isEditing?'Updating...':'Adding...';
         try {
-            const expenseData = {
-                type: document.getElementById('expenseType').value,
-                description: document.getElementById('expenseDescription').value,
-                amount: parseFloat(document.getElementById('expenseAmount').value),
-                date: document.getElementById('expenseDate').value,
-                paymentMethod: document.getElementById('expensePaymentMethod').value,
-                paidTo: document.getElementById('expensePaidTo').value || '-',
-                forMonth: document.getElementById('expenseForMonth').value || '-',
-                notes: document.getElementById('expenseNotes').value || '-'
-            };
+            const expenseData = { type:document.getElementById('expenseType').value, description:document.getElementById('expenseDescription').value, amount:parseFloat(document.getElementById('expenseAmount').value), date:document.getElementById('expenseDate').value, paymentMethod:document.getElementById('expensePaymentMethod').value, paidTo:document.getElementById('expensePaidTo').value||'-', forMonth:document.getElementById('expenseForMonth').value||'-', notes:document.getElementById('expenseNotes').value||'-' };
             if (isEditing) {
-                await updateDoc(doc(db, 'expenses', editingExpenseId), { ...expenseData, updatedAt: new Date().toISOString() });
-                alert('✅ Expense updated!');
-                cancelExpenseEdit();
+                await updateDoc(doc(db,'expenses',editingExpenseId), {...expenseData,updatedAt:new Date().toISOString()});
+                alert('✅ Expense updated!'); cancelExpenseEdit();
             } else {
-                await addDoc(collection(db, 'expenses'), { ...expenseData, createdAt: new Date().toISOString() });
+                await addDoc(collection(db,'expenses'), {...expenseData,createdAt:new Date().toISOString()});
                 alert('✅ Expense added!');
             }
             this.reset();
-            document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
-        } catch (error) { alert('Error: ' + error.message); }
-        finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Expense' : 'Add Expense'; }
+            document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);
+        } catch (error) { alert('Error: '+error.message); }
+        finally { submitBtn.disabled=false; submitBtn.textContent=isEditing?'Update Expense':'Add Expense'; }
     });
 
     window.updateExpenseTable = function() {
-        const tbody = document.getElementById('expenseTableBody');
-        const searchTerm = document.getElementById('expenseSearch')?.value.toLowerCase() || '';
-        const typeFilter = document.getElementById('expenseFilterType')?.value || '';
-        const monthFilter = document.getElementById('expenseFilterMonth')?.value || '';
-        let filtered = window.expenses.filter(e => {
-            const matchSearch = e.description.toLowerCase().includes(searchTerm) || e.type.toLowerCase().includes(searchTerm) || (e.paidTo && e.paidTo.toLowerCase().includes(searchTerm));
-            const matchType = !typeFilter || e.type === typeFilter;
-            const matchMonth = !monthFilter || e.forMonth === monthFilter || e.date.startsWith(monthFilter);
-            return matchSearch && matchType && matchMonth;
+        const tbody=document.getElementById('expenseTableBody');
+        const searchTerm=document.getElementById('expenseSearch')?.value.toLowerCase()||'';
+        const typeFilter=document.getElementById('expenseFilterType')?.value||'';
+        const monthFilter=document.getElementById('expenseFilterMonth')?.value||'';
+        let filtered=window.expenses.filter(e=>{
+            const matchSearch=e.description.toLowerCase().includes(searchTerm)||e.type.toLowerCase().includes(searchTerm)||(e.paidTo&&e.paidTo.toLowerCase().includes(searchTerm));
+            const matchType=!typeFilter||e.type===typeFilter;
+            const matchMonth=!monthFilter||e.forMonth===monthFilter||e.date.startsWith(monthFilter);
+            return matchSearch&&matchType&&matchMonth;
         });
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No expenses found.</td></tr>';
-            return;
-        }
-        tbody.innerHTML = filtered.map(e => {
-            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
-                <button class="btn btn-warning" onclick="editExpense('${e.id}')" style="padding:5px 15px;">Edit</button>
-                <button class="btn btn-danger" onclick="deleteExpense('${e.id}')" style="padding:5px 15px;">Delete</button>
-            </div></td>`;
-            return `<tr>
-                <td>${e.date}</td><td><span class="badge badge-active">${e.type}</span></td>
-                <td>${e.description}</td><td style="font-weight:600;color:#dc3545;">₹${e.amount.toLocaleString()}</td>
-                <td>${e.forMonth === '-' ? '-' : e.forMonth}</td><td>${e.paidTo}</td>
-                <td>${e.paymentMethod}</td><td style="font-size:0.9em;color:#666;">${e.notes}</td>
-                ${actionsCell}
-            </tr>`;
+        if (filtered.length===0) { tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No expenses found.</td></tr>'; return; }
+        tbody.innerHTML=filtered.map(e => {
+            const actionsCell=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-warning" onclick="editExpense('${e.id}')" style="padding:5px 15px;">Edit</button><button class="btn btn-danger" onclick="deleteExpense('${e.id}')" style="padding:5px 15px;">Delete</button></div></td>`;
+            return `<tr><td>${e.date}</td><td><span class="badge badge-active">${e.type}</span></td><td>${e.description}</td><td style="font-weight:600;color:#dc3545;">₹${e.amount.toLocaleString()}</td><td>${e.forMonth==='-'?'-':e.forMonth}</td><td>${e.paidTo}</td><td>${e.paymentMethod}</td><td style="font-size:0.9em;color:#666;">${e.notes}</td>${actionsCell}</tr>`;
         }).join('');
     };
 
     document.getElementById('expenseSearch')?.addEventListener('input', updateExpenseTable);
 
     window.clearExpenseFilters = function() {
-        document.getElementById('expenseFilterType').value = '';
-        document.getElementById('expenseFilterMonth').value = '';
+        document.getElementById('expenseFilterType').value='';
+        document.getElementById('expenseFilterMonth').value='';
         updateExpenseTable();
     };
 
     window.editExpense = function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const expense = window.expenses.find(e => e.id === id);
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const expense=window.expenses.find(e=>e.id===id);
         if (expense) {
-            editingExpenseId = id;
-            document.getElementById('expenseType').value = expense.type;
-            document.getElementById('expenseDescription').value = expense.description;
-            document.getElementById('expenseAmount').value = expense.amount;
-            document.getElementById('expenseDate').value = expense.date;
-            document.getElementById('expensePaymentMethod').value = expense.paymentMethod;
-            document.getElementById('expensePaidTo').value = expense.paidTo === '-' ? '' : expense.paidTo;
-            document.getElementById('expenseForMonth').value = expense.forMonth === '-' ? '' : expense.forMonth;
-            document.getElementById('expenseNotes').value = expense.notes === '-' ? '' : expense.notes;
-            const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
-            submitBtn.textContent = 'Update Expense';
-            submitBtn.classList.add('btn-warning');
-            submitBtn.classList.remove('btn-primary');
+            editingExpenseId=id;
+            document.getElementById('expenseType').value=expense.type;
+            document.getElementById('expenseDescription').value=expense.description;
+            document.getElementById('expenseAmount').value=expense.amount;
+            document.getElementById('expenseDate').value=expense.date;
+            document.getElementById('expensePaymentMethod').value=expense.paymentMethod;
+            document.getElementById('expensePaidTo').value=expense.paidTo==='-'?'':expense.paidTo;
+            document.getElementById('expenseForMonth').value=expense.forMonth==='-'?'':expense.forMonth;
+            document.getElementById('expenseNotes').value=expense.notes==='-'?'':expense.notes;
+            const submitBtn=document.querySelector('#expenseForm button[type="submit"]');
+            submitBtn.textContent='Update Expense';
+            submitBtn.classList.add('btn-warning'); submitBtn.classList.remove('btn-primary');
             if (!document.getElementById('cancelExpenseEditBtn')) {
-                const cancelBtn = document.createElement('button');
-                cancelBtn.type = 'button'; cancelBtn.id = 'cancelExpenseEditBtn';
-                cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
-                cancelBtn.onclick = cancelExpenseEdit; cancelBtn.style.marginLeft = '10px';
+                const cancelBtn=document.createElement('button');
+                cancelBtn.type='button'; cancelBtn.id='cancelExpenseEditBtn';
+                cancelBtn.className='btn btn-danger'; cancelBtn.textContent='Cancel Edit';
+                cancelBtn.onclick=cancelExpenseEdit; cancelBtn.style.marginLeft='10px';
                 submitBtn.parentNode.appendChild(cancelBtn);
             }
-            document.getElementById('expenseFormSection').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('expenseFormSection').scrollIntoView({behavior:'smooth'});
         }
     };
 
     function cancelExpenseEdit() {
-        editingExpenseId = null;
+        editingExpenseId=null;
         document.getElementById('expenseForm').reset();
-        document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
-        const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
-        submitBtn.textContent = 'Add Expense';
-        submitBtn.classList.remove('btn-warning');
-        submitBtn.classList.add('btn-primary');
-        const cancelBtn = document.getElementById('cancelExpenseEditBtn');
+        document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);
+        const submitBtn=document.querySelector('#expenseForm button[type="submit"]');
+        submitBtn.textContent='Add Expense';
+        submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
+        const cancelBtn=document.getElementById('cancelExpenseEditBtn');
         if (cancelBtn) cancelBtn.remove();
     }
 
     window.deleteExpense = async function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (userRole==='staff') { alert('No permission.'); return; }
         if (!confirm('Delete this expense?')) return;
-        try { await deleteDoc(doc(db, 'expenses', id)); alert('Expense deleted!'); }
-        catch (error) { alert('Error: ' + error.message); }
+        try { await deleteDoc(doc(db,'expenses',id)); alert('Expense deleted!'); }
+        catch (error) { alert('Error: '+error.message); }
     };
 
     window.updateExpenseSummary = function() {
-        const currentMonth = new Date().toISOString().slice(0,7);
-        const total = window.expenses.reduce((sum, e) => sum + e.amount, 0);
-        const thisMonth = window.expenses.filter(e => e.date.startsWith(currentMonth) || e.forMonth === currentMonth).reduce((sum, e) => sum + e.amount, 0);
-        document.getElementById('totalExpenses').textContent = '₹' + total.toLocaleString();
-        document.getElementById('thisMonthExpenses').textContent = '₹' + thisMonth.toLocaleString();
-        document.getElementById('expenseCount').textContent = window.expenses.length;
+        const currentMonth=new Date().toISOString().slice(0,7);
+        const total=window.expenses.reduce((sum,e)=>sum+e.amount,0);
+        const thisMonth=window.expenses.filter(e=>e.date.startsWith(currentMonth)||e.forMonth===currentMonth).reduce((sum,e)=>sum+e.amount,0);
+        document.getElementById('totalExpenses').textContent='₹'+total.toLocaleString();
+        document.getElementById('thisMonthExpenses').textContent='₹'+thisMonth.toLocaleString();
+        document.getElementById('expenseCount').textContent=window.expenses.length;
     };
 
     // ---- WhatsApp ----
     window.sendWhatsAppReminder = async function(studentId, phone, studentName, monthlyFee) {
-        let cleanPhone = phone.replace(/\D/g, '');
-        if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
-        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-        const currentMonth = monthNames[new Date().getMonth()];
-        const currentMonthCode = new Date().toISOString().slice(0,7);
-        const message = `Dear ${studentName},\n\nThis is a friendly reminder from Vismaya Education regarding your fee payment.\n\n📚 *Fee Details:*\n• Month: ${currentMonth}\n• Amount: ₹${monthlyFee}\n\nPlease make the payment at your earliest convenience.\n\nThank you!\n*Vismaya Education*`;
-        try {
-            await addDoc(collection(db, 'reminders'), { studentId, month: currentMonthCode, sentAt: new Date().toISOString(), sentBy: currentUser.email, phone, studentName });
-            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
-        } catch (error) { window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank'); }
+        let cleanPhone=phone.replace(/\D/g,'');
+        if (cleanPhone.length===10) cleanPhone='91'+cleanPhone;
+        const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const currentMonth=monthNames[new Date().getMonth()];
+        const currentMonthCode=new Date().toISOString().slice(0,7);
+        const message=`Dear ${studentName},\n\nThis is a friendly reminder from Vismaya Education regarding your fee payment.\n\n📚 *Fee Details:*\n• Month: ${currentMonth}\n• Amount: ₹${monthlyFee}\n\nPlease make the payment at your earliest convenience.\n\nThank you!\n*Vismaya Education*`;
+        try { await addDoc(collection(db,'reminders'), {studentId, month:currentMonthCode, sentAt:new Date().toISOString(), sentBy:currentUser.email, phone, studentName}); window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`,'_blank'); }
+        catch (error) { window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`,'_blank'); }
     };
 
     window.sendBulkWhatsAppReminders = function() {
-        const currentMonth = new Date().toISOString().slice(0,7);
-        const unpaid = window.students.filter(s => !window.payments.some(p => p.studentId === s.id && p.month === currentMonth) && s.status === 'Active');
-        if (unpaid.length === 0) { alert('✅ All active students have paid!'); return; }
+        const currentMonth=new Date().toISOString().slice(0,7);
+        const unpaid=window.students.filter(s=>!window.payments.some(p=>p.studentId===s.id&&p.month===currentMonth)&&s.status==='Active');
+        if (unpaid.length===0) { alert('✅ All active students have paid!'); return; }
         if (confirm(`Send WhatsApp reminders to ${unpaid.length} students?`)) {
-            unpaid.forEach((s, i) => setTimeout(() => sendWhatsAppReminder(s.id, s.phone, s.name, s.monthlyFee), i * 2000));
+            unpaid.forEach((s,i)=>setTimeout(()=>sendWhatsAppReminder(s.id,s.phone,s.name,s.monthlyFee),i*2000));
         }
     };
 
     // ---- Accounts ----
     window.generateAccountsSummary = function() {
-        const month = document.getElementById('accountsMonth').value;
+        const month=document.getElementById('accountsMonth').value;
         if (!month) { alert('Please select a month.'); return; }
-        const monthPayments = window.payments.filter(p => p.month === month);
-        const totalFees = monthPayments.reduce((sum, p) => sum + p.amount, 0);
-        const monthSalaries = window.salaries.filter(s => s.month === month);
-        const totalSalary = monthSalaries.reduce((sum, s) => sum + s.amount, 0);
-        const monthExpenses = window.expenses.filter(e => e.date.startsWith(month) || e.forMonth === month);
-        const totalExpenses = monthExpenses.reduce((sum, e) => sum + e.amount, 0);
-        const totalExpenditure = totalSalary + totalExpenses;
-        const netResult = totalFees - totalExpenditure;
-        const isProfit = netResult >= 0;
-
-        currentAccountsData = { month, monthPayments, monthSalaries, monthExpenses, totalFees, totalSalary, totalExpenses, totalExpenditure, netResult };
-
-        document.getElementById('accTotalFees').textContent = '₹' + totalFees.toLocaleString();
-        document.getElementById('accTotalSalary').textContent = '₹' + totalSalary.toLocaleString();
-        document.getElementById('accTotalExpenses').textContent = '₹' + totalExpenses.toLocaleString();
-        document.getElementById('accTotalExpenditure').textContent = '₹' + totalExpenditure.toLocaleString();
-
-        const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
-        document.getElementById('netResultBanner').innerHTML = `
-            <div class="net-result-banner ${isProfit ? 'profit-banner' : 'loss-banner'}">
-                <div>
-                    <div class="net-label">${monthLabel} — ${isProfit ? '🟢 Net Profit' : '🔴 Net Loss'}</div>
-                    <div class="net-formula">₹${totalFees.toLocaleString()} (Fees) − ₹${totalSalary.toLocaleString()} (Salary) − ₹${totalExpenses.toLocaleString()} (Expenses)</div>
-                </div>
-                <div class="net-value">${isProfit ? '+' : ''}₹${Math.abs(netResult).toLocaleString()}</div>
-            </div>`;
-
-        const feeBody = document.getElementById('feeBreakdownBody');
-        feeBody.innerHTML = monthPayments.length === 0 ? '<div class="accounts-breakdown-empty">No fees this month</div>' :
-            monthPayments.map(p => { const s = window.students.find(st => st.id === p.studentId); return `<div class="accounts-breakdown-row"><span class="row-label">${s?.name||'Unknown'} (${s?.rollNumber||'N/A'})</span><span class="row-amount green">₹${p.amount.toLocaleString()}</span></div>`; }).join('');
-        document.getElementById('feeBreakdownTotal').textContent = '₹' + totalFees.toLocaleString();
-
-        const expBody = document.getElementById('expenseBreakdownBody');
-        expBody.innerHTML = monthExpenses.length === 0 ? '<div class="accounts-breakdown-empty">No expenses this month</div>' :
-            monthExpenses.map(e => `<div class="accounts-breakdown-row"><span class="row-label">${e.description}</span><span class="row-amount red">₹${e.amount.toLocaleString()}</span></div>`).join('');
-        document.getElementById('expenseBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
-
-        const salBody = document.getElementById('salaryBreakdownBody');
-        salBody.innerHTML = monthSalaries.length === 0 ? '<div class="accounts-breakdown-empty">No salary this month</div>' :
-            monthSalaries.map(s => { const t = window.teachers.find(tc => tc.id === s.teacherId); return `<div class="accounts-breakdown-row"><span class="row-label">${t?.name||'Unknown'}</span><span class="row-amount orange">₹${s.amount.toLocaleString()}</span></div>`; }).join('');
-        document.getElementById('salaryBreakdownTotal').textContent = '₹' + totalSalary.toLocaleString();
-
-        const catMap = {};
-        monthExpenses.forEach(e => { catMap[e.type] = (catMap[e.type] || 0) + e.amount; });
-        const catBody = document.getElementById('categoryBreakdownBody');
-        catBody.innerHTML = Object.keys(catMap).length === 0 ? '<div class="accounts-breakdown-empty">No expenses this month</div>' :
-            Object.entries(catMap).map(([type, amount]) => `<div class="accounts-breakdown-row"><span class="row-label">${type}</span><span class="row-amount red">₹${amount.toLocaleString()}</span></div>`).join('');
-        document.getElementById('categoryBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
-
+        const monthPayments=window.payments.filter(p=>p.month===month);
+        const totalFees=monthPayments.reduce((sum,p)=>sum+p.amount,0);
+        const monthSalaries=window.salaries.filter(s=>s.month===month);
+        const totalSalary=monthSalaries.reduce((sum,s)=>sum+s.amount,0);
+        const monthExpenses=window.expenses.filter(e=>e.date.startsWith(month)||e.forMonth===month);
+        const totalExpenses=monthExpenses.reduce((sum,e)=>sum+e.amount,0);
+        const totalExpenditure=totalSalary+totalExpenses;
+        const netResult=totalFees-totalExpenditure;
+        const isProfit=netResult>=0;
+        currentAccountsData={month,monthPayments,monthSalaries,monthExpenses,totalFees,totalSalary,totalExpenses,totalExpenditure,netResult};
+        document.getElementById('accTotalFees').textContent='₹'+totalFees.toLocaleString();
+        document.getElementById('accTotalSalary').textContent='₹'+totalSalary.toLocaleString();
+        document.getElementById('accTotalExpenses').textContent='₹'+totalExpenses.toLocaleString();
+        document.getElementById('accTotalExpenditure').textContent='₹'+totalExpenditure.toLocaleString();
+        const monthLabel=new Date(month+'-01').toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+        document.getElementById('netResultBanner').innerHTML=`<div class="net-result-banner ${isProfit?'profit-banner':'loss-banner'}"><div><div class="net-label">${monthLabel} — ${isProfit?'🟢 Net Profit':'🔴 Net Loss'}</div><div class="net-formula">₹${totalFees.toLocaleString()} (Fees) − ₹${totalSalary.toLocaleString()} (Salary) − ₹${totalExpenses.toLocaleString()} (Expenses)</div></div><div class="net-value">${isProfit?'+':''}₹${Math.abs(netResult).toLocaleString()}</div></div>`;
+        const feeBody=document.getElementById('feeBreakdownBody');
+        feeBody.innerHTML=monthPayments.length===0?'<div class="accounts-breakdown-empty">No fees this month</div>':monthPayments.map(p=>{const s=window.students.find(st=>st.id===p.studentId);return `<div class="accounts-breakdown-row"><span class="row-label">${s?.name||'Unknown'} (${s?.rollNumber||'N/A'})</span><span class="row-amount green">₹${p.amount.toLocaleString()}</span></div>`;}).join('');
+        document.getElementById('feeBreakdownTotal').textContent='₹'+totalFees.toLocaleString();
+        const expBody=document.getElementById('expenseBreakdownBody');
+        expBody.innerHTML=monthExpenses.length===0?'<div class="accounts-breakdown-empty">No expenses this month</div>':monthExpenses.map(e=>`<div class="accounts-breakdown-row"><span class="row-label">${e.description}</span><span class="row-amount red">₹${e.amount.toLocaleString()}</span></div>`).join('');
+        document.getElementById('expenseBreakdownTotal').textContent='₹'+totalExpenses.toLocaleString();
+        const salBody=document.getElementById('salaryBreakdownBody');
+        salBody.innerHTML=monthSalaries.length===0?'<div class="accounts-breakdown-empty">No salary this month</div>':monthSalaries.map(s=>{const t=window.teachers.find(tc=>tc.id===s.teacherId);return `<div class="accounts-breakdown-row"><span class="row-label">${t?.name||'Unknown'}</span><span class="row-amount orange">₹${s.amount.toLocaleString()}</span></div>`;}).join('');
+        document.getElementById('salaryBreakdownTotal').textContent='₹'+totalSalary.toLocaleString();
+        const catMap={};
+        monthExpenses.forEach(e=>{catMap[e.type]=(catMap[e.type]||0)+e.amount;});
+        const catBody=document.getElementById('categoryBreakdownBody');
+        catBody.innerHTML=Object.keys(catMap).length===0?'<div class="accounts-breakdown-empty">No expenses this month</div>':Object.entries(catMap).map(([type,amount])=>`<div class="accounts-breakdown-row"><span class="row-label">${type}</span><span class="row-amount red">₹${amount.toLocaleString()}</span></div>`).join('');
+        document.getElementById('categoryBreakdownTotal').textContent='₹'+totalExpenses.toLocaleString();
         generateMonthlyHistory();
-
-        document.getElementById('netResultBanner').style.display = 'block';
-        document.getElementById('accountsSummaryGrid').style.display = 'grid';
-        document.getElementById('accountsBreakdown').style.display = 'grid';
-        document.getElementById('monthlyHistorySection').style.display = 'block';
-        document.getElementById('exportAccountsBtn').style.display = 'inline-block';
+        document.getElementById('netResultBanner').style.display='block';
+        document.getElementById('accountsSummaryGrid').style.display='grid';
+        document.getElementById('accountsBreakdown').style.display='grid';
+        document.getElementById('monthlyHistorySection').style.display='block';
+        document.getElementById('exportAccountsBtn').style.display='inline-block';
     };
 
     function generateMonthlyHistory() {
-        const allMonths = new Set();
-        window.payments.forEach(p => allMonths.add(p.month));
-        window.salaries.forEach(s => allMonths.add(s.month));
-        window.expenses.forEach(e => { if (e.forMonth && e.forMonth !== '-') allMonths.add(e.forMonth); else allMonths.add(e.date.slice(0,7)); });
-        const sorted = Array.from(allMonths).sort((a,b) => b.localeCompare(a));
-        const tbody = document.getElementById('monthlyHistoryBody');
-        if (sorted.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No data available</td></tr>'; return; }
-        tbody.innerHTML = sorted.map(m => {
-            const fees = window.payments.filter(p => p.month === m).reduce((sum, p) => sum + p.amount, 0);
-            const salary = window.salaries.filter(s => s.month === m).reduce((sum, s) => sum + s.amount, 0);
-            const expenses = window.expenses.filter(e => e.date.startsWith(m) || e.forMonth === m).reduce((sum, e) => sum + e.amount, 0);
-            const exp = salary + expenses;
-            const net = fees - exp;
-            const isP = net >= 0;
-            const label = new Date(m + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
-            return `<tr class="${isP ? 'profit-row' : 'loss-row'}">
-                <td><strong>${label}</strong></td>
-                <td style="color:#28a745;font-weight:600;">₹${fees.toLocaleString()}</td>
-                <td style="color:#fd7e14;font-weight:600;">₹${salary.toLocaleString()}</td>
-                <td style="color:#dc3545;font-weight:600;">₹${expenses.toLocaleString()}</td>
-                <td style="color:#dc3545;font-weight:700;">₹${exp.toLocaleString()}</td>
-                <td style="font-weight:700;color:${isP?'#28a745':'#dc3545'};">${isP?'🟢 +':'🔴 '}₹${Math.abs(net).toLocaleString()}</td>
-            </tr>`;
+        const allMonths=new Set();
+        window.payments.forEach(p=>allMonths.add(p.month));
+        window.salaries.forEach(s=>allMonths.add(s.month));
+        window.expenses.forEach(e=>{if(e.forMonth&&e.forMonth!=='-')allMonths.add(e.forMonth);else allMonths.add(e.date.slice(0,7));});
+        const sorted=Array.from(allMonths).sort((a,b)=>b.localeCompare(a));
+        const tbody=document.getElementById('monthlyHistoryBody');
+        if (sorted.length===0) { tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No data available</td></tr>'; return; }
+        tbody.innerHTML=sorted.map(m=>{
+            const fees=window.payments.filter(p=>p.month===m).reduce((sum,p)=>sum+p.amount,0);
+            const salary=window.salaries.filter(s=>s.month===m).reduce((sum,s)=>sum+s.amount,0);
+            const expenses=window.expenses.filter(e=>e.date.startsWith(m)||e.forMonth===m).reduce((sum,e)=>sum+e.amount,0);
+            const exp=salary+expenses; const net=fees-exp; const isP=net>=0;
+            const label=new Date(m+'-01').toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+            return `<tr class="${isP?'profit-row':'loss-row'}"><td><strong>${label}</strong></td><td style="color:#28a745;font-weight:600;">₹${fees.toLocaleString()}</td><td style="color:#fd7e14;font-weight:600;">₹${salary.toLocaleString()}</td><td style="color:#dc3545;font-weight:600;">₹${expenses.toLocaleString()}</td><td style="color:#dc3545;font-weight:700;">₹${exp.toLocaleString()}</td><td style="font-weight:700;color:${isP?'#28a745':'#dc3545'};">${isP?'🟢 +':'🔴 '}₹${Math.abs(net).toLocaleString()}</td></tr>`;
         }).join('');
     }
 
     window.exportAccountsToExcel = function() {
         if (!currentAccountsData) { alert('Please generate a summary first.'); return; }
-        const { month, monthPayments, monthSalaries, monthExpenses, totalFees, totalSalary, totalExpenses, totalExpenditure, netResult } = currentAccountsData;
-        const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
-        const wb = XLSX.utils.book_new();
-        const summaryData = [
-            ['Vismaya Education - Monthly Accounts Summary'],
-            ['Month:', monthLabel], ['Generated On:', new Date().toLocaleDateString('en-IN')], [],
-            ['Category', 'Amount (₹)'],
-            ['Total Fees Collected', totalFees], ['Salary Paid', totalSalary],
-            ['Other Expenses', totalExpenses], ['Total Expenditure', totalExpenditure], ['Net Profit / Loss', netResult]
-        ];
-        const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-        wsSummary['!cols'] = [{ wch: 30 },{ wch: 20 }];
-        XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
-        XLSX.writeFile(wb, `Accounts_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const {month,monthPayments,monthSalaries,monthExpenses,totalFees,totalSalary,totalExpenses,totalExpenditure,netResult}=currentAccountsData;
+        const monthLabel=new Date(month+'-01').toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+        const wb=XLSX.utils.book_new();
+        const summaryData=[['Vismaya Education - Monthly Accounts Summary'],['Month:',monthLabel],['Generated On:',new Date().toLocaleDateString('en-IN')],[],['Category','Amount (₹)'],['Total Fees Collected',totalFees],['Salary Paid',totalSalary],['Other Expenses',totalExpenses],['Total Expenditure',totalExpenditure],['Net Profit / Loss',netResult]];
+        const wsSummary=XLSX.utils.aoa_to_sheet(summaryData);
+        wsSummary['!cols']=[{wch:30},{wch:20}];
+        XLSX.utils.book_append_sheet(wb,wsSummary,'Summary');
+        XLSX.writeFile(wb,`Accounts_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     // ---- Excel Exports ----
     window.exportStudentsToExcel = function() {
-        const currentMonth = new Date().toISOString().slice(0,7);
-        const data = window.students.map(s => ({
-            'Roll Number': s.rollNumber, 'Name': s.name, 'Class': s.course, 'Syllabus': s.syllabus,
-            'Phone': s.phone, 'Monthly Fee': s.monthlyFee, 'Admission Date': s.admissionDate,
-            'Status': s.status, 'Fee Status (This Month)': window.payments.some(p => p.studentId === s.id && p.month === currentMonth) ? 'Paid' : 'Pending'
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        ws['!cols'] = [{ wch:12 },{ wch:25 },{ wch:12 },{ wch:12 },{ wch:15 },{ wch:12 },{ wch:15 },{ wch:10 },{ wch:20 }];
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Students');
-        XLSX.writeFile(wb, `Students_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const currentMonth=new Date().toISOString().slice(0,7);
+        const data=window.students.map(s=>({'Roll Number':s.rollNumber,'Name':s.name,'Class':s.course,'Syllabus':s.syllabus,'Phone':s.phone,'Monthly Fee':s.monthlyFee,'Admission Date':s.admissionDate,'Status':s.status,'Fee Status (This Month)':window.payments.some(p=>p.studentId===s.id&&p.month===currentMonth)?'Paid':'Pending'}));
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Students');
+        XLSX.writeFile(wb,`Students_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.exportRecentPaymentsToExcel = function() {
-        const data = window.payments.slice(0,20).map(p => {
-            const s = window.students.find(st => st.id === p.studentId);
-            return { 'Receipt No': p.receiptNo, 'Date': p.date, 'Roll Number': s?.rollNumber||'N/A', 'Student Name': s?.name||'Unknown', 'Class': s?.course||'N/A', 'Fee Month': p.month, 'Amount': p.amount, 'Payment Method': p.method };
-        });
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Recent Payments');
-        XLSX.writeFile(wb, `Recent_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const data=window.payments.slice(0,20).map(p=>{const s=window.students.find(st=>st.id===p.studentId); return {'Receipt No':p.receiptNo,'Date':p.date,'Roll Number':s?.rollNumber||'N/A','Student Name':s?.name||'Unknown','Class':s?.course||'N/A','Fee Month':p.month,'Amount':p.amount,'Payment Method':p.method};});
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Recent Payments');
+        XLSX.writeFile(wb,`Recent_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.generatePaidStudentsReport = function() {
-        const month = document.getElementById('paidReportMonth').value;
-        const classFilter = document.getElementById('paidReportClass').value;
-        const methodFilter = document.getElementById('paidReportMethod').value;
-        let monthPayments = window.payments.filter(p => p.month === month);
-        if (methodFilter) monthPayments = monthPayments.filter(p => p.method === methodFilter);
-        const paidData = [];
-        monthPayments.forEach(payment => {
-            const student = window.students.find(s => s.id === payment.studentId);
-            if (student && (!classFilter || student.course === classFilter)) paidData.push({ student, payment });
-        });
-        filteredPaidStudents = paidData;
-        const total = paidData.length;
-        const totalAmount = paidData.reduce((sum, item) => sum + item.payment.amount, 0);
-        document.getElementById('paidReportCount').textContent = total;
-        document.getElementById('paidReportTotal').textContent = '₹' + totalAmount.toLocaleString();
-        document.getElementById('paidReportAverage').textContent = '₹' + Math.round(total > 0 ? totalAmount/total : 0).toLocaleString();
-        document.getElementById('paidReportSummary').style.display = 'block';
-        document.getElementById('paidStudentsTableContainer').style.display = 'block';
-        document.getElementById('exportPaidReportBtn').style.display = 'inline-block';
+        const month=document.getElementById('paidReportMonth').value;
+        const classFilter=document.getElementById('paidReportClass').value;
+        const methodFilter=document.getElementById('paidReportMethod').value;
+        let monthPayments=window.payments.filter(p=>p.month===month);
+        if (methodFilter) monthPayments=monthPayments.filter(p=>p.method===methodFilter);
+        const paidData=[];
+        monthPayments.forEach(payment=>{const student=window.students.find(s=>s.id===payment.studentId); if(student&&(!classFilter||student.course===classFilter))paidData.push({student,payment});});
+        filteredPaidStudents=paidData;
+        const total=paidData.length;
+        const totalAmount=paidData.reduce((sum,item)=>sum+item.payment.amount,0);
+        document.getElementById('paidReportCount').textContent=total;
+        document.getElementById('paidReportTotal').textContent='₹'+totalAmount.toLocaleString();
+        document.getElementById('paidReportAverage').textContent='₹'+Math.round(total>0?totalAmount/total:0).toLocaleString();
+        document.getElementById('paidReportSummary').style.display='block';
+        document.getElementById('paidStudentsTableContainer').style.display='block';
+        document.getElementById('exportPaidReportBtn').style.display='inline-block';
         updatePaidStudentsTable(paidData);
     };
 
     function updatePaidStudentsTable(data) {
-        const tbody = document.getElementById('paidStudentsTableBody');
-        if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>'; return; }
-        tbody.innerHTML = data.map((item, i) => `<tr>
-            <td>${i+1}</td><td>${item.student.rollNumber}</td><td>${item.student.name}</td>
-            <td>${item.student.course}</td><td>${item.student.phone}</td>
-            <td>₹${item.payment.amount}</td><td>${item.payment.date}</td>
-            <td><span class="badge badge-active">${item.payment.method}</span></td>
-            <td>${item.payment.receiptNo}</td>
-        </tr>`).join('');
+        const tbody=document.getElementById('paidStudentsTableBody');
+        if (data.length===0) { tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>'; return; }
+        tbody.innerHTML=data.map((item,i)=>`<tr><td>${i+1}</td><td>${item.student.rollNumber}</td><td>${item.student.name}</td><td>${item.student.course}</td><td>${item.student.phone}</td><td>₹${item.payment.amount}</td><td>${item.payment.date}</td><td><span class="badge badge-active">${item.payment.method}</span></td><td>${item.payment.receiptNo}</td></tr>`).join('');
     }
 
     window.filterPaidStudentsTable = function() {
-        const search = document.getElementById('paidStudentsSearch').value.toLowerCase();
-        updatePaidStudentsTable(filteredPaidStudents.filter(item => item.student.name.toLowerCase().includes(search) || item.student.rollNumber.toLowerCase().includes(search)));
+        const search=document.getElementById('paidStudentsSearch').value.toLowerCase();
+        updatePaidStudentsTable(filteredPaidStudents.filter(item=>item.student.name.toLowerCase().includes(search)||item.student.rollNumber.toLowerCase().includes(search)));
     };
 
     window.exportPaidStudentsReport = function() {
-        if (filteredPaidStudents.length === 0) { alert('Generate a report first.'); return; }
-        const month = document.getElementById('paidReportMonth').value;
-        const data = filteredPaidStudents.map((item, i) => ({
-            'S.No': i+1, 'Roll Number': item.student.rollNumber, 'Student Name': item.student.name,
-            'Class': item.student.course, 'Syllabus': item.student.syllabus, 'Phone': item.student.phone,
-            'Monthly Fee': item.student.monthlyFee, 'Amount Paid': item.payment.amount,
-            'Payment Date': item.payment.date, 'Payment Method': item.payment.method, 'Receipt No': item.payment.receiptNo
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Paid Students');
-        XLSX.writeFile(wb, `Paid_Students_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+        if (filteredPaidStudents.length===0) { alert('Generate a report first.'); return; }
+        const month=document.getElementById('paidReportMonth').value;
+        const data=filteredPaidStudents.map((item,i)=>({'S.No':i+1,'Roll Number':item.student.rollNumber,'Student Name':item.student.name,'Class':item.student.course,'Syllabus':item.student.syllabus,'Phone':item.student.phone,'Monthly Fee':item.student.monthlyFee,'Amount Paid':item.payment.amount,'Payment Date':item.payment.date,'Payment Method':item.payment.method,'Receipt No':item.payment.receiptNo}));
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Paid Students');
+        XLSX.writeFile(wb,`Paid_Students_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.exportTeachersToExcel = function() {
-        const data = window.teachers.map(t => ({ 'Employee ID': t.employeeId, 'Name': t.name, 'Subject': t.subject, 'Phone': t.phone, 'Email': t.email, 'Monthly Salary': t.salary, 'Joining Date': t.joiningDate, 'Status': t.status }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Teachers');
-        XLSX.writeFile(wb, `Teachers_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const data=window.teachers.map(t=>({'Employee ID':t.employeeId,'Name':t.name,'Subject':t.subject,'Phone':t.phone,'Email':t.email,'Monthly Salary':t.salary,'Joining Date':t.joiningDate,'Status':t.status}));
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Teachers');
+        XLSX.writeFile(wb,`Teachers_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.exportSalaryPaymentsToExcel = function() {
-        const data = window.salaries.map(s => {
-            const t = window.teachers.find(tc => tc.id === s.teacherId);
-            return { 'Receipt No': s.receiptNo, 'Date': s.date, 'Employee ID': t?.employeeId||'N/A', 'Teacher Name': t?.name||'Unknown', 'Month': s.month, 'Amount': s.amount, 'Payment Method': s.method };
-        });
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Salary Payments');
-        XLSX.writeFile(wb, `Salary_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const data=window.salaries.map(s=>{const t=window.teachers.find(tc=>tc.id===s.teacherId); return {'Receipt No':s.receiptNo,'Date':s.date,'Employee ID':t?.employeeId||'N/A','Teacher Name':t?.name||'Unknown','Month':s.month,'Amount':s.amount,'Payment Method':s.method};});
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Salary Payments');
+        XLSX.writeFile(wb,`Salary_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.exportExpensesToExcel = function() {
-        const data = window.expenses.map(e => ({ 'Date': e.date, 'Type': e.type, 'Description': e.description, 'Amount': e.amount, 'For Month': e.forMonth, 'Paid To': e.paidTo, 'Payment Method': e.paymentMethod, 'Notes': e.notes }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Expenses');
-        XLSX.writeFile(wb, `Expenses_${new Date().toISOString().slice(0,10)}.xlsx`);
+        const data=window.expenses.map(e=>({'Date':e.date,'Type':e.type,'Description':e.description,'Amount':e.amount,'For Month':e.forMonth,'Paid To':e.paidTo,'Payment Method':e.paymentMethod,'Notes':e.notes}));
+        const ws=XLSX.utils.json_to_sheet(data);
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Expenses');
+        XLSX.writeFile(wb,`Expenses_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     window.downloadTemplate = function() {
-        const template = [
-            ['Student Name','Roll Number','Class','Syllabus','Phone Number','Monthly Fee','Admission Date','Status'],
-            ['John Doe','001','Class 10','CBSE','9876543210','5000','01/01/2024','Active'],
-            ['Jane Smith','002','Class 11','Matric','9876543211','6000','','Active']
-        ];
-        const ws = XLSX.utils.aoa_to_sheet(template);
-        ws['!cols'] = [{ wch:20 },{ wch:12 },{ wch:12 },{ wch:12 },{ wch:15 },{ wch:12 },{ wch:15 },{ wch:10 }];
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Students');
-        XLSX.writeFile(wb, 'Student_Upload_Template.xlsx');
+        const template=[['Student Name','Roll Number','Class','Syllabus','Phone Number','Monthly Fee','Admission Date','Status'],['John Doe','001','Class 10','CBSE','9876543210','5000','01/01/2024','Active'],['Jane Smith','002','Class 11','Matric','9876543211','6000','','Active']];
+        const ws=XLSX.utils.aoa_to_sheet(template);
+        ws['!cols']=[{wch:20},{wch:12},{wch:12},{wch:12},{wch:15},{wch:12},{wch:15},{wch:10}];
+        const wb=XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb,ws,'Students');
+        XLSX.writeFile(wb,'Student_Upload_Template.xlsx');
     };
 
     window.uploadExcel = async function() {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const fileInput = document.getElementById('excelFile');
-        const file = fileInput.files[0];
+        if (userRole==='staff') { alert('No permission.'); return; }
+        const fileInput=document.getElementById('excelFile');
+        const file=fileInput.files[0];
         if (!file) { alert('Please select an Excel file first.'); return; }
-        const statusDiv = document.getElementById('uploadStatus');
-        statusDiv.style.display = 'block';
-        statusDiv.style.background = '#fff3cd'; statusDiv.style.color = '#856404';
-        statusDiv.textContent = '⏳ Reading Excel file...';
+        const statusDiv=document.getElementById('uploadStatus');
+        statusDiv.style.display='block';
+        statusDiv.style.background='#fff3cd'; statusDiv.style.color='#856404';
+        statusDiv.textContent='⏳ Reading Excel file...';
         try {
-            const data = await file.arrayBuffer();
-            const workbook = XLSX.read(data);
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-            if (jsonData.length < 2) throw new Error('Excel file is empty or has no data rows.');
-            const rows = jsonData.slice(1);
-            let successCount = 0, errorCount = 0;
-            const errors = [];
-            statusDiv.textContent = `⏳ Uploading ${rows.length} students...`;
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                if (!row || row.length === 0 || !row[0]) continue;
+            const data=await file.arrayBuffer();
+            const workbook=XLSX.read(data);
+            const worksheet=workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData=XLSX.utils.sheet_to_json(worksheet,{header:1});
+            if (jsonData.length<2) throw new Error('Excel file is empty or has no data rows.');
+            const rows=jsonData.slice(1);
+            let successCount=0,errorCount=0;
+            const errors=[];
+            statusDiv.textContent=`⏳ Uploading ${rows.length} students...`;
+            for (let i=0;i<rows.length;i++) {
+                const row=rows[i];
+                if (!row||row.length===0||!row[0]) continue;
                 try {
-                    let admissionDate = row[6];
+                    let admissionDate=row[6];
                     if (admissionDate) {
-                        if (typeof admissionDate === 'number') {
-                            const excelEpoch = new Date(1900, 0, 1);
-                            admissionDate = new Date(excelEpoch.getTime() + (admissionDate - 2) * 86400000).toISOString().slice(0,10);
-                        } else if (typeof admissionDate === 'string' && admissionDate.includes('/')) {
-                            const parts = admissionDate.split('/');
-                            if (parts.length === 3) admissionDate = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
-                        }
-                    } else { admissionDate = '-'; }
-                    const student = {
-                        name: String(row[0]||'').trim(), rollNumber: String(row[1]||'').trim(),
-                        course: String(row[2]||'').trim(), syllabus: String(row[3]||'').trim() || '-',
-                        phone: String(row[4]||'').trim(), monthlyFee: parseFloat(row[5]) || 0,
-                        admissionDate, status: String(row[7]||'').trim() || 'Active', createdAt: new Date().toISOString()
-                    };
-                    if (!student.name || !student.rollNumber || !student.course || !student.phone || !student.monthlyFee || !student.status) {
-                        errors.push(`Row ${i+2}: Missing required fields`); errorCount++; continue;
-                    }
-                    if (student.status !== 'Active' && student.status !== 'Inactive') {
-                        errors.push(`Row ${i+2}: Status must be "Active" or "Inactive"`); errorCount++; continue;
-                    }
-                    if (window.students.find(s => s.rollNumber === student.rollNumber)) {
-                        errors.push(`Row ${i+2}: Roll number ${student.rollNumber} already exists`); errorCount++; continue;
-                    }
-                    await addDoc(collection(db, 'students'), student);
+                        if (typeof admissionDate==='number') { const excelEpoch=new Date(1900,0,1); admissionDate=new Date(excelEpoch.getTime()+(admissionDate-2)*86400000).toISOString().slice(0,10); }
+                        else if (typeof admissionDate==='string'&&admissionDate.includes('/')) { const parts=admissionDate.split('/'); if(parts.length===3)admissionDate=`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`; }
+                    } else { admissionDate='-'; }
+                    const student={name:String(row[0]||'').trim(),rollNumber:String(row[1]||'').trim(),course:String(row[2]||'').trim(),syllabus:String(row[3]||'').trim()||'-',phone:String(row[4]||'').trim(),monthlyFee:parseFloat(row[5])||0,admissionDate,status:String(row[7]||'').trim()||'Active',createdAt:new Date().toISOString()};
+                    if (!student.name||!student.rollNumber||!student.course||!student.phone||!student.monthlyFee||!student.status) { errors.push(`Row ${i+2}: Missing required fields`); errorCount++; continue; }
+                    if (student.status!=='Active'&&student.status!=='Inactive') { errors.push(`Row ${i+2}: Status must be "Active" or "Inactive"`); errorCount++; continue; }
+                    if (window.students.find(s=>s.rollNumber===student.rollNumber)) { errors.push(`Row ${i+2}: Roll number ${student.rollNumber} already exists`); errorCount++; continue; }
+                    await addDoc(collection(db,'students'),student);
                     successCount++;
-                    statusDiv.textContent = `⏳ Uploaded ${successCount} of ${rows.length} students...`;
+                    statusDiv.textContent=`⏳ Uploaded ${successCount} of ${rows.length} students...`;
                 } catch (error) { errors.push(`Row ${i+2}: ${error.message}`); errorCount++; }
             }
-            if (successCount > 0 && errorCount === 0) {
-                statusDiv.style.background = '#d4edda'; statusDiv.style.color = '#155724';
-                statusDiv.innerHTML = `✅ Successfully uploaded ${successCount} student(s)!`;
-            } else if (successCount > 0) {
-                statusDiv.style.background = '#fff3cd'; statusDiv.style.color = '#856404';
-                statusDiv.innerHTML = `⚠️ Uploaded ${successCount}. ${errorCount} failed.<details style="margin-top:10px;"><summary>View Errors</summary><pre style="margin-top:5px;font-size:0.85em;">${errors.join('\n')}</pre></details>`;
-            } else {
-                statusDiv.style.background = '#f8d7da'; statusDiv.style.color = '#721c24';
-                statusDiv.innerHTML = `❌ Upload failed. ${errorCount} error(s).<details style="margin-top:10px;"><summary>View Errors</summary><pre>${errors.join('\n')}</pre></details>`;
-            }
-            fileInput.value = '';
-        } catch (error) {
-            statusDiv.style.background = '#f8d7da'; statusDiv.style.color = '#721c24';
-            statusDiv.textContent = `❌ Error: ${error.message}`;
-        }
+            if (successCount>0&&errorCount===0) { statusDiv.style.background='#d4edda'; statusDiv.style.color='#155724'; statusDiv.innerHTML=`✅ Successfully uploaded ${successCount} student(s)!`; }
+            else if (successCount>0) { statusDiv.style.background='#fff3cd'; statusDiv.style.color='#856404'; statusDiv.innerHTML=`⚠️ Uploaded ${successCount}. ${errorCount} failed.<details style="margin-top:10px;"><summary>View Errors</summary><pre style="margin-top:5px;font-size:0.85em;">${errors.join('\n')}</pre></details>`; }
+            else { statusDiv.style.background='#f8d7da'; statusDiv.style.color='#721c24'; statusDiv.innerHTML=`❌ Upload failed. ${errorCount} error(s).<details style="margin-top:10px;"><summary>View Errors</summary><pre>${errors.join('\n')}</pre></details>`; }
+            fileInput.value='';
+        } catch (error) { statusDiv.style.background='#f8d7da'; statusDiv.style.color='#721c24'; statusDiv.textContent=`❌ Error: ${error.message}`; }
     };
 
     function getErrorMessage(code) {
-        const messages = {
-            'auth/email-already-in-use': 'This email is already registered.',
-            'auth/invalid-email': 'Invalid email address.',
-            'auth/weak-password': 'Password should be at least 6 characters.',
-            'auth/user-disabled': 'This account has been disabled.',
-            'auth/user-not-found': 'No account found with this email.',
-            'auth/wrong-password': 'Incorrect password.',
-            'auth/invalid-credential': 'Invalid email or password.',
-            'auth/too-many-requests': 'Too many attempts. Please try again later.'
-        };
-        return messages[code] || 'An error occurred. Please try again.';
+        const messages={'auth/email-already-in-use':'This email is already registered.','auth/invalid-email':'Invalid email address.','auth/weak-password':'Password should be at least 6 characters.','auth/user-disabled':'This account has been disabled.','auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Invalid email or password.','auth/too-many-requests':'Too many attempts. Please try again later.'};
+        return messages[code]||'An error occurred. Please try again.';
     }
 </script>
 </body>
