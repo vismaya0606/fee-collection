@@ -122,6 +122,8 @@
         .readonly-notice { background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 600; }
         #loginPage, #signupPage, #resetPage { display: none; }
         #mainApp { display: none; }
+
+        /* Inquiry Styles */
         .inquiry-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .inquiry-stat { background: white; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
         .inquiry-stat.new-color { border-top-color: #17a2b8; }
@@ -136,8 +138,11 @@
         .inquiry-stat.interested-color h3 { color: #28a745; }
         .inquiry-stat.notinterested-color h3 { color: #dc3545; }
         .inquiry-stat.converted-color h3 { color: #667eea; }
+
         .convert-modal-content { background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 95%; max-height: 90vh; overflow-y: auto; }
         .convert-notice { background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; border-left: 4px solid #17a2b8; }
+
+        /* Accounts Tab Styles */
         .accounts-month-selector { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
         .accounts-month-selector label { font-weight: 600; color: #333; font-size: 1em; }
         .accounts-month-selector input[type="month"] { padding: 10px 15px; border: 2px solid #667eea; border-radius: 8px; font-size: 1em; color: #333; }
@@ -189,121 +194,6 @@
         .reminder-info { font-size: 0.85em; color: #666; }
         .reminder-count { font-weight: 600; color: #667eea; }
         .reminder-date { font-size: 0.8em; color: #999; display: block; margin-top: 2px; }
-
-        /* =============================================
-           BATCH 2026 INQUIRY TAB STYLES
-        ============================================= */
-        .b26-header-banner {
-            background: linear-gradient(135deg, #3a1c71 0%, #6b2d7f 60%, #d76d77 100%);
-            border-radius: 16px;
-            padding: 28px 30px;
-            color: white;
-            margin-bottom: 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .b26-header-banner h2 { font-size: 1.6em; margin-bottom: 6px; }
-        .b26-header-banner p { opacity: 0.85; font-size: 0.92em; }
-        .b26-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .b26-tag { padding: 4px 14px; border-radius: 100px; font-size: 0.8em; font-weight: 600; }
-        .b26-tag-10 { background: rgba(215,109,119,0.5); border: 1px solid rgba(215,109,119,0.8); }
-        .b26-tag-12 { background: rgba(255,175,123,0.4); border: 1px solid rgba(255,175,123,0.8); }
-        .b26-tag-batch { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
-        .b26-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 28px; }
-        .b26-stat { background: white; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
-        .b26-stat.s10 { border-top-color: #d76d77; }
-        .b26-stat.s12 { border-top-color: #ffaf7b; }
-        .b26-stat.stotal { border-top-color: #3a1c71; }
-        .b26-stat.snew { border-top-color: #17a2b8; }
-        .b26-stat.sconv { border-top-color: #28a745; }
-        .b26-stat h3 { font-size: 1.7em; font-weight: 700; margin-bottom: 4px; }
-        .b26-stat p { font-size: 0.78em; color: #666; }
-        .b26-stat.stotal h3 { color: #3a1c71; }
-        .b26-stat.s10 h3 { color: #d76d77; }
-        .b26-stat.s12 h3 { color: #d67a2b; }
-        .b26-stat.snew h3 { color: #17a2b8; }
-        .b26-stat.sconv h3 { color: #28a745; }
-
-        .b26-form-card { background: #f8f9fa; border-radius: 14px; padding: 28px; margin-bottom: 28px; border: 1px solid #e8dff5; }
-        .b26-section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-        .b26-section-num { width: 28px; height: 28px; background: linear-gradient(135deg, #3a1c71, #d76d77); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8em; font-weight: 700; flex-shrink: 0; }
-        .b26-section-name { font-size: 1em; font-weight: 700; color: #3a1c71; }
-        .b26-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
-        .b26-field { display: flex; flex-direction: column; gap: 6px; }
-        .b26-field label { font-size: 0.8em; font-weight: 600; color: #7a6d8a; text-transform: uppercase; letter-spacing: 0.04em; }
-        .b26-field label .req { color: #d76d77; }
-        .b26-field input, .b26-field select, .b26-field textarea {
-            padding: 11px 14px; border: 2px solid #e0d5f0; border-radius: 10px;
-            font-size: 0.93em; color: #333; background: white; font-family: inherit;
-            transition: border-color 0.2s; outline: none;
-        }
-        .b26-field input:focus, .b26-field select:focus, .b26-field textarea:focus { border-color: #d76d77; }
-        .b26-field textarea { resize: vertical; min-height: 70px; }
-
-        .b26-std-toggle { display: flex; gap: 12px; }
-        .b26-std-btn {
-            flex: 1; padding: 14px; border: 2px solid #e0d5f0; border-radius: 12px;
-            cursor: pointer; text-align: center; transition: all 0.2s; background: white; user-select: none;
-        }
-        .b26-std-btn .icon { font-size: 1.5em; margin-bottom: 4px; }
-        .b26-std-btn .title { font-weight: 700; font-size: 0.92em; color: #333; }
-        .b26-std-btn .sub { font-size: 0.75em; color: #999; }
-        .b26-std-btn.selected { border-color: #d76d77; background: linear-gradient(135deg, #fdf0f2, #f5f0ff); }
-        .b26-std-btn.selected .title { color: #3a1c71; }
-
-        .b26-radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        .b26-radio-opt {
-            display: flex; align-items: center; gap: 7px; padding: 8px 14px;
-            border: 2px solid #e0d5f0; border-radius: 100px; cursor: pointer;
-            font-size: 0.87em; font-weight: 500; color: #666; background: white; user-select: none; transition: all 0.2s;
-        }
-        .b26-radio-opt:hover { border-color: #d76d77; }
-        .b26-radio-opt input { display: none; }
-        .b26-radio-opt.selected { border-color: #d76d77; background: #fdf0f2; color: #3a1c71; font-weight: 600; }
-
-        .b26-check-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        .b26-check-opt {
-            display: flex; align-items: center; gap: 7px; padding: 8px 14px;
-            border: 2px solid #e0d5f0; border-radius: 100px; cursor: pointer;
-            font-size: 0.87em; font-weight: 500; color: #666; background: white; user-select: none; transition: all 0.2s;
-        }
-        .b26-check-opt input { display: none; }
-        .b26-check-opt.selected { border-color: #d76d77; background: #fdf0f2; color: #3a1c71; font-weight: 600; }
-
-        .b26-subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
-        .b26-subject-card {
-            padding: 10px 12px; border: 2px solid #e0d5f0; border-radius: 10px;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
-            background: white; user-select: none; transition: all 0.2s; font-size: 0.87em; font-weight: 500; color: #555;
-        }
-        .b26-subject-card.selected { border-color: #d76d77; background: #fdf0f2; color: #3a1c71; font-weight: 600; }
-
-        .b26-conditional { display: none; }
-        .b26-conditional.show { display: block; animation: b26fadeIn 0.3s ease; }
-        @keyframes b26fadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
-
-        .b26-table-badge { padding: 3px 10px; border-radius: 100px; font-size: 0.8em; font-weight: 600; display: inline-block; }
-        .b26-badge-10 { background: #fde8ec; color: #a0283a; }
-        .b26-badge-12 { background: #fff3e0; color: #8a4a00; }
-        .b26-badge-new { background: #e0f4ff; color: #0a5275; }
-        .b26-badge-contacted { background: #fff3cd; color: #856404; }
-        .b26-badge-converted { background: #d4edda; color: #155724; }
-        .b26-badge-notinterested { background: #f8d7da; color: #721c24; }
-
-        .b26-filters { background: #f8f9fa; padding: 16px 20px; border-radius: 10px; margin-bottom: 18px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-        .b26-filters select, .b26-filters input[type="text"] {
-            padding: 9px 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.92em; outline: none;
-        }
-
-        .b26-detail-modal { background: white; padding: 30px; border-radius: 15px; max-width: 750px; width: 95%; max-height: 90vh; overflow-y: auto; }
-        .b26-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-        @media (max-width: 600px) { .b26-detail-grid { grid-template-columns: 1fr; } }
-        .b26-detail-row { background: #f8f9fa; padding: 10px 14px; border-radius: 8px; }
-        .b26-detail-row label { font-size: 0.75em; font-weight: 600; color: #999; text-transform: uppercase; display: block; margin-bottom: 3px; }
-        .b26-detail-row span { font-size: 0.92em; color: #333; font-weight: 500; }
 
         @media print {
             body * { visibility: hidden; }
@@ -422,8 +312,7 @@
                 <button class="tab" onclick="switchTab('teachers', this)">Teachers</button>
                 <button class="tab" onclick="switchTab('expenses', this)">Expenses</button>
                 <button class="tab" onclick="switchTab('accounts', this)">Accounts</button>
-                <button class="tab" onclick="switchTab('inquiries', this)">🔍 Inquiry</button>
-                <button class="tab" onclick="switchTab('batch2026', this)">🎓 Batch 2026</button>
+                <button class="tab" onclick="switchTab('inquiries', this)">🔍 Inquiry Form</button>
                 <button class="tab" onclick="switchTab('reports', this)">Reports</button>
             </div>
 
@@ -441,6 +330,7 @@
                         </div>
                         <div id="uploadStatus" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
                     </div>
+
                     <h3 style="margin-bottom: 20px;">➕ Add Single Student</h3>
                     <form id="studentForm">
                         <div class="form-grid">
@@ -478,6 +368,7 @@
                         <button type="submit" class="btn btn-primary">Add Student</button>
                     </form>
                 </div>
+
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">All Students</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
                     <div style="flex: 1; min-width: 250px;">
@@ -533,6 +424,7 @@
                     </div>
                     <button class="btn btn-success" onclick="collectFee()">Collect Fee</button>
                 </div>
+
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">📊 Paid Students Report</h2>
                 <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
                     <div class="form-grid" style="margin-bottom: 20px;">
@@ -580,6 +472,7 @@
                         </table>
                     </div>
                 </div>
+
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">Recent Payments (Last 20)</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
                     <div class="sort-controls">
@@ -636,6 +529,7 @@
                         <tbody id="teacherTableBody"></tbody>
                     </table>
                 </div>
+
                 <div id="salaryFormSection" style="margin-top: 40px;">
                     <h2 style="margin-bottom: 20px;">💰 Pay Salary</h2>
                     <div class="form-grid">
@@ -790,7 +684,9 @@
                 </div>
             </div>
 
-            <!-- Inquiry Tab -->
+            <!-- ============================================================ -->
+            <!-- INQUIRY FORM TAB -->
+            <!-- ============================================================ -->
             <div id="inquiries" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
                     <div>
@@ -799,6 +695,8 @@
                     </div>
                     <button class="btn btn-success" onclick="exportInquiriesToExcel()" style="padding: 10px 20px;">📥 Export to Excel</button>
                 </div>
+
+                <!-- Inquiry Stats -->
                 <div class="inquiry-stats" id="inquiryStats">
                     <div class="inquiry-stat"><h3 id="inqTotal">0</h3><p>Total Inquiries</p></div>
                     <div class="inquiry-stat new-color"><h3 id="inqNew">0</h3><p>New</p></div>
@@ -807,6 +705,8 @@
                     <div class="inquiry-stat notinterested-color"><h3 id="inqNotInterested">0</h3><p>Not Interested</p></div>
                     <div class="inquiry-stat converted-color"><h3 id="inqConverted">0</h3><p>Converted</p></div>
                 </div>
+
+                <!-- Add Inquiry Form -->
                 <div id="inquiryFormSection" style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                     <h3 style="margin-bottom: 20px; color: #667eea;">➕ Add New Inquiry</h3>
                     <form id="inquiryForm">
@@ -835,9 +735,12 @@
                                 <label>Source</label>
                                 <select id="inqSource">
                                     <option value="">Select Source</option>
-                                    <option value="Walk-in">Walk-in</option><option value="Phone Call">Phone Call</option>
-                                    <option value="WhatsApp">WhatsApp</option><option value="Referral">Referral</option>
-                                    <option value="Social Media">Social Media</option><option value="Advertisement">Advertisement</option>
+                                    <option value="Walk-in">Walk-in</option>
+                                    <option value="Phone Call">Phone Call</option>
+                                    <option value="WhatsApp">WhatsApp</option>
+                                    <option value="Referral">Referral</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Advertisement">Advertisement</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
@@ -845,8 +748,10 @@
                             <div class="form-group">
                                 <label>Status *</label>
                                 <select id="inqStatus" required>
-                                    <option value="New">New</option><option value="Follow Up">Follow Up</option>
-                                    <option value="Interested">Interested</option><option value="Not Interested">Not Interested</option>
+                                    <option value="New">New</option>
+                                    <option value="Follow Up">Follow Up</option>
+                                    <option value="Interested">Interested</option>
+                                    <option value="Not Interested">Not Interested</option>
                                 </select>
                             </div>
                             <div class="form-group"><label>Follow Up Date</label><input type="date" id="inqFollowUpDate"></div>
@@ -859,6 +764,8 @@
                         <button type="submit" class="btn btn-primary" id="inqSubmitBtn">Add Inquiry</button>
                     </form>
                 </div>
+
+                <!-- Inquiry Filters -->
                 <div style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px;">
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                         <input type="text" class="search-box" placeholder="Search by name or phone..." id="inquirySearch" style="margin-bottom: 0; max-width: 280px; flex: 1;">
@@ -866,8 +773,10 @@
                             <label style="font-weight: 600; color: #333; white-space: nowrap;">Status:</label>
                             <select id="inquiryStatusFilter" onchange="updateInquiryTable()" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95em;">
                                 <option value="">All Statuses</option>
-                                <option value="New">New</option><option value="Follow Up">Follow Up</option>
-                                <option value="Interested">Interested</option><option value="Not Interested">Not Interested</option>
+                                <option value="New">New</option>
+                                <option value="Follow Up">Follow Up</option>
+                                <option value="Interested">Interested</option>
+                                <option value="Not Interested">Not Interested</option>
                                 <option value="Converted">Converted</option>
                             </select>
                         </div>
@@ -883,392 +792,26 @@
                         <button class="btn btn-primary" onclick="clearInquiryFilters()" style="padding: 10px 18px;">Clear Filters</button>
                     </div>
                 </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th><th>Name</th><th>Phone</th><th>Class</th><th>Syllabus</th><th>Source</th>
-                                <th>Expected Fee</th><th>Status</th><th>Follow Up</th><th>Notes</th>
-                                <th id="inquiryActionsHeader">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inquiryTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
 
-            <!-- ============================================================ -->
-            <!-- BATCH 2026 TAB — NEW -->
-            <!-- ============================================================ -->
-            <div id="batch2026" class="tab-content">
-
-                <!-- Header Banner -->
-                <div class="b26-header-banner">
-                    <div>
-                        <h2>🎓 Batch 2026 — Student Inquiry Form</h2>
-                        <p>Dedicated admission inquiry for 10th & 12th Standard students joining in 2026</p>
-                        <div class="b26-tags">
-                            <span class="b26-tag b26-tag-10">📘 10th Standard</span>
-                            <span class="b26-tag b26-tag-12">🎓 12th Standard</span>
-                            <span class="b26-tag b26-tag-batch">📅 Batch 2026</span>
-                        </div>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
-                        <button class="btn btn-success" onclick="exportBatch2026ToExcel()" style="padding:10px 20px;">📥 Export to Excel</button>
-                    </div>
-                </div>
-
-                <!-- Stats -->
-                <div class="b26-stats-grid">
-                    <div class="b26-stat stotal"><h3 id="b26Total">0</h3><p>Total Inquiries</p></div>
-                    <div class="b26-stat s10"><h3 id="b26Count10">0</h3><p>10th Standard</p></div>
-                    <div class="b26-stat s12"><h3 id="b26Count12">0</h3><p>12th Standard</p></div>
-                    <div class="b26-stat snew"><h3 id="b26CountNew">0</h3><p>New / Pending</p></div>
-                    <div class="b26-stat sconv"><h3 id="b26CountConverted">0</h3><p>Converted</p></div>
-                </div>
-
-                <!-- Add Inquiry Form -->
-                <div id="b26FormSection" class="b26-form-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-size:1.4em;">📋</span>
-                            <div>
-                                <div style="font-size:1.05em; font-weight:700; color:#3a1c71;">Add New Batch 2026 Inquiry</div>
-                                <div style="font-size:0.82em; color:#999;">Fill all details carefully for 10th or 12th standard applicant</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form id="b26Form">
-                        <!-- Section 1: Student Info -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">1</div><div class="b26-section-name">Student Information</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field">
-                                    <label>Student Name <span class="req">*</span></label>
-                                    <input type="text" id="b26Name" placeholder="Full name" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Date of Birth <span class="req">*</span></label>
-                                    <input type="date" id="b26DOB" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Gender <span class="req">*</span></label>
-                                    <select id="b26Gender" required>
-                                        <option value="">Select gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Aadhar Number</label>
-                                    <input type="text" id="b26Aadhar" placeholder="12-digit Aadhar (optional)" maxlength="14">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Standard & Syllabus -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">2</div><div class="b26-section-name">Standard & Syllabus</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field" style="grid-column: span 2;">
-                                    <label>Applying for Standard <span class="req">*</span></label>
-                                    <div class="b26-std-toggle">
-                                        <div class="b26-std-btn" id="b26Std10Btn" onclick="b26SelectStd('10')">
-                                            <div class="icon">📘</div>
-                                            <div class="title">10th Standard</div>
-                                            <div class="sub">SSLC / Matriculation</div>
-                                        </div>
-                                        <div class="b26-std-btn" id="b26Std12Btn" onclick="b26SelectStd('12')">
-                                            <div class="icon">🎓</div>
-                                            <div class="title">12th Standard</div>
-                                            <div class="sub">Higher Secondary</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Board / Syllabus <span class="req">*</span></label>
-                                    <select id="b26Syllabus" required>
-                                        <option value="">Select board</option>
-                                        <option value="CBSE">CBSE</option>
-                                        <option value="Matric">State Board (Matric)</option>
-                                        <option value="ICSE">ICSE</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Medium of Instruction <span class="req">*</span></label>
-                                    <select id="b26Medium" required>
-                                        <option value="">Select medium</option>
-                                        <option value="Tamil">Tamil Medium</option>
-                                        <option value="English">English Medium</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- 10th Subjects -->
-                            <div class="b26-conditional" id="b26Sub10Sec" style="margin-top:14px;">
-                                <div class="b26-field">
-                                    <label>Subjects Needing Help — 10th Standard</label>
-                                    <div class="b26-subject-grid" id="b26Sub10Grid">
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">📖 Tamil</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">🔤 English</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">🔢 Mathematics</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">🔬 Science</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">🌍 Social Science</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">💻 Computer Science</div>
-                                        <div class="b26-subject-card" onclick="this.classList.toggle('selected')">📚 All Subjects</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 12th Stream & Subjects -->
-                            <div class="b26-conditional" id="b26Sub12Sec" style="margin-top:14px;">
-                                <div class="b26-field" style="margin-bottom:12px;">
-                                    <label>Stream / Group <span class="req">*</span></label>
-                                    <div class="b26-radio-group">
-                                        <label class="b26-radio-opt" onclick="b26SelectRadio('b26Stream','Science (Maths)',this); b26LoadStreamSubs('science_maths')"><input type="radio" name="b26stream"><span>🔢 Science (Maths)</span></label>
-                                        <label class="b26-radio-opt" onclick="b26SelectRadio('b26Stream','Science (Bio)',this); b26LoadStreamSubs('science_bio')"><input type="radio" name="b26stream"><span>🧬 Science (Bio)</span></label>
-                                        <label class="b26-radio-opt" onclick="b26SelectRadio('b26Stream','Commerce',this); b26LoadStreamSubs('commerce')"><input type="radio" name="b26stream"><span>💼 Commerce</span></label>
-                                        <label class="b26-radio-opt" onclick="b26SelectRadio('b26Stream','Arts',this); b26LoadStreamSubs('arts')"><input type="radio" name="b26stream"><span>🎨 Arts / Humanities</span></label>
-                                    </div>
-                                </div>
-                                <div class="b26-field b26-conditional" id="b26Sub12DynSec">
-                                    <label>Subjects Needing Help — 12th Standard</label>
-                                    <div class="b26-subject-grid" id="b26Sub12Grid"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Previous Academic Info -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">3</div><div class="b26-section-name">Previous Academic Performance</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field">
-                                    <label>Previous School / Institution <span class="req">*</span></label>
-                                    <input type="text" id="b26PrevSchool" placeholder="School name" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Last Class Completed <span class="req">*</span></label>
-                                    <select id="b26PrevClass" required>
-                                        <option value="">Select</option>
-                                        <option value="9th">9th Standard</option>
-                                        <option value="10th">10th Standard</option>
-                                        <option value="11th">11th Standard</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Previous Exam % / CGPA</label>
-                                    <input type="text" id="b26PrevScore" placeholder="e.g. 75% or 8.5 CGPA">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Weakest Subject</label>
-                                    <input type="text" id="b26WeakSub" placeholder="e.g. Mathematics">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Strongest Subject</label>
-                                    <input type="text" id="b26StrongSub" placeholder="e.g. English">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Target Board Exam Score</label>
-                                    <select id="b26TargetScore">
-                                        <option value="">Select target</option>
-                                        <option value="90%+">90% and above</option>
-                                        <option value="80-90%">80% – 90%</option>
-                                        <option value="70-80%">70% – 80%</option>
-                                        <option value="Pass">Just Pass</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Currently Attending Other Tuition?</label>
-                                    <select id="b26OtherTuition">
-                                        <option value="">Select</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Career / Higher Education Goal</label>
-                                    <select id="b26CareerGoal">
-                                        <option value="">Select goal</option>
-                                        <option value="Engineering / JEE">Engineering / JEE</option>
-                                        <option value="Medicine / NEET">Medicine / NEET</option>
-                                        <option value="Arts / Law">Arts / Law</option>
-                                        <option value="Commerce / CA">Commerce / CA</option>
-                                        <option value="Govt. Job / UPSC">Govt. Job / UPSC</option>
-                                        <option value="Study Abroad">Study Abroad</option>
-                                        <option value="Not Decided">Not Decided Yet</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 4: Parent Details -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">4</div><div class="b26-section-name">Parent / Guardian Details</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field">
-                                    <label>Father's Name <span class="req">*</span></label>
-                                    <input type="text" id="b26Father" placeholder="Father's full name" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Mother's Name</label>
-                                    <input type="text" id="b26Mother" placeholder="Mother's full name">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Parent Mobile <span class="req">*</span></label>
-                                    <input type="tel" id="b26ParentPhone" placeholder="10-digit mobile" maxlength="10" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>WhatsApp Number <span class="req">*</span></label>
-                                    <input type="tel" id="b26WhatsApp" placeholder="For updates & reminders" maxlength="10" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Alternate Contact</label>
-                                    <input type="tel" id="b26AltPhone" placeholder="Optional" maxlength="10">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Email Address</label>
-                                    <input type="email" id="b26Email" placeholder="Optional">
-                                </div>
-                                <div class="b26-field" style="grid-column: span 2;">
-                                    <label>Full Address <span class="req">*</span></label>
-                                    <textarea id="b26Address" placeholder="Door no., Street, Area, City, Pincode" rows="2" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 5: Batch Preferences -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">5</div><div class="b26-section-name">Batch Preferences</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field">
-                                    <label>Preferred Batch Timing <span class="req">*</span></label>
-                                    <div class="b26-check-group" id="b26TimingGroup">
-                                        <label class="b26-check-opt" onclick="this.classList.toggle('selected')"><input type="checkbox" value="Morning">🌅 Morning</label>
-                                        <label class="b26-check-opt" onclick="this.classList.toggle('selected')"><input type="checkbox" value="Afternoon">☀️ Afternoon</label>
-                                        <label class="b26-check-opt" onclick="this.classList.toggle('selected')"><input type="checkbox" value="Evening">🌆 Evening</label>
-                                        <label class="b26-check-opt" onclick="this.classList.toggle('selected')"><input type="checkbox" value="Weekend">📅 Weekend Only</label>
-                                    </div>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Mode of Learning <span class="req">*</span></label>
-                                    <select id="b26Mode" required>
-                                        <option value="">Select mode</option>
-                                        <option value="Offline">🏫 Offline (Centre)</option>
-                                        <option value="Online">💻 Online</option>
-                                        <option value="Hybrid">🔄 Hybrid (Both)</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Expected Monthly Fee Range</label>
-                                    <select id="b26FeeRange">
-                                        <option value="">Select range</option>
-                                        <option value="Below ₹1,000">Below ₹1,000</option>
-                                        <option value="₹1,000–₹2,000">₹1,000 – ₹2,000</option>
-                                        <option value="₹2,000–₹3,000">₹2,000 – ₹3,000</option>
-                                        <option value="₹3,000–₹5,000">₹3,000 – ₹5,000</option>
-                                        <option value="Above ₹5,000">Above ₹5,000</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Expected Joining Date</label>
-                                    <input type="date" id="b26JoiningDate">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 6: Source & Notes -->
-                        <div style="margin-bottom:22px;">
-                            <div class="b26-section-title"><div class="b26-section-num">6</div><div class="b26-section-name">Source & Additional Info</div></div>
-                            <div class="b26-form-grid">
-                                <div class="b26-field">
-                                    <label>How Did You Hear About Us? <span class="req">*</span></label>
-                                    <select id="b26Source" required>
-                                        <option value="">Select source</option>
-                                        <option value="Walk-in">🚶 Walk-in</option>
-                                        <option value="Referral">👥 Referral</option>
-                                        <option value="Social Media">📱 Social Media</option>
-                                        <option value="Banner / Pamphlet">🪧 Banner / Pamphlet</option>
-                                        <option value="Phone Call">📞 Phone Call</option>
-                                        <option value="Online Search">🌐 Online Search</option>
-                                        <option value="WhatsApp">💬 WhatsApp</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Referred By</label>
-                                    <input type="text" id="b26ReferredBy" placeholder="Name of referrer (if any)">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Inquiry Date <span class="req">*</span></label>
-                                    <input type="date" id="b26InqDate" required>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Follow Up Date</label>
-                                    <input type="date" id="b26FollowUpDate">
-                                </div>
-                                <div class="b26-field">
-                                    <label>Inquiry Status</label>
-                                    <select id="b26Status">
-                                        <option value="New">🆕 New</option>
-                                        <option value="Contacted">📞 Contacted</option>
-                                        <option value="Interested">✅ Interested</option>
-                                        <option value="Not Interested">❌ Not Interested</option>
-                                        <option value="Converted">🎓 Converted to Student</option>
-                                    </select>
-                                </div>
-                                <div class="b26-field">
-                                    <label>Special Requirements / Notes</label>
-                                    <input type="text" id="b26Notes" placeholder="Any additional notes">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                            <button type="submit" class="btn btn-primary" id="b26SubmitBtn">✨ Submit Batch 2026 Inquiry</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Filters & Table -->
-                <div class="b26-filters">
-                    <input type="text" id="b26Search" placeholder="🔍 Search name or phone..." style="flex:1; min-width:180px;" oninput="updateBatch2026Table()">
-                    <select id="b26FilterStd" onchange="updateBatch2026Table()" style="padding:9px 12px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.92em;">
-                        <option value="">All Standards</option>
-                        <option value="10">10th Standard</option>
-                        <option value="12">12th Standard</option>
-                    </select>
-                    <select id="b26FilterStatus" onchange="updateBatch2026Table()" style="padding:9px 12px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.92em;">
-                        <option value="">All Statuses</option>
-                        <option value="New">New</option>
-                        <option value="Contacted">Contacted</option>
-                        <option value="Interested">Interested</option>
-                        <option value="Not Interested">Not Interested</option>
-                        <option value="Converted">Converted</option>
-                    </select>
-                    <button class="btn btn-primary" onclick="clearB26Filters()" style="padding:9px 18px;">Clear</button>
-                </div>
-
+                <!-- Inquiry Table -->
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Student Name</th>
-                                <th>Standard</th>
-                                <th>Syllabus / Stream</th>
-                                <th>Parent Phone</th>
-                                <th>WhatsApp</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Class</th>
+                                <th>Syllabus</th>
                                 <th>Source</th>
-                                <th>Mode</th>
-                                <th>Target %</th>
+                                <th>Expected Fee</th>
                                 <th>Status</th>
                                 <th>Follow Up</th>
-                                <th id="b26ActionsHeader">Actions</th>
+                                <th>Notes</th>
+                                <th id="inquiryActionsHeader">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="b26TableBody"></tbody>
+                        <tbody id="inquiryTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -1339,7 +882,9 @@
             <h2>🎓 Convert Inquiry to Student</h2>
             <button class="close-btn" onclick="closeConvertModal()">&times;</button>
         </div>
-        <div class="convert-notice">✅ Great news! This inquiry is being converted to a student. Please fill in the remaining details below.</div>
+        <div class="convert-notice">
+            ✅ Great news! This inquiry is being converted to a student. Please fill in the remaining details below.
+        </div>
         <div id="convertInquiryInfo" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em;"></div>
         <form id="convertForm">
             <div class="form-grid">
@@ -1381,17 +926,6 @@
     </div>
 </div>
 
-<!-- Batch 2026 View Detail Modal -->
-<div id="b26DetailModal" class="modal">
-    <div class="modal-content b26-detail-modal">
-        <div class="modal-header">
-            <h2 style="color:#3a1c71;">🎓 Batch 2026 Inquiry Details</h2>
-            <button class="close-btn" onclick="document.getElementById('b26DetailModal').classList.remove('active')">&times;</button>
-        </div>
-        <div id="b26DetailContent"></div>
-    </div>
-</div>
-
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
@@ -1418,57 +952,91 @@
     window.salaries = [];
     window.expenses = [];
     window.inquiries = [];
-    window.batch2026Inquiries = [];
 
-    let studentsListener = null, paymentsListener = null, remindersListener = null;
-    let teachersListener = null, salariesListener = null, expensesListener = null;
-    let inquiriesListener = null, batch2026Listener = null;
-    let currentUser = null, userRole = null;
-    let editingStudentId = null, editingExpenseId = null, editingInquiryId = null;
-    let editingB26Id = null, convertingInquiryId = null;
-    let filteredPaidStudents = [], currentAccountsData = null;
-    let b26FormState = { standard: '', stream: '' };
+    let studentsListener = null;
+    let paymentsListener = null;
+    let remindersListener = null;
+    let teachersListener = null;
+    let salariesListener = null;
+    let expensesListener = null;
+    let inquiriesListener = null;
+    let currentUser = null;
+    let userRole = null;
+    let editingStudentId = null;
+    let editingExpenseId = null;
+    let editingInquiryId = null;
+    let convertingInquiryId = null;
+    let filteredPaidStudents = [];
+    let currentAccountsData = null;
 
-    // ---- Auth ----
     window.showPage = function(pageId) {
-        ['loginPage','signupPage','resetPage','mainApp'].forEach(id => document.getElementById(id).style.display = 'none');
+        ['loginPage','signupPage','resetPage','mainApp'].forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
         document.getElementById(pageId).style.display = 'block';
         document.querySelectorAll('.error-message, .success-message').forEach(el => el.classList.remove('show'));
     };
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
         const btn = document.getElementById('loginBtn');
         const errorDiv = document.getElementById('loginError');
         btn.disabled = true; btn.textContent = 'Logging in...';
         errorDiv.classList.remove('show');
-        try { await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); }
-        catch (error) { errorDiv.textContent = '❌ ' + getErrorMessage(error.code); errorDiv.classList.add('show'); btn.disabled = false; btn.textContent = 'Login'; }
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
+            errorDiv.classList.add('show');
+            btn.disabled = false; btn.textContent = 'Login';
+        }
     });
 
     document.getElementById('signupForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const role = document.getElementById('signupRole').value;
         const btn = document.getElementById('signupBtn');
-        const errorDiv = document.getElementById('signupError'), successDiv = document.getElementById('signupSuccess');
+        const errorDiv = document.getElementById('signupError');
+        const successDiv = document.getElementById('signupSuccess');
         btn.disabled = true; btn.textContent = 'Creating Account...';
         errorDiv.classList.remove('show'); successDiv.classList.remove('show');
         try {
-            const uc = await createUserWithEmailAndPassword(auth, document.getElementById('signupEmail').value, document.getElementById('signupPassword').value);
-            await setDoc(doc(db, 'users', uc.user.uid), { email: document.getElementById('signupEmail').value, name: document.getElementById('signupName').value, role: document.getElementById('signupRole').value, createdAt: new Date().toISOString() });
-            successDiv.textContent = '✅ Account created! Redirecting...'; successDiv.classList.add('show');
-            setTimeout(() => { showPage('loginPage'); document.getElementById('loginEmail').value = document.getElementById('signupEmail').value; }, 2000);
-        } catch (error) { errorDiv.textContent = '❌ ' + getErrorMessage(error.code); errorDiv.classList.add('show'); btn.disabled = false; btn.textContent = 'Create Account'; }
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, 'users', userCredential.user.uid), { email, name, role, createdAt: new Date().toISOString() });
+            successDiv.textContent = '✅ Account created! Redirecting...';
+            successDiv.classList.add('show');
+            setTimeout(() => { showPage('loginPage'); document.getElementById('loginEmail').value = email; }, 2000);
+        } catch (error) {
+            errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
+            errorDiv.classList.add('show');
+            btn.disabled = false; btn.textContent = 'Create Account';
+        }
     });
 
     document.getElementById('resetForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const email = document.getElementById('resetEmail').value;
         const btn = document.getElementById('resetBtn');
-        const errorDiv = document.getElementById('resetError'), successDiv = document.getElementById('resetSuccess');
         btn.disabled = true; btn.textContent = 'Sending...';
+        const errorDiv = document.getElementById('resetError');
+        const successDiv = document.getElementById('resetSuccess');
         errorDiv.classList.remove('show'); successDiv.classList.remove('show');
-        try { await sendPasswordResetEmail(auth, document.getElementById('resetEmail').value); successDiv.textContent = '✅ Password reset email sent!'; successDiv.classList.add('show'); document.getElementById('resetEmail').value = ''; }
-        catch (error) { errorDiv.textContent = '❌ ' + getErrorMessage(error.code); errorDiv.classList.add('show'); }
-        finally { btn.disabled = false; btn.textContent = 'Send Reset Link'; }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            successDiv.textContent = '✅ Password reset email sent!';
+            successDiv.classList.add('show');
+            document.getElementById('resetEmail').value = '';
+        } catch (error) {
+            errorDiv.textContent = '❌ ' + getErrorMessage(error.code);
+            errorDiv.classList.add('show');
+        } finally {
+            btn.disabled = false; btn.textContent = 'Send Reset Link';
+        }
     });
 
     onAuthStateChanged(auth, async (user) => {
@@ -1476,20 +1044,32 @@
             currentUser = user;
             const userDoc = await getDoc(doc(db, 'users', user.uid));
             if (userDoc.exists()) {
-                const ud = userDoc.data(); userRole = ud.role;
-                document.getElementById('userName').textContent = ud.name;
+                const userData = userDoc.data();
+                userRole = userData.role;
+                document.getElementById('userName').textContent = userData.name;
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('userRole').textContent = userRole.toUpperCase();
                 applyRoleBasedUI(userRole);
-                showPage('mainApp'); loadData();
-            } else { alert('User profile not found.'); signOut(auth); }
-        } else { showPage('loginPage'); }
+                showPage('mainApp');
+                loadData();
+            } else {
+                alert('User profile not found.'); signOut(auth);
+            }
+        } else {
+            showPage('loginPage');
+        }
     });
 
     window.logout = async function() {
         if (confirm('Are you sure you want to logout?')) {
             try {
-                [studentsListener,paymentsListener,remindersListener,teachersListener,salariesListener,expensesListener,inquiriesListener,batch2026Listener].forEach(l => l && l());
+                if (studentsListener) studentsListener();
+                if (paymentsListener) paymentsListener();
+                if (remindersListener) remindersListener();
+                if (teachersListener) teachersListener();
+                if (salariesListener) salariesListener();
+                if (expensesListener) expensesListener();
+                if (inquiriesListener) inquiriesListener();
                 await signOut(auth);
             } catch (error) { alert('Error logging out: ' + error.message); }
         }
@@ -1497,31 +1077,61 @@
 
     function applyRoleBasedUI(role) {
         const isStaff = role === 'staff';
-        ['staffNotice'].forEach(id => document.getElementById(id).style.display = isStaff ? 'block' : 'none');
-        ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','b26FormSection'].forEach(id => {
-            document.getElementById(id).style.display = isStaff ? 'none' : 'block';
-        });
-        ['actionsHeader','paymentActionsHeader','teacherActionsHeader','salaryActionsHeader','expenseActionsHeader','inquiryActionsHeader','b26ActionsHeader'].forEach(id => {
-            document.getElementById(id).style.display = isStaff ? 'none' : 'table-cell';
-        });
+        document.getElementById('staffNotice').style.display = isStaff ? 'block' : 'none';
+        document.getElementById('studentFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('feeFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('actionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        document.getElementById('paymentActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        document.getElementById('teacherFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('salaryFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('teacherActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        document.getElementById('salaryActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        document.getElementById('expenseFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('expenseActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
+        document.getElementById('inquiryFormSection').style.display = isStaff ? 'none' : 'block';
+        document.getElementById('inquiryActionsHeader').style.display = isStaff ? 'none' : 'table-cell';
     }
 
     async function loadData() {
         try {
-            studentsListener = onSnapshot(query(collection(db, 'students'), orderBy('rollNumber')), (snap) => { window.students = snap.docs.map(d => ({id:d.id,...d.data()})); updateStudentTable(); updateFeeStudentSelect(); updateStats(); });
-            paymentsListener = onSnapshot(query(collection(db, 'payments'), orderBy('date','desc')), (snap) => { window.payments = snap.docs.map(d => ({id:d.id,...d.data()})); updatePaymentTable(); updateStats(); });
-            remindersListener = onSnapshot(query(collection(db, 'reminders'), orderBy('sentAt','desc')), (snap) => { window.reminders = snap.docs.map(d => ({id:d.id,...d.data()})); updateStudentTable(); });
-            teachersListener = onSnapshot(query(collection(db, 'teachers'), orderBy('employeeId')), (snap) => { window.teachers = snap.docs.map(d => ({id:d.id,...d.data()})); updateTeacherTable(); updateSalaryTeacherSelect(); });
-            salariesListener = onSnapshot(query(collection(db, 'salaries'), orderBy('date','desc')), (snap) => { window.salaries = snap.docs.map(d => ({id:d.id,...d.data()})); updateSalaryTable(); });
-            expensesListener = onSnapshot(query(collection(db, 'expenses'), orderBy('date','desc')), (snap) => { window.expenses = snap.docs.map(d => ({id:d.id,...d.data()})); updateExpenseTable(); updateExpenseSummary(); });
-            inquiriesListener = onSnapshot(query(collection(db, 'inquiries'), orderBy('createdAt','desc')), (snap) => { window.inquiries = snap.docs.map(d => ({id:d.id,...d.data()})); updateInquiryTable(); updateInquiryStats(); });
-            batch2026Listener = onSnapshot(query(collection(db, 'batch2026'), orderBy('createdAt','desc')), (snap) => { window.batch2026Inquiries = snap.docs.map(d => ({id:d.id,...d.data()})); updateBatch2026Table(); updateB26Stats(); });
+            studentsListener = onSnapshot(query(collection(db, 'students'), orderBy('rollNumber')), (snapshot) => {
+                window.students = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateStudentTable(); updateFeeStudentSelect(); updateStats();
+            });
+            paymentsListener = onSnapshot(query(collection(db, 'payments'), orderBy('date', 'desc')), (snapshot) => {
+                window.payments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updatePaymentTable(); updateStats();
+            });
+            remindersListener = onSnapshot(query(collection(db, 'reminders'), orderBy('sentAt', 'desc')), (snapshot) => {
+                window.reminders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateStudentTable();
+            });
+            teachersListener = onSnapshot(query(collection(db, 'teachers'), orderBy('employeeId')), (snapshot) => {
+                window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateTeacherTable(); updateSalaryTeacherSelect();
+            });
+            salariesListener = onSnapshot(query(collection(db, 'salaries'), orderBy('date', 'desc')), (snapshot) => {
+                window.salaries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateSalaryTable();
+            });
+            expensesListener = onSnapshot(query(collection(db, 'expenses'), orderBy('date', 'desc')), (snapshot) => {
+                window.expenses = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateExpenseTable(); updateExpenseSummary();
+            });
+            inquiriesListener = onSnapshot(query(collection(db, 'inquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
+                window.inquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateInquiryTable(); updateInquiryStats();
+            });
+
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-        } catch (error) { console.error(error); alert('Error loading data: ' + error.message); }
+        } catch (error) {
+            console.error('Error loading data:', error);
+            alert('Error loading data: ' + error.message);
+        }
     }
 
-    // Default dates
+    // Set default dates
     document.getElementById('feeMonth').value = new Date().toISOString().slice(0,7);
     document.getElementById('reportMonth').value = new Date().toISOString().slice(0,7);
     document.getElementById('paidReportMonth').value = new Date().toISOString().slice(0,7);
@@ -1529,336 +1139,22 @@
     document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
     document.getElementById('accountsMonth').value = new Date().toISOString().slice(0,7);
     document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
-    document.getElementById('b26InqDate').value = new Date().toISOString().slice(0,10);
 
     // ============================================================
-    // BATCH 2026 FUNCTIONS
+    // INQUIRY FUNCTIONS
     // ============================================================
-    const b26StreamSubs = {
-        science_maths: ['🔤 English','📖 Tamil','🔢 Mathematics','⚡ Physics','⚗️ Chemistry','💻 Computer Science'],
-        science_bio:   ['🔤 English','📖 Tamil','🧬 Biology','⚡ Physics','⚗️ Chemistry','🔢 Mathematics'],
-        commerce:      ['🔤 English','📖 Tamil','📊 Accountancy','💼 Business Studies','📈 Economics','🔢 Mathematics'],
-        arts:          ['🔤 English','📖 Tamil','🏛️ History','🌍 Geography','💰 Economics','📊 Political Science']
-    };
 
-    window.b26SelectStd = function(std) {
-        b26FormState.standard = std;
-        document.getElementById('b26Std10Btn').classList.toggle('selected', std === '10');
-        document.getElementById('b26Std12Btn').classList.toggle('selected', std === '12');
-        document.getElementById('b26Sub10Sec').classList.toggle('show', std === '10');
-        document.getElementById('b26Sub12Sec').classList.toggle('show', std === '12');
-        if (std === '10') { b26FormState.stream = ''; document.getElementById('b26Sub12DynSec').classList.remove('show'); }
-    };
-
-    window.b26SelectRadio = function(field, value, el) {
-        b26FormState[field] = value;
-        el.closest('.b26-radio-group').querySelectorAll('.b26-radio-opt').forEach(o => o.classList.remove('selected'));
-        el.classList.add('selected');
-    };
-
-    window.b26LoadStreamSubs = function(stream) {
-        b26FormState.stream = stream;
-        const grid = document.getElementById('b26Sub12Grid');
-        const subs = [...(b26StreamSubs[stream] || []), '📚 All Subjects'];
-        grid.innerHTML = subs.map(s => `<div class="b26-subject-card" onclick="this.classList.toggle('selected')">${s}</div>`).join('');
-        document.getElementById('b26Sub12DynSec').classList.add('show');
-    };
-
-    document.getElementById('b26Form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        if (!b26FormState.standard) { alert('Please select a standard (10th or 12th).'); return; }
-
-        const btn = document.getElementById('b26SubmitBtn');
-        const isEditing = editingB26Id !== null;
-        btn.disabled = true; btn.textContent = isEditing ? 'Updating...' : 'Submitting...';
-
-        const getSelectedSubjects = () => {
-            const gridId = b26FormState.standard === '10' ? 'b26Sub10Grid' : 'b26Sub12Grid';
-            return [...document.querySelectorAll(`#${gridId} .b26-subject-card.selected`)].map(c => c.textContent.trim());
-        };
-        const getSelectedTimings = () => [...document.querySelectorAll('#b26TimingGroup .b26-check-opt.selected')].map(c => c.querySelector('input').value);
-
-        const data = {
-            studentName: document.getElementById('b26Name').value.trim(),
-            dob: document.getElementById('b26DOB').value,
-            gender: document.getElementById('b26Gender').value,
-            aadhar: document.getElementById('b26Aadhar').value.trim(),
-            standard: b26FormState.standard,
-            syllabus: document.getElementById('b26Syllabus').value,
-            medium: document.getElementById('b26Medium').value,
-            stream: b26FormState.stream || '-',
-            subjects: getSelectedSubjects().join(', ') || '-',
-            prevSchool: document.getElementById('b26PrevSchool').value.trim(),
-            prevClass: document.getElementById('b26PrevClass').value,
-            prevScore: document.getElementById('b26PrevScore').value.trim(),
-            weakSubject: document.getElementById('b26WeakSub').value.trim() || '-',
-            strongSubject: document.getElementById('b26StrongSub').value.trim() || '-',
-            targetScore: document.getElementById('b26TargetScore').value || '-',
-            careerGoal: document.getElementById('b26CareerGoal').value || '-',
-            otherTuition: document.getElementById('b26OtherTuition').value || '-',
-            fatherName: document.getElementById('b26Father').value.trim(),
-            motherName: document.getElementById('b26Mother').value.trim() || '-',
-            parentPhone: document.getElementById('b26ParentPhone').value.trim(),
-            whatsapp: document.getElementById('b26WhatsApp').value.trim(),
-            altPhone: document.getElementById('b26AltPhone').value.trim() || '-',
-            email: document.getElementById('b26Email').value.trim() || '-',
-            address: document.getElementById('b26Address').value.trim(),
-            batchTiming: getSelectedTimings().join(', ') || '-',
-            mode: document.getElementById('b26Mode').value,
-            feeRange: document.getElementById('b26FeeRange').value || '-',
-            joiningDate: document.getElementById('b26JoiningDate').value || '-',
-            source: document.getElementById('b26Source').value,
-            referredBy: document.getElementById('b26ReferredBy').value.trim() || '-',
-            inquiryDate: document.getElementById('b26InqDate').value,
-            followUpDate: document.getElementById('b26FollowUpDate').value || '-',
-            status: document.getElementById('b26Status').value,
-            notes: document.getElementById('b26Notes').value.trim() || '-',
-            batch: '2026'
-        };
-
-        try {
-            if (isEditing) {
-                await updateDoc(doc(db, 'batch2026', editingB26Id), {...data, updatedAt: new Date().toISOString()});
-                alert('✅ Inquiry updated successfully!');
-                cancelB26Edit();
-            } else {
-                await addDoc(collection(db, 'batch2026'), {...data, createdAt: new Date().toISOString()});
-                alert('✅ Batch 2026 inquiry submitted successfully!');
-            }
-            this.reset();
-            document.getElementById('b26InqDate').value = new Date().toISOString().slice(0,10);
-            b26FormState = { standard: '', stream: '' };
-            document.querySelectorAll('#b26Std10Btn, #b26Std12Btn').forEach(b => b.classList.remove('selected'));
-            document.querySelectorAll('#b26Sub10Sec, #b26Sub12Sec, #b26Sub12DynSec').forEach(s => s.classList.remove('show'));
-            document.querySelectorAll('#b26Sub10Grid .b26-subject-card.selected, #b26Sub12Grid .b26-subject-card.selected, #b26TimingGroup .b26-check-opt.selected').forEach(c => c.classList.remove('selected'));
-        } catch (error) { alert('Error saving inquiry: ' + error.message); }
-        finally { btn.disabled = false; btn.textContent = isEditing ? 'Update Inquiry' : '✨ Submit Batch 2026 Inquiry'; }
-    });
-
-    window.updateBatch2026Table = function() {
-        const tbody = document.getElementById('b26TableBody');
-        const search = document.getElementById('b26Search')?.value.toLowerCase() || '';
-        const stdFilter = document.getElementById('b26FilterStd')?.value || '';
-        const statusFilter = document.getElementById('b26FilterStatus')?.value || '';
-
-        let filtered = window.batch2026Inquiries.filter(r => {
-            const matchSearch = r.studentName?.toLowerCase().includes(search) || r.parentPhone?.includes(search);
-            const matchStd = !stdFilter || r.standard === stdFilter;
-            const matchStatus = !statusFilter || r.status === statusFilter;
-            return matchSearch && matchStd && matchStatus;
-        });
-
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:30px;color:#999;">No Batch 2026 inquiries yet. Add the first one above!</td></tr>';
-            return;
-        }
-
-        const statusBadge = s => ({
-            'New': 'b26-badge-new', 'Contacted': 'b26-badge-contacted',
-            'Interested': 'badge-interested', 'Not Interested': 'b26-badge-notinterested',
-            'Converted': 'b26-badge-converted'
-        }[s] || 'badge-pending');
-
-        tbody.innerHTML = filtered.map(r => {
-            const actionsCell = userRole === 'staff' ? '' : `
-                <td><div class="action-buttons">
-                    <button class="btn btn-info" onclick="viewB26Detail('${r.id}')" style="padding:4px 10px;font-size:0.82em;">View</button>
-                    <button class="btn btn-whatsapp" onclick="sendB26WhatsApp('${r.whatsapp}','${r.studentName.replace(/'/g,"\\'")}','${r.standard}')" style="padding:4px 10px;font-size:0.82em;">📱</button>
-                    <button class="btn btn-warning" onclick="editB26('${r.id}')" style="padding:4px 10px;font-size:0.82em;">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteB26('${r.id}')" style="padding:4px 10px;font-size:0.82em;">Del</button>
-                </div></td>`;
-            return `<tr style="${r.status==='Converted'?'background:#f0fff4;':''}">
-                <td style="font-size:0.88em;">${r.inquiryDate}</td>
-                <td><strong>${r.studentName}</strong><br><small style="color:#999;">${r.fatherName}</small></td>
-                <td><span class="b26-table-badge ${r.standard==='10'?'b26-badge-10':'b26-badge-12'}">${r.standard}th Std</span></td>
-                <td style="font-size:0.85em;">${r.syllabus}<br><small style="color:#999;">${r.stream!=='-'?r.stream:''}</small></td>
-                <td>${r.parentPhone}</td>
-                <td>${r.whatsapp}</td>
-                <td style="font-size:0.85em;">${r.source}</td>
-                <td style="font-size:0.85em;">${r.mode}</td>
-                <td style="font-size:0.85em;">${r.targetScore}</td>
-                <td><span class="badge ${statusBadge(r.status)}">${r.status}</span></td>
-                <td style="font-size:0.82em;color:${r.followUpDate!=='-'?'#856404':'#999'};">${r.followUpDate!=='-'?'📅 '+r.followUpDate:'-'}</td>
-                ${actionsCell}
-            </tr>`;
-        }).join('');
-    };
-
-    window.updateB26Stats = function() {
-        const all = window.batch2026Inquiries;
-        document.getElementById('b26Total').textContent = all.length;
-        document.getElementById('b26Count10').textContent = all.filter(r => r.standard === '10').length;
-        document.getElementById('b26Count12').textContent = all.filter(r => r.standard === '12').length;
-        document.getElementById('b26CountNew').textContent = all.filter(r => ['New','Contacted'].includes(r.status)).length;
-        document.getElementById('b26CountConverted').textContent = all.filter(r => r.status === 'Converted').length;
-    };
-
-    window.viewB26Detail = function(id) {
-        const r = window.batch2026Inquiries.find(x => x.id === id);
-        if (!r) return;
-        document.getElementById('b26DetailContent').innerHTML = `
-            <div style="margin-bottom:14px;padding:14px;background:linear-gradient(135deg,#f5f0ff,#fff0f5);border-radius:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-                <div>
-                    <div style="font-size:1.1em;font-weight:700;color:#3a1c71;">${r.studentName}</div>
-                    <div style="font-size:0.85em;color:#666;">${r.standard}th Standard · ${r.syllabus} · ${r.batch} Batch</div>
-                </div>
-                <span class="badge ${r.status==='Converted'?'badge-paid':r.status==='New'?'badge-new':'badge-pending'}">${r.status}</span>
-            </div>
-            <div class="b26-detail-grid">
-                <div class="b26-detail-row"><label>Date of Birth</label><span>${r.dob}</span></div>
-                <div class="b26-detail-row"><label>Gender</label><span>${r.gender}</span></div>
-                <div class="b26-detail-row"><label>Aadhar</label><span>${r.aadhar||'-'}</span></div>
-                <div class="b26-detail-row"><label>Medium</label><span>${r.medium}</span></div>
-                <div class="b26-detail-row"><label>Stream</label><span>${r.stream}</span></div>
-                <div class="b26-detail-row"><label>Subjects</label><span style="font-size:0.88em;">${r.subjects}</span></div>
-                <div class="b26-detail-row"><label>Previous School</label><span>${r.prevSchool}</span></div>
-                <div class="b26-detail-row"><label>Last Class</label><span>${r.prevClass}</span></div>
-                <div class="b26-detail-row"><label>Previous Score</label><span>${r.prevScore||'-'}</span></div>
-                <div class="b26-detail-row"><label>Weak Subject</label><span>${r.weakSubject}</span></div>
-                <div class="b26-detail-row"><label>Strong Subject</label><span>${r.strongSubject}</span></div>
-                <div class="b26-detail-row"><label>Target Score</label><span>${r.targetScore}</span></div>
-                <div class="b26-detail-row"><label>Career Goal</label><span>${r.careerGoal}</span></div>
-                <div class="b26-detail-row"><label>Other Tuition</label><span>${r.otherTuition}</span></div>
-                <div class="b26-detail-row"><label>Father's Name</label><span>${r.fatherName}</span></div>
-                <div class="b26-detail-row"><label>Mother's Name</label><span>${r.motherName}</span></div>
-                <div class="b26-detail-row"><label>Parent Phone</label><span>${r.parentPhone}</span></div>
-                <div class="b26-detail-row"><label>WhatsApp</label><span>${r.whatsapp}</span></div>
-                <div class="b26-detail-row"><label>Alt Phone</label><span>${r.altPhone}</span></div>
-                <div class="b26-detail-row"><label>Email</label><span>${r.email}</span></div>
-                <div class="b26-detail-row" style="grid-column:span 2;"><label>Address</label><span>${r.address}</span></div>
-                <div class="b26-detail-row"><label>Batch Timing</label><span>${r.batchTiming}</span></div>
-                <div class="b26-detail-row"><label>Mode</label><span>${r.mode}</span></div>
-                <div class="b26-detail-row"><label>Fee Range</label><span>${r.feeRange}</span></div>
-                <div class="b26-detail-row"><label>Joining Date</label><span>${r.joiningDate}</span></div>
-                <div class="b26-detail-row"><label>Source</label><span>${r.source}</span></div>
-                <div class="b26-detail-row"><label>Referred By</label><span>${r.referredBy}</span></div>
-                <div class="b26-detail-row"><label>Follow Up Date</label><span>${r.followUpDate}</span></div>
-                <div class="b26-detail-row"><label>Notes</label><span>${r.notes}</span></div>
-            </div>
-            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-                <button class="btn btn-whatsapp" onclick="sendB26WhatsApp('${r.whatsapp}','${r.studentName.replace(/'/g,"\\'")}','${r.standard}')">📱 Send WhatsApp</button>
-            </div>`;
-        document.getElementById('b26DetailModal').classList.add('active');
-    };
-
-    window.editB26 = function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const r = window.batch2026Inquiries.find(x => x.id === id);
-        if (!r) return;
-        editingB26Id = id;
-        document.getElementById('b26Name').value = r.studentName;
-        document.getElementById('b26DOB').value = r.dob;
-        document.getElementById('b26Gender').value = r.gender;
-        document.getElementById('b26Aadhar').value = r.aadhar || '';
-        b26SelectStd(r.standard);
-        document.getElementById('b26Syllabus').value = r.syllabus;
-        document.getElementById('b26Medium').value = r.medium;
-        document.getElementById('b26PrevSchool').value = r.prevSchool;
-        document.getElementById('b26PrevClass').value = r.prevClass;
-        document.getElementById('b26PrevScore').value = r.prevScore || '';
-        document.getElementById('b26WeakSub').value = r.weakSubject === '-' ? '' : r.weakSubject;
-        document.getElementById('b26StrongSub').value = r.strongSubject === '-' ? '' : r.strongSubject;
-        document.getElementById('b26TargetScore').value = r.targetScore === '-' ? '' : r.targetScore;
-        document.getElementById('b26CareerGoal').value = r.careerGoal === '-' ? '' : r.careerGoal;
-        document.getElementById('b26OtherTuition').value = r.otherTuition === '-' ? '' : r.otherTuition;
-        document.getElementById('b26Father').value = r.fatherName;
-        document.getElementById('b26Mother').value = r.motherName === '-' ? '' : r.motherName;
-        document.getElementById('b26ParentPhone').value = r.parentPhone;
-        document.getElementById('b26WhatsApp').value = r.whatsapp;
-        document.getElementById('b26AltPhone').value = r.altPhone === '-' ? '' : r.altPhone;
-        document.getElementById('b26Email').value = r.email === '-' ? '' : r.email;
-        document.getElementById('b26Address').value = r.address;
-        document.getElementById('b26Mode').value = r.mode;
-        document.getElementById('b26FeeRange').value = r.feeRange === '-' ? '' : r.feeRange;
-        document.getElementById('b26JoiningDate').value = r.joiningDate === '-' ? '' : r.joiningDate;
-        document.getElementById('b26Source').value = r.source;
-        document.getElementById('b26ReferredBy').value = r.referredBy === '-' ? '' : r.referredBy;
-        document.getElementById('b26InqDate').value = r.inquiryDate;
-        document.getElementById('b26FollowUpDate').value = r.followUpDate === '-' ? '' : r.followUpDate;
-        document.getElementById('b26Status').value = r.status;
-        document.getElementById('b26Notes').value = r.notes === '-' ? '' : r.notes;
-        const btn = document.getElementById('b26SubmitBtn');
-        btn.textContent = 'Update Inquiry'; btn.classList.add('btn-warning'); btn.classList.remove('btn-primary');
-        if (!document.getElementById('cancelB26EditBtn')) {
-            const cb = document.createElement('button'); cb.type = 'button'; cb.id = 'cancelB26EditBtn';
-            cb.className = 'btn btn-danger'; cb.textContent = 'Cancel Edit'; cb.onclick = cancelB26Edit; cb.style.marginLeft = '10px';
-            btn.parentNode.appendChild(cb);
-        }
-        document.getElementById('b26FormSection').scrollIntoView({ behavior: 'smooth' });
-    };
-
-    function cancelB26Edit() {
-        editingB26Id = null;
-        document.getElementById('b26Form').reset();
-        document.getElementById('b26InqDate').value = new Date().toISOString().slice(0,10);
-        b26FormState = { standard: '', stream: '' };
-        document.querySelectorAll('#b26Std10Btn,#b26Std12Btn').forEach(b => b.classList.remove('selected'));
-        document.querySelectorAll('#b26Sub10Sec,#b26Sub12Sec,#b26Sub12DynSec').forEach(s => s.classList.remove('show'));
-        const btn = document.getElementById('b26SubmitBtn');
-        btn.textContent = '✨ Submit Batch 2026 Inquiry'; btn.classList.remove('btn-warning'); btn.classList.add('btn-primary');
-        const cb = document.getElementById('cancelB26EditBtn'); if (cb) cb.remove();
-    }
-
-    window.deleteB26 = async function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        if (!confirm('Delete this Batch 2026 inquiry?')) return;
-        try { await deleteDoc(doc(db, 'batch2026', id)); alert('✅ Deleted!'); }
-        catch (error) { alert('Error: ' + error.message); }
-    };
-
-    window.clearB26Filters = function() {
-        document.getElementById('b26Search').value = '';
-        document.getElementById('b26FilterStd').value = '';
-        document.getElementById('b26FilterStatus').value = '';
-        updateBatch2026Table();
-    };
-
-    window.sendB26WhatsApp = function(phone, name, standard) {
-        let p = phone.replace(/\D/g,'');
-        if (p.length === 10) p = '91' + p;
-        const msg = `Dear Parent of ${name},\n\nThank you for your interest in *Vismaya Education* — Batch 2026! 🎓\n\n📘 Standard: ${standard}th Standard\n\nWe are now enrolling students for our *Batch 2026* programme. Our expert faculty will provide focused coaching to help your child excel in board exams.\n\n📍 Highlights:\n• Experienced teachers for ${standard}th Std\n• CBSE & State Board coverage\n• Morning / Evening batches available\n• Personalised attention\n\nPlease visit us or call to complete your admission.\n\nWe look forward to seeing ${name} succeed! 🌟\n\n*Vismaya Education Team*`;
-        window.open(`https://wa.me/${p}?text=${encodeURIComponent(msg)}`, '_blank');
-    };
-
-    window.exportBatch2026ToExcel = function() {
-        if (window.batch2026Inquiries.length === 0) { alert('No inquiries to export.'); return; }
-        const data = window.batch2026Inquiries.map((r, i) => ({
-            'S.No': i+1, 'Inquiry Date': r.inquiryDate, 'Student Name': r.studentName,
-            'Standard': r.standard + 'th', 'Syllabus': r.syllabus, 'Medium': r.medium,
-            'Stream': r.stream, 'Subjects': r.subjects,
-            'DOB': r.dob, 'Gender': r.gender,
-            'Previous School': r.prevSchool, 'Last Class': r.prevClass, 'Previous Score': r.prevScore,
-            'Weak Subject': r.weakSubject, 'Strong Subject': r.strongSubject,
-            'Target Score': r.targetScore, 'Career Goal': r.careerGoal,
-            'Other Tuition': r.otherTuition,
-            "Father's Name": r.fatherName, "Mother's Name": r.motherName,
-            'Parent Phone': r.parentPhone, 'WhatsApp': r.whatsapp,
-            'Alt Phone': r.altPhone, 'Email': r.email, 'Address': r.address,
-            'Batch Timing': r.batchTiming, 'Mode': r.mode, 'Fee Range': r.feeRange,
-            'Joining Date': r.joiningDate, 'Source': r.source, 'Referred By': r.referredBy,
-            'Status': r.status, 'Follow Up Date': r.followUpDate, 'Notes': r.notes
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Batch 2026 Inquiries');
-        XLSX.writeFile(wb, `Batch2026_Inquiries_${new Date().toISOString().slice(0,10)}.xlsx`);
-    };
-
-    // expose for html onclick
-    window.b26SelectStd = window.b26SelectStd;
-
-    // ============================================================
-    // EXISTING INQUIRY FUNCTIONS
-    // ============================================================
     document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const btn = document.getElementById('inqSubmitBtn');
+        if (userRole === 'staff') { alert('You do not have permission to add inquiries.'); return; }
+
+        const submitBtn = document.getElementById('inqSubmitBtn');
         const isEditing = editingInquiryId !== null;
-        btn.disabled = true; btn.textContent = isEditing ? 'Updating...' : 'Adding...';
+        submitBtn.disabled = true;
+        submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
+
         try {
-            const d = {
+            const inquiryData = {
                 name: document.getElementById('inqName').value.trim(),
                 phone: document.getElementById('inqPhone').value.trim(),
                 altPhone: document.getElementById('inqAltPhone').value.trim() || '-',
@@ -1871,211 +1167,1165 @@
                 expectedFee: parseFloat(document.getElementById('inqExpectedFee').value) || 0,
                 notes: document.getElementById('inqNotes').value.trim() || '-'
             };
+
             if (isEditing) {
-                await updateDoc(doc(db, 'inquiries', editingInquiryId), {...d, updatedAt: new Date().toISOString()});
-                alert('✅ Inquiry updated!'); cancelInquiryEdit();
+                await updateDoc(doc(db, 'inquiries', editingInquiryId), { ...inquiryData, updatedAt: new Date().toISOString() });
+                alert('✅ Inquiry updated successfully!');
+                cancelInquiryEdit();
             } else {
-                await addDoc(collection(db, 'inquiries'), {...d, createdAt: new Date().toISOString()});
-                alert('✅ Inquiry added!');
+                await addDoc(collection(db, 'inquiries'), { ...inquiryData, createdAt: new Date().toISOString() });
+                alert('✅ Inquiry added successfully!');
             }
-            this.reset(); document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
-        } catch (error) { alert('Error: ' + error.message); }
-        finally { btn.disabled = false; btn.textContent = isEditing ? 'Update Inquiry' : 'Add Inquiry'; }
+            this.reset();
+            document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
+        } catch (error) {
+            alert('Error saving inquiry: ' + error.message);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = isEditing ? 'Update Inquiry' : 'Add Inquiry';
+        }
     });
 
     window.updateInquiryTable = function() {
         const tbody = document.getElementById('inquiryTableBody');
-        const search = document.getElementById('inquirySearch')?.value.toLowerCase() || '';
-        const statusF = document.getElementById('inquiryStatusFilter')?.value || '';
-        const classF = document.getElementById('inquiryClassFilter')?.value || '';
+        const searchTerm = document.getElementById('inquirySearch')?.value.toLowerCase() || '';
+        const statusFilter = document.getElementById('inquiryStatusFilter')?.value || '';
+        const classFilter = document.getElementById('inquiryClassFilter')?.value || '';
+
         let filtered = window.inquiries.filter(inq => {
-            return (inq.name.toLowerCase().includes(search) || inq.phone.includes(search)) &&
-                   (!statusF || inq.status === statusF) && (!classF || inq.interestedClass === classF);
+            const matchSearch = inq.name.toLowerCase().includes(searchTerm) || inq.phone.includes(searchTerm);
+            const matchStatus = !statusFilter || inq.status === statusFilter;
+            const matchClass = !classFilter || inq.interestedClass === classFilter;
+            return matchSearch && matchStatus && matchClass;
         });
-        if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:30px;color:#999;">No inquiries found.</td></tr>'; return; }
-        const sbc = {'New':'badge-new','Follow Up':'badge-followup','Interested':'badge-interested','Not Interested':'badge-notinterested','Converted':'badge-converted'};
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 30px; color: #999;">No inquiries found. Add your first inquiry above!</td></tr>';
+            return;
+        }
+
         tbody.innerHTML = filtered.map(inq => {
-            const isConv = inq.status === 'Converted';
-            const act = userRole === 'staff' ? '' : `<td><div class="action-buttons">
-                ${!isConv ? `<button class="btn btn-success" onclick="openConvertModal('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">🎓 Convert</button>` : `<span style="color:#0c5460;font-size:0.85em;font-weight:600;">✅ Converted</span>`}
-                <button class="btn btn-whatsapp" onclick="sendInquiryWhatsApp('${inq.phone}','${inq.name.replace(/'/g,"\\'")}','${inq.interestedClass}')" style="padding:5px 10px;font-size:0.85em;">📱</button>
-                ${!isConv ? `<button class="btn btn-warning" onclick="editInquiry('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">Edit</button>` : ''}
-                <button class="btn btn-danger" onclick="deleteInquiry('${inq.id}')" style="padding:5px 10px;font-size:0.85em;">Delete</button>
-            </div></td>`;
-            return `<tr style="${isConv?'background:#f0fff4;':''}">
-                <td>${inq.date}</td><td><strong>${inq.name}</strong></td>
-                <td>${inq.phone}${inq.altPhone!=='-'?'<br><small style="color:#999;">'+inq.altPhone+'</small>':''}</td>
-                <td>${inq.interestedClass}</td><td>${inq.syllabus}</td><td>${inq.source}</td>
-                <td>${inq.expectedFee>0?'₹'+inq.expectedFee.toLocaleString():'-'}</td>
-                <td><span class="badge ${sbc[inq.status]||'badge-pending'}">${inq.status}</span></td>
-                <td style="font-size:0.9em;color:${inq.followUpDate!=='-'?'#856404':'#999'};">${inq.followUpDate!=='-'?'📅 '+inq.followUpDate:'-'}</td>
-                <td style="font-size:0.85em;color:#666;max-width:150px;word-break:break-word;">${inq.notes}</td>
-                ${act}
-            </tr>`;
+            const statusBadgeClass = {
+                'New': 'badge-new',
+                'Follow Up': 'badge-followup',
+                'Interested': 'badge-interested',
+                'Not Interested': 'badge-notinterested',
+                'Converted': 'badge-converted'
+            }[inq.status] || 'badge-pending';
+
+            const isConverted = inq.status === 'Converted';
+
+            const actionsCell = userRole === 'staff' ? '' : `
+                <td>
+                    <div class="action-buttons">
+                        ${!isConverted ? `<button class="btn btn-success" onclick="openConvertModal('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">🎓 Convert</button>` : `<span style="color:#0c5460; font-size:0.85em; font-weight:600;">✅ Converted</span>`}
+                        <button class="btn btn-whatsapp" onclick="sendInquiryWhatsApp('${inq.phone}', '${inq.name.replace(/'/g,"\\'")}', '${inq.interestedClass}')" style="padding: 5px 10px; font-size: 0.85em;">📱</button>
+                        ${!isConverted ? `<button class="btn btn-warning" onclick="editInquiry('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">Edit</button>` : ''}
+                        <button class="btn btn-danger" onclick="deleteInquiry('${inq.id}')" style="padding: 5px 10px; font-size: 0.85em;">Delete</button>
+                    </div>
+                </td>
+            `;
+
+            return `
+                <tr style="${isConverted ? 'background: #f0fff4;' : ''}">
+                    <td>${inq.date}</td>
+                    <td><strong>${inq.name}</strong></td>
+                    <td>${inq.phone}${inq.altPhone !== '-' ? '<br><small style="color:#999;">' + inq.altPhone + '</small>' : ''}</td>
+                    <td>${inq.interestedClass}</td>
+                    <td>${inq.syllabus}</td>
+                    <td>${inq.source}</td>
+                    <td>${inq.expectedFee > 0 ? '₹' + inq.expectedFee.toLocaleString() : '-'}</td>
+                    <td><span class="badge ${statusBadgeClass}">${inq.status}</span></td>
+                    <td style="font-size:0.9em; color:${inq.followUpDate !== '-' ? '#856404' : '#999'};">${inq.followUpDate !== '-' ? '📅 ' + inq.followUpDate : '-'}</td>
+                    <td style="font-size:0.85em; color:#666; max-width:150px; word-break:break-word;">${inq.notes}</td>
+                    ${actionsCell}
+                </tr>
+            `;
         }).join('');
     };
 
     window.updateInquiryStats = function() {
-        const all = window.inquiries;
-        document.getElementById('inqTotal').textContent = all.length;
-        document.getElementById('inqNew').textContent = all.filter(i=>i.status==='New').length;
-        document.getElementById('inqFollowup').textContent = all.filter(i=>i.status==='Follow Up').length;
-        document.getElementById('inqInterested').textContent = all.filter(i=>i.status==='Interested').length;
-        document.getElementById('inqNotInterested').textContent = all.filter(i=>i.status==='Not Interested').length;
-        document.getElementById('inqConverted').textContent = all.filter(i=>i.status==='Converted').length;
+        const total = window.inquiries.length;
+        const newCount = window.inquiries.filter(i => i.status === 'New').length;
+        const followup = window.inquiries.filter(i => i.status === 'Follow Up').length;
+        const interested = window.inquiries.filter(i => i.status === 'Interested').length;
+        const notInterested = window.inquiries.filter(i => i.status === 'Not Interested').length;
+        const converted = window.inquiries.filter(i => i.status === 'Converted').length;
+        document.getElementById('inqTotal').textContent = total;
+        document.getElementById('inqNew').textContent = newCount;
+        document.getElementById('inqFollowup').textContent = followup;
+        document.getElementById('inqInterested').textContent = interested;
+        document.getElementById('inqNotInterested').textContent = notInterested;
+        document.getElementById('inqConverted').textContent = converted;
     };
 
     window.editInquiry = function(id) {
-        if (userRole === 'staff') { alert('No permission.'); return; }
-        const inq = window.inquiries.find(i=>i.id===id); if (!inq) return;
+        if (userRole === 'staff') { alert('You do not have permission to edit inquiries.'); return; }
+        const inq = window.inquiries.find(i => i.id === id);
+        if (!inq) return;
         editingInquiryId = id;
-        ['inqName','inqPhone','inqAltPhone','inqClass','inqSyllabus','inqSource','inqDate','inqStatus','inqFollowUpDate','inqExpectedFee','inqNotes'].forEach(fid => {
-            const el = document.getElementById(fid); if (!el) return;
-            const key = {inqName:'name',inqPhone:'phone',inqAltPhone:'altPhone',inqClass:'interestedClass',inqSyllabus:'syllabus',inqSource:'source',inqDate:'date',inqStatus:'status',inqFollowUpDate:'followUpDate',inqExpectedFee:'expectedFee',inqNotes:'notes'}[fid];
-            el.value = (inq[key]==='-'||inq[key]===0) ? '' : inq[key];
-        });
-        const btn = document.getElementById('inqSubmitBtn');
-        btn.textContent = 'Update Inquiry'; btn.classList.add('btn-warning'); btn.classList.remove('btn-primary');
+        document.getElementById('inqName').value = inq.name;
+        document.getElementById('inqPhone').value = inq.phone;
+        document.getElementById('inqAltPhone').value = inq.altPhone === '-' ? '' : inq.altPhone;
+        document.getElementById('inqClass').value = inq.interestedClass;
+        document.getElementById('inqSyllabus').value = inq.syllabus === '-' ? '' : inq.syllabus;
+        document.getElementById('inqSource').value = inq.source === '-' ? '' : inq.source;
+        document.getElementById('inqDate').value = inq.date;
+        document.getElementById('inqStatus').value = inq.status;
+        document.getElementById('inqFollowUpDate').value = inq.followUpDate === '-' ? '' : inq.followUpDate;
+        document.getElementById('inqExpectedFee').value = inq.expectedFee || '';
+        document.getElementById('inqNotes').value = inq.notes === '-' ? '' : inq.notes;
+
+        const submitBtn = document.getElementById('inqSubmitBtn');
+        submitBtn.textContent = 'Update Inquiry';
+        submitBtn.classList.add('btn-warning');
+        submitBtn.classList.remove('btn-primary');
+
         if (!document.getElementById('cancelInquiryEditBtn')) {
-            const cb = document.createElement('button'); cb.type='button'; cb.id='cancelInquiryEditBtn';
-            cb.className='btn btn-danger'; cb.textContent='Cancel Edit'; cb.onclick=cancelInquiryEdit; cb.style.marginLeft='10px';
-            btn.parentNode.appendChild(cb);
+            const cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button'; cancelBtn.id = 'cancelInquiryEditBtn';
+            cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
+            cancelBtn.onclick = cancelInquiryEdit; cancelBtn.style.marginLeft = '10px';
+            submitBtn.parentNode.appendChild(cancelBtn);
         }
-        document.getElementById('inquiryFormSection').scrollIntoView({behavior:'smooth'});
+        document.getElementById('inquiryFormSection').scrollIntoView({ behavior: 'smooth' });
     };
 
     function cancelInquiryEdit() {
-        editingInquiryId = null; document.getElementById('inquiryForm').reset();
+        editingInquiryId = null;
+        document.getElementById('inquiryForm').reset();
         document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
-        const btn = document.getElementById('inqSubmitBtn');
-        btn.textContent = 'Add Inquiry'; btn.classList.remove('btn-warning'); btn.classList.add('btn-primary');
-        const cb = document.getElementById('cancelInquiryEditBtn'); if (cb) cb.remove();
+        const submitBtn = document.getElementById('inqSubmitBtn');
+        submitBtn.textContent = 'Add Inquiry';
+        submitBtn.classList.remove('btn-warning');
+        submitBtn.classList.add('btn-primary');
+        const cancelBtn = document.getElementById('cancelInquiryEditBtn');
+        if (cancelBtn) cancelBtn.remove();
     }
 
     window.deleteInquiry = async function(id) {
-        if (userRole==='staff') { alert('No permission.'); return; }
-        if (!confirm('Delete this inquiry?')) return;
-        try { await deleteDoc(doc(db,'inquiries',id)); alert('Deleted!'); } catch(e) { alert(e.message); }
+        if (userRole === 'staff') { alert('You do not have permission to delete inquiries.'); return; }
+        if (!confirm('Are you sure you want to delete this inquiry?')) return;
+        try {
+            await deleteDoc(doc(db, 'inquiries', id));
+            alert('Inquiry deleted successfully!');
+        } catch (error) { alert('Error deleting inquiry: ' + error.message); }
     };
 
     window.clearInquiryFilters = function() {
-        document.getElementById('inquirySearch').value=''; document.getElementById('inquiryStatusFilter').value=''; document.getElementById('inquiryClassFilter').value=''; updateInquiryTable();
+        document.getElementById('inquirySearch').value = '';
+        document.getElementById('inquiryStatusFilter').value = '';
+        document.getElementById('inquiryClassFilter').value = '';
+        updateInquiryTable();
     };
 
+    // ---- Convert Inquiry to Student ----
+
     window.openConvertModal = function(inquiryId) {
-        if (userRole==='staff') { alert('No permission.'); return; }
-        const inq = window.inquiries.find(i=>i.id===inquiryId); if (!inq) return;
+        if (userRole === 'staff') { alert('You do not have permission to convert inquiries.'); return; }
+        const inq = window.inquiries.find(i => i.id === inquiryId);
+        if (!inq) return;
         convertingInquiryId = inquiryId;
-        document.getElementById('convName').value=inq.name; document.getElementById('convPhone').value=inq.phone;
-        document.getElementById('convClass').value=inq.interestedClass; document.getElementById('convSyllabus').value=inq.syllabus==='-'?'':inq.syllabus;
-        document.getElementById('convFee').value=inq.expectedFee>0?inq.expectedFee:'';
-        document.getElementById('convAdmissionDate').value=new Date().toISOString().slice(0,10);
-        document.getElementById('convRollNumber').value='';
-        document.getElementById('convertInquiryInfo').innerHTML=`<strong>Inquiry Details:</strong><br>📋 Name: ${inq.name} | 📞 Phone: ${inq.phone}<br>🏫 Class: ${inq.interestedClass} | 📅 Date: ${inq.date}<br>📝 Notes: ${inq.notes}`;
+
+        // Pre-fill modal with inquiry data
+        document.getElementById('convName').value = inq.name;
+        document.getElementById('convPhone').value = inq.phone;
+        document.getElementById('convClass').value = inq.interestedClass;
+        document.getElementById('convSyllabus').value = inq.syllabus === '-' ? '' : inq.syllabus;
+        document.getElementById('convFee').value = inq.expectedFee > 0 ? inq.expectedFee : '';
+        document.getElementById('convAdmissionDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('convRollNumber').value = '';
+
+        // Show inquiry info
+        document.getElementById('convertInquiryInfo').innerHTML = `
+            <strong>Inquiry Details:</strong><br>
+            📋 Name: ${inq.name} &nbsp;|&nbsp; 📞 Phone: ${inq.phone}<br>
+            🏫 Class: ${inq.interestedClass} &nbsp;|&nbsp; 📅 Inquiry Date: ${inq.date}<br>
+            📝 Notes: ${inq.notes}
+        `;
+
         document.getElementById('convertModal').classList.add('active');
     };
 
-    window.closeConvertModal = function() { document.getElementById('convertModal').classList.remove('active'); convertingInquiryId=null; document.getElementById('convertForm').reset(); };
+    window.closeConvertModal = function() {
+        document.getElementById('convertModal').classList.remove('active');
+        convertingInquiryId = null;
+        document.getElementById('convertForm').reset();
+    };
 
     document.getElementById('convertForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const btn = e.target.querySelector('button[type="submit"]'); btn.disabled=true; btn.textContent='Converting...';
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true; submitBtn.textContent = 'Converting...';
+
         try {
-            const sd = {
-                name: document.getElementById('convName').value.trim(), rollNumber: document.getElementById('convRollNumber').value.trim(),
-                course: document.getElementById('convClass').value, syllabus: document.getElementById('convSyllabus').value||'-',
-                phone: document.getElementById('convPhone').value.trim(), monthlyFee: parseFloat(document.getElementById('convFee').value),
-                admissionDate: document.getElementById('convAdmissionDate').value||'-', status: document.getElementById('convStatus').value,
-                convertedFromInquiry: convertingInquiryId, createdAt: new Date().toISOString()
+            const studentData = {
+                name: document.getElementById('convName').value.trim(),
+                rollNumber: document.getElementById('convRollNumber').value.trim(),
+                course: document.getElementById('convClass').value,
+                syllabus: document.getElementById('convSyllabus').value || '-',
+                phone: document.getElementById('convPhone').value.trim(),
+                monthlyFee: parseFloat(document.getElementById('convFee').value),
+                admissionDate: document.getElementById('convAdmissionDate').value || '-',
+                status: document.getElementById('convStatus').value,
+                convertedFromInquiry: convertingInquiryId,
+                createdAt: new Date().toISOString()
             };
-            if (window.students.find(s=>s.rollNumber===sd.rollNumber)) { alert(`❌ Roll number "${sd.rollNumber}" already exists.`); btn.disabled=false; btn.textContent='✅ Convert to Student'; return; }
-            await addDoc(collection(db,'students'), sd);
-            await updateDoc(doc(db,'inquiries',convertingInquiryId), {status:'Converted', convertedAt:new Date().toISOString(), convertedStudentName:sd.name, convertedRollNumber:sd.rollNumber});
-            alert(`🎉 "${sd.name}" converted to student!\nRoll: ${sd.rollNumber} | Class: ${sd.course}`);
+
+            // Check duplicate roll number
+            const duplicate = window.students.find(s => s.rollNumber === studentData.rollNumber);
+            if (duplicate) {
+                alert(`❌ Roll number "${studentData.rollNumber}" already exists. Please choose a different roll number.`);
+                submitBtn.disabled = false; submitBtn.textContent = '✅ Convert to Student';
+                return;
+            }
+
+            // Add student
+            await addDoc(collection(db, 'students'), studentData);
+
+            // Update inquiry status to Converted
+            await updateDoc(doc(db, 'inquiries', convertingInquiryId), {
+                status: 'Converted',
+                convertedAt: new Date().toISOString(),
+                convertedStudentName: studentData.name,
+                convertedRollNumber: studentData.rollNumber
+            });
+
+            alert(`🎉 Success!\n\n"${studentData.name}" has been converted to a student!\nRoll Number: ${studentData.rollNumber}\nClass: ${studentData.course}`);
             closeConvertModal();
-        } catch(error) { alert('Error: '+error.message); btn.disabled=false; btn.textContent='✅ Convert to Student'; }
+        } catch (error) {
+            alert('Error converting inquiry: ' + error.message);
+            submitBtn.disabled = false; submitBtn.textContent = '✅ Convert to Student';
+        }
     });
 
-    window.sendInquiryWhatsApp = function(phone, name, cls) {
-        let p=phone.replace(/\D/g,''); if(p.length===10) p='91'+p;
-        const msg=`Dear ${name},\n\nThank you for your inquiry at *Vismaya Education*! 🎓\n\nWe are happy to inform you about our ${cls} program.\n\nPlease visit or call to know more about:\n• Class timings\n• Fee structure\n• Admission process\n\nWe look forward to welcoming you!\n*Vismaya Education Team*`;
-        window.open(`https://wa.me/${p}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.sendInquiryWhatsApp = function(phone, name, interestedClass) {
+        let cleanPhone = phone.replace(/\D/g, '');
+        if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+
+        const message = `Dear ${name},
+
+Thank you for your inquiry at *Vismaya Education*! 🎓
+
+We are happy to inform you about our ${interestedClass} program. We offer quality education with experienced teachers.
+
+📍 Please visit us or call to know more about:
+• Class timings
+• Fee structure
+• Admission process
+
+We look forward to welcoming you!
+
+*Vismaya Education Team*`;
+
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
     };
 
     window.exportInquiriesToExcel = function() {
-        if (!window.inquiries.length) { alert('No inquiries.'); return; }
-        const data = window.inquiries.map((inq,i) => ({'S.No':i+1,'Date':inq.date,'Name':inq.name,'Phone':inq.phone,'Alt Phone':inq.altPhone,'Class':inq.interestedClass,'Syllabus':inq.syllabus,'Source':inq.source,'Expected Fee':inq.expectedFee,'Status':inq.status,'Follow Up Date':inq.followUpDate,'Notes':inq.notes}));
-        const ws=XLSX.utils.json_to_sheet(data); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Inquiries');
-        XLSX.writeFile(wb,`Inquiries_${new Date().toISOString().slice(0,10)}.xlsx`);
+        if (window.inquiries.length === 0) { alert('No inquiries to export.'); return; }
+        const data = window.inquiries.map((inq, i) => ({
+            'S.No': i + 1,
+            'Date': inq.date,
+            'Name': inq.name,
+            'Phone': inq.phone,
+            'Alt Phone': inq.altPhone,
+            'Class': inq.interestedClass,
+            'Syllabus': inq.syllabus,
+            'Source': inq.source,
+            'Expected Fee': inq.expectedFee,
+            'Status': inq.status,
+            'Follow Up Date': inq.followUpDate,
+            'Notes': inq.notes
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        ws['!cols'] = [{ wch: 5 },{ wch: 12 },{ wch: 25 },{ wch: 15 },{ wch: 15 },{ wch: 12 },{ wch: 10 },{ wch: 15 },{ wch: 14 },{ wch: 15 },{ wch: 15 },{ wch: 30 }];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Inquiries');
+        XLSX.writeFile(wb, `Inquiries_${new Date().toISOString().slice(0,10)}.xlsx`);
     };
 
     document.getElementById('inquirySearch').addEventListener('input', updateInquiryTable);
 
     // ============================================================
-    // STUDENT FUNCTIONS
+    // STUDENT FUNCTIONS (original)
     // ============================================================
+
     document.getElementById('studentForm').addEventListener('submit', async function(e) {
-        e.preventDefault(); if(userRole==='staff'){alert('No permission.');return;}
-        const btn=e.target.querySelector('button[type="submit"]'); btn.disabled=true;
-        const isEditing=editingStudentId!==null; btn.textContent=isEditing?'Updating...':'Adding...';
+        e.preventDefault();
+        if (userRole === 'staff') { alert('You do not have permission to add students.'); return; }
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        const isEditing = editingStudentId !== null;
+        submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
         try {
-            const sd={name:document.getElementById('studentName').value,rollNumber:document.getElementById('rollNumber').value,course:document.getElementById('course').value,syllabus:document.getElementById('syllabus').value||'-',phone:document.getElementById('phoneNumber').value,monthlyFee:parseFloat(document.getElementById('monthlyFee').value),admissionDate:document.getElementById('admissionDate').value||'-',status:document.getElementById('studentStatus').value};
-            if(isEditing){await updateDoc(doc(db,'students',editingStudentId),{...sd,updatedAt:new Date().toISOString()});alert('✅ Updated!');cancelEdit();}
-            else{await addDoc(collection(db,'students'),{...sd,createdAt:new Date().toISOString()});alert('✅ Student added!');}
+            const studentData = {
+                name: document.getElementById('studentName').value,
+                rollNumber: document.getElementById('rollNumber').value,
+                course: document.getElementById('course').value,
+                syllabus: document.getElementById('syllabus').value || '-',
+                phone: document.getElementById('phoneNumber').value,
+                monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
+                admissionDate: document.getElementById('admissionDate').value || '-',
+                status: document.getElementById('studentStatus').value
+            };
+            if (isEditing) {
+                await updateDoc(doc(db, 'students', editingStudentId), { ...studentData, updatedAt: new Date().toISOString() });
+                alert('✅ Student updated successfully!');
+                cancelEdit();
+            } else {
+                await addDoc(collection(db, 'students'), { ...studentData, createdAt: new Date().toISOString() });
+                alert('✅ Student added successfully!');
+            }
             this.reset();
-        } catch(error){alert('Error: '+error.message);}
-        finally{btn.disabled=false;btn.textContent=isEditing?'Update Student':'Add Student';}
+        } catch (error) { alert('Error saving student: ' + error.message); }
+        finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = isEditing ? 'Update Student' : 'Add Student';
+        }
     });
 
     window.collectFee = async function() {
-        if(userRole==='staff'){alert('No permission.');return;}
-        const studentId=document.getElementById('feeStudent').value,month=document.getElementById('feeMonth').value,amount=parseFloat(document.getElementById('feeAmount').value),method=document.getElementById('paymentMethod').value;
-        if(!studentId||!month||!amount||!method){alert('Please fill all fields');return;}
-        if(window.payments.some(p=>p.studentId===studentId&&p.month===month)){alert(`❌ Fee already collected for this month!`);return;}
+        if (userRole === 'staff') { alert('You do not have permission to collect fees.'); return; }
+        const studentId = document.getElementById('feeStudent').value;
+        const month = document.getElementById('feeMonth').value;
+        const amount = parseFloat(document.getElementById('feeAmount').value);
+        const method = document.getElementById('paymentMethod').value;
+        if (!studentId || !month || !amount || !method) { alert('Please fill all fields'); return; }
+        const alreadyPaid = window.payments.some(p => p.studentId === studentId && p.month === month);
+        if (alreadyPaid) {
+            const student = window.students.find(s => s.id === studentId);
+            alert(`❌ Fee Already Collected!\nStudent: ${student?.name}\nMonth: ${month}`);
+            return;
+        }
         try {
-            const payment={receiptNo:'REC'+Date.now().toString().slice(-6),studentId,month,amount,method,date:new Date().toISOString().slice(0,10),createdAt:new Date().toISOString()};
-            const ref=await addDoc(collection(db,'payments'),payment);
-            document.getElementById('feeStudent').value='';document.getElementById('feeAmount').value='';document.getElementById('paymentMethod').value='';
-            showReceipt({id:ref.id,...payment});
-        } catch(e){alert('Error: '+e.message);}
+            const payment = {
+                receiptNo: 'REC' + Date.now().toString().slice(-6),
+                studentId, month, amount, method,
+                date: new Date().toISOString().slice(0,10),
+                createdAt: new Date().toISOString()
+            };
+            const docRef = await addDoc(collection(db, 'payments'), payment);
+            document.getElementById('feeStudent').value = '';
+            document.getElementById('feeAmount').value = '';
+            document.getElementById('paymentMethod').value = '';
+            showReceipt({ id: docRef.id, ...payment });
+        } catch (error) { alert('Error collecting fee: ' + error.message); }
     };
 
-    window.deleteStudent=async function(id){if(userRole==='staff'){alert('No permission.');return;}if(!confirm('Delete this student?'))return;try{await deleteDoc(doc(db,'students',id));const sp=window.payments.filter(p=>p.studentId===id);for(const p of sp)await deleteDoc(doc(db,'payments',p.id));alert('Deleted!');}catch(e){alert(e.message);}};
-    window.deletePayment=async function(id,name,month,amount){if(userRole==='staff'){alert('No permission.');return;}if(!confirm(`Delete payment?\nStudent: ${name}\nMonth: ${month}\nAmount: ₹${amount}`))return;try{await deleteDoc(doc(db,'payments',id));alert('✅ Deleted!');}catch(e){alert(e.message);}};
-    window.editStudent=function(id){if(userRole==='staff'){alert('No permission.');return;}const s=window.students.find(x=>x.id===id);if(!s)return;editingStudentId=id;document.getElementById('studentName').value=s.name;document.getElementById('rollNumber').value=s.rollNumber;document.getElementById('course').value=s.course;document.getElementById('syllabus').value=s.syllabus==='-'?'':s.syllabus;document.getElementById('phoneNumber').value=s.phone;document.getElementById('monthlyFee').value=s.monthlyFee;document.getElementById('admissionDate').value=s.admissionDate==='-'?'':s.admissionDate;document.getElementById('studentStatus').value=s.status;const btn=document.querySelector('#studentForm button[type="submit"]');btn.textContent='Update Student';btn.classList.add('btn-warning');btn.classList.remove('btn-primary');if(!document.getElementById('cancelEditBtn')){const cb=document.createElement('button');cb.type='button';cb.id='cancelEditBtn';cb.className='btn btn-danger';cb.textContent='Cancel Edit';cb.onclick=cancelEdit;cb.style.marginLeft='10px';btn.parentNode.appendChild(cb);}window.scrollTo(0,0);};
-    function cancelEdit(){editingStudentId=null;document.getElementById('studentForm').reset();const btn=document.querySelector('#studentForm button[type="submit"]');btn.textContent='Add Student';btn.classList.remove('btn-warning');btn.classList.add('btn-primary');const cb=document.getElementById('cancelEditBtn');if(cb)cb.remove();}
+    window.deleteStudent = async function(id) {
+        if (userRole === 'staff') { alert('You do not have permission to delete students.'); return; }
+        if (!confirm('Are you sure you want to delete this student?')) return;
+        try {
+            await deleteDoc(doc(db, 'students', id));
+            const sp = window.payments.filter(p => p.studentId === id);
+            for (const payment of sp) await deleteDoc(doc(db, 'payments', payment.id));
+            alert('Student deleted successfully!');
+        } catch (error) { alert('Error deleting student: ' + error.message); }
+    };
 
-    window.updateStudentTable=function(){const tbody=document.getElementById('studentTableBody');const search=document.getElementById('studentSearch').value.toLowerCase();const sf=document.getElementById('sortField').value;const so=document.getElementById('sortOrder').value;let fs=window.students.filter(s=>s.name.toLowerCase().includes(search)||s.rollNumber.toLowerCase().includes(search));fs.sort((a,b)=>{let vA,vB;if(sf==='rollNumber'){vA=a.rollNumber.match(/\d+/)?parseInt(a.rollNumber.match(/\d+/)[0]):a.rollNumber;vB=b.rollNumber.match(/\d+/)?parseInt(b.rollNumber.match(/\d+/)[0]):b.rollNumber;}else if(sf==='monthlyFee'){vA=parseFloat(a[sf])||0;vB=parseFloat(b[sf])||0;}else{vA=(a[sf]||'').toString().toLowerCase();vB=(b[sf]||'').toString().toLowerCase();}if(vA<vB)return so==='asc'?-1:1;if(vA>vB)return so==='asc'?1:-1;return 0;});const cm=new Date().toISOString().slice(0,7);tbody.innerHTML=fs.map(s=>{const hasPaid=window.payments.some(p=>p.studentId===s.id&&p.month===cm);const mr=window.reminders.filter(r=>r.studentId===s.id&&r.month===cm);const rc=mr.length;const lr=mr[0]||null;let rc2='<td class="reminder-info">';if(rc>0){rc2+=`<span class="reminder-count">${rc} sent</span>`;if(lr){const d=new Date(lr.sentAt);rc2+=`<span class="reminder-date">Last: ${d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</span>`;}}else rc2+='<span style="color:#999;">None</span>';rc2+='</td>';const act=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-warning" onclick="editStudent('${s.id}')" style="padding:5px 15px;">Edit</button><button class="btn btn-danger" onclick="deleteStudent('${s.id}')" style="padding:5px 15px;">Delete</button></div></td>`;const wa=`<td><button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${s.id}','${s.phone}','${s.name.replace(/'/g,"\\'")}',${s.monthlyFee})" style="padding:5px 15px;">📱 Remind</button></td>`;return `<tr><td>${s.rollNumber}</td><td>${s.name}</td><td>${s.course}</td><td>${s.syllabus}</td><td>${s.phone}</td><td>₹${s.monthlyFee}</td><td><span class="badge ${s.status==='Active'?'badge-active':'badge-inactive'}">${s.status}</span></td><td><span class="badge ${hasPaid?'badge-paid':'badge-pending'}">${hasPaid?'Paid':'Pending'}</span></td>${rc2}${act}${wa}</tr>`;}).join('');};
-    window.updateFeeStudentSelect=function(){const sel=document.getElementById('feeStudent');sel.innerHTML='<option value="">Choose student...</option>'+window.students.map(s=>`<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');};
-    window.updatePaymentTable=function(){const tbody=document.getElementById('paymentTableBody');const sf=document.getElementById('paymentSortField')?.value||'date';const so=document.getElementById('paymentSortOrder')?.value||'desc';let sorted=[...window.payments];sorted.sort((a,b)=>{const sA=window.students.find(s=>s.id===a.studentId);const sB=window.students.find(s=>s.id===b.studentId);let vA,vB;if(sf==='date'){vA=new Date(a.date);vB=new Date(b.date);}else if(sf==='rollNumber'){const rA=sA?.rollNumber||'';const rB=sB?.rollNumber||'';vA=rA.match(/\d+/)?parseInt(rA.match(/\d+/)[0]):rA;vB=rB.match(/\d+/)?parseInt(rB.match(/\d+/)[0]):rB;}else if(sf==='studentName'){vA=(sA?.name||'').toLowerCase();vB=(sB?.name||'').toLowerCase();}else if(sf==='amount'){vA=a.amount;vB=b.amount;}if(vA<vB)return so==='asc'?-1:1;if(vA>vB)return so==='asc'?1:-1;return 0;});tbody.innerHTML=sorted.slice(0,20).map(p=>{const s=window.students.find(x=>x.id===p.studentId);const act=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-primary" onclick='showReceipt(${JSON.stringify(p).replace(/'/g,"&#39;")})' style="padding:5px 15px;">View</button><button class="btn btn-danger" onclick="deletePayment('${p.id}','${s?s.name:'Unknown'}','${p.month}',${p.amount})" style="padding:5px 15px;">Delete</button></div></td>`;return `<tr><td>${p.receiptNo}</td><td>${p.date}</td><td>${s?s.rollNumber:'N/A'}</td><td>${s?s.name:'Unknown'}</td><td>${p.month}</td><td>₹${p.amount}</td><td>${p.method}</td>${act}</tr>`;}).join('');};
-    window.showReceipt=function(payment){const s=window.students.find(x=>x.id===payment.studentId);document.getElementById('receiptContent').innerHTML=`<div class="receipt"><div class="receipt-header"><h2>📚 Vismaya Education Dashboard</h2><p>Fee Receipt</p></div><div class="receipt-details"><div class="receipt-row"><strong>Receipt No:</strong><span>${payment.receiptNo}</span></div><div class="receipt-row"><strong>Date:</strong><span>${payment.date}</span></div><div class="receipt-row"><strong>Student Name:</strong><span>${s?s.name:'Unknown'}</span></div><div class="receipt-row"><strong>Roll Number:</strong><span>${s?s.rollNumber:'N/A'}</span></div><div class="receipt-row"><strong>Class:</strong><span>${s?s.course:'N/A'}</span></div><div class="receipt-row"><strong>Syllabus:</strong><span>${s?s.syllabus:'N/A'}</span></div><div class="receipt-row"><strong>Fee Month:</strong><span>${payment.month}</span></div><div class="receipt-row"><strong>Payment Method:</strong><span>${payment.method}</span></div><div class="receipt-row receipt-total"><strong>Amount Paid:</strong><span>₹${payment.amount}</span></div></div><div style="text-align:center;margin-top:30px;padding-top:20px;border-top:2px dashed #667eea;"><p style="font-size:0.9em;color:#666;">Thank you for your payment!</p><p style="font-size:0.8em;color:#999;margin-top:10px;">Computer-generated receipt</p></div></div>`;document.getElementById('receiptModal').classList.add('active');};
-    window.closeReceipt=function(){document.getElementById('receiptModal').classList.remove('active');};
-    window.updateStats=function(){const cm=new Date().toISOString().slice(0,7);const total=window.students.length;document.getElementById('totalStudents').textContent=total;const ps=new Set(window.payments.filter(p=>p.month===cm).map(p=>p.studentId));document.getElementById('paidStudents').textContent=ps.size;document.getElementById('pendingStudents').textContent=total-ps.size;const col=window.payments.filter(p=>p.month===cm).reduce((s,p)=>s+p.amount,0);document.getElementById('totalCollected').textContent='₹'+col.toLocaleString();const pen=window.students.filter(s=>!ps.has(s.id)).reduce((s,x)=>s+x.monthlyFee,0);document.getElementById('totalPending').textContent='₹'+pen.toLocaleString();document.getElementById('thisMonth').textContent='₹'+window.students.reduce((s,x)=>s+x.monthlyFee,0).toLocaleString();};
-    window.switchTab=function(tabName,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');document.getElementById(tabName).classList.add('active');};
-    window.generateReport=function(){const month=document.getElementById('reportMonth').value;const course=document.getElementById('reportCourse').value;const syl=document.getElementById('reportSyllabus').value;const fs=document.getElementById('reportFeeStatus').value;let filtered=window.students;if(course)filtered=filtered.filter(s=>s.course===course);if(syl)filtered=filtered.filter(s=>s.syllabus===syl);const ws2=filtered.map(s=>({...s,hasPaid:window.payments.some(p=>p.studentId===s.id&&p.month===month)}));let final=ws2;if(fs==='paid')final=ws2.filter(s=>s.hasPaid);else if(fs==='pending')final=ws2.filter(s=>!s.hasPaid);const paid=final.filter(s=>s.hasPaid);const pend=final.filter(s=>!s.hasPaid);document.getElementById('reportTotalStudents').textContent=final.length;document.getElementById('reportPaidCount').textContent=paid.length;document.getElementById('reportPendingCount').textContent=pend.length;document.getElementById('reportTotalAmount').textContent='₹'+final.reduce((s,x)=>s+x.monthlyFee,0).toLocaleString();document.getElementById('reportCollectedAmount').textContent='₹'+paid.reduce((s,x)=>s+x.monthlyFee,0).toLocaleString();document.getElementById('reportPendingAmount').textContent='₹'+pend.reduce((s,x)=>s+x.monthlyFee,0).toLocaleString();document.getElementById('reportSummary').style.display='block';const tbody=document.getElementById('reportTableBody');tbody.innerHTML=final.map(s=>{const last=window.payments.filter(p=>p.studentId===s.id).sort((a,b)=>new Date(b.date)-new Date(a.date))[0];return `<tr><td>${s.rollNumber}</td><td>${s.name}</td><td>${s.course}</td><td>${s.syllabus}</td><td>₹${s.monthlyFee}</td><td><span class="badge ${s.hasPaid?'badge-paid':'badge-pending'}">${s.hasPaid?'Paid':'Pending'}</span></td><td>${last?last.date:'No payment yet'}</td></tr>`;}).join('')||'<tr><td colspan="7" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>';};
-    document.getElementById('studentSearch').addEventListener('input',updateStudentTable);
-    document.getElementById('feeStudent').addEventListener('change',function(){const s=window.students.find(x=>x.id===this.value);if(s)document.getElementById('feeAmount').value=s.monthlyFee;});
+    window.deletePayment = async function(paymentId, studentName, month, amount) {
+        if (userRole === 'staff') { alert('You do not have permission to delete payments.'); return; }
+        if (!confirm(`⚠️ Delete payment?\nStudent: ${studentName}\nMonth: ${month}\nAmount: ₹${amount}`)) return;
+        try {
+            await deleteDoc(doc(db, 'payments', paymentId));
+            alert('✅ Payment deleted!');
+        } catch (error) { alert('Error deleting payment: ' + error.message); }
+    };
 
-    // Teachers
-    document.getElementById('teacherForm').addEventListener('submit',async function(e){e.preventDefault();if(userRole==='staff'){alert('No permission.');return;}const btn=e.target.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Adding...';try{await addDoc(collection(db,'teachers'),{name:document.getElementById('teacherName').value,employeeId:document.getElementById('employeeId').value,subject:document.getElementById('teacherSubject').value||'-',phone:document.getElementById('teacherPhone').value,email:document.getElementById('teacherEmail').value||'-',salary:parseFloat(document.getElementById('teacherSalary').value),joiningDate:document.getElementById('teacherJoiningDate').value||'-',status:document.getElementById('teacherStatus').value,createdAt:new Date().toISOString()});alert('✅ Teacher added!');this.reset();}catch(e){alert('Error: '+e.message);}finally{btn.disabled=false;btn.textContent='Add Teacher';}});
-    window.updateTeacherTable=function(){const tbody=document.getElementById('teacherTableBody');const search=document.getElementById('teacherSearch')?.value.toLowerCase()||'';const filtered=window.teachers.filter(t=>t.name.toLowerCase().includes(search)||t.employeeId.toLowerCase().includes(search));tbody.innerHTML=filtered.map(t=>{const act=userRole==='staff'?'':`<td><button class="btn btn-danger" onclick="deleteTeacher('${t.id}')" style="padding:5px 15px;">Delete</button></td>`;return `<tr><td>${t.employeeId}</td><td>${t.name}</td><td>${t.subject}</td><td>${t.phone}</td><td>${t.email}</td><td>₹${t.salary.toLocaleString()}</td><td>${t.joiningDate}</td><td><span class="badge ${t.status==='Active'?'badge-active':'badge-inactive'}">${t.status}</span></td>${act}</tr>`;}).join('');};
-    document.getElementById('teacherSearch')?.addEventListener('input',updateTeacherTable);
-    window.deleteTeacher=async function(id){if(userRole==='staff'){alert('No permission.');return;}if(!confirm('Delete teacher?'))return;try{await deleteDoc(doc(db,'teachers',id));alert('Deleted!');}catch(e){alert(e.message);}};
-    window.updateSalaryTeacherSelect=function(){const sel=document.getElementById('salaryTeacher');sel.innerHTML='<option value="">Choose teacher...</option>'+window.teachers.filter(t=>t.status==='Active').map(t=>`<option value="${t.id}">${t.employeeId} - ${t.name}</option>`).join('');};
-    document.getElementById('salaryTeacher')?.addEventListener('change',function(){const t=window.teachers.find(x=>x.id===this.value);if(t)document.getElementById('salaryAmount').value=t.salary;});
-    window.paySalary=async function(){if(userRole==='staff'){alert('No permission.');return;}const tid=document.getElementById('salaryTeacher').value,month=document.getElementById('salaryMonth').value,amount=parseFloat(document.getElementById('salaryAmount').value),method=document.getElementById('salaryPaymentMethod').value;if(!tid||!month||!amount||!method){alert('Please fill all fields');return;}if(window.salaries.some(s=>s.teacherId===tid&&s.month===month)){alert('❌ Salary already paid this month!');return;}try{await addDoc(collection(db,'salaries'),{receiptNo:'SAL'+Date.now().toString().slice(-6),teacherId:tid,month,amount,method,date:new Date().toISOString().slice(0,10),createdAt:new Date().toISOString()});document.getElementById('salaryTeacher').value='';document.getElementById('salaryAmount').value='';document.getElementById('salaryPaymentMethod').value='';alert('✅ Salary paid!');}catch(e){alert(e.message);}};
-    window.updateSalaryTable=function(){const tbody=document.getElementById('salaryTableBody');tbody.innerHTML=window.salaries.slice(0,20).map(s=>{const t=window.teachers.find(x=>x.id===s.teacherId);const act=userRole==='staff'?'':`<td><button class="btn btn-danger" onclick="deleteSalary('${s.id}','${t?.name||'Unknown'}','${s.month}',${s.amount})" style="padding:5px 15px;">Delete</button></td>`;return `<tr><td>${s.receiptNo}</td><td>${s.date}</td><td>${t?.employeeId||'N/A'}</td><td>${t?.name||'Unknown'}</td><td>${s.month}</td><td>₹${s.amount.toLocaleString()}</td><td>${s.method}</td>${act}</tr>`;}).join('');};
-    window.deleteSalary=async function(id,name,month,amount){if(userRole==='staff'){alert('No permission.');return;}if(!confirm(`Delete salary?\nTeacher: ${name}\nMonth: ${month}\nAmount: ₹${amount}`))return;try{await deleteDoc(doc(db,'salaries',id));alert('✅ Deleted!');}catch(e){alert(e.message);}};
+    window.editStudent = function(id) {
+        if (userRole === 'staff') { alert('You do not have permission to edit students.'); return; }
+        const student = window.students.find(s => s.id === id);
+        if (student) {
+            editingStudentId = id;
+            document.getElementById('studentName').value = student.name;
+            document.getElementById('rollNumber').value = student.rollNumber;
+            document.getElementById('course').value = student.course;
+            document.getElementById('syllabus').value = student.syllabus === '-' ? '' : student.syllabus;
+            document.getElementById('phoneNumber').value = student.phone;
+            document.getElementById('monthlyFee').value = student.monthlyFee;
+            document.getElementById('admissionDate').value = student.admissionDate === '-' ? '' : student.admissionDate;
+            document.getElementById('studentStatus').value = student.status;
+            const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+            submitBtn.textContent = 'Update Student';
+            submitBtn.classList.add('btn-warning');
+            submitBtn.classList.remove('btn-primary');
+            if (!document.getElementById('cancelEditBtn')) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button'; cancelBtn.id = 'cancelEditBtn';
+                cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
+                cancelBtn.onclick = cancelEdit; cancelBtn.style.marginLeft = '10px';
+                submitBtn.parentNode.appendChild(cancelBtn);
+            }
+            window.scrollTo(0, 0);
+        }
+    };
 
-    // Expenses
-    document.getElementById('expenseForm').addEventListener('submit',async function(e){e.preventDefault();if(userRole==='staff'){alert('No permission.');return;}const btn=e.target.querySelector('button[type="submit"]');btn.disabled=true;const isEditing=editingExpenseId!==null;btn.textContent=isEditing?'Updating...':'Adding...';try{const ed={type:document.getElementById('expenseType').value,description:document.getElementById('expenseDescription').value,amount:parseFloat(document.getElementById('expenseAmount').value),date:document.getElementById('expenseDate').value,paymentMethod:document.getElementById('expensePaymentMethod').value,paidTo:document.getElementById('expensePaidTo').value||'-',forMonth:document.getElementById('expenseForMonth').value||'-',notes:document.getElementById('expenseNotes').value||'-'};if(isEditing){await updateDoc(doc(db,'expenses',editingExpenseId),{...ed,updatedAt:new Date().toISOString()});alert('✅ Expense updated!');cancelExpenseEdit();}else{await addDoc(collection(db,'expenses'),{...ed,createdAt:new Date().toISOString()});alert('✅ Expense added!');}this.reset();document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);}catch(e){alert('Error: '+e.message);}finally{btn.disabled=false;btn.textContent=isEditing?'Update Expense':'Add Expense';}});
-    window.updateExpenseTable=function(){const tbody=document.getElementById('expenseTableBody');const search=document.getElementById('expenseSearch')?.value.toLowerCase()||'';const typeF=document.getElementById('expenseFilterType')?.value||'';const monthF=document.getElementById('expenseFilterMonth')?.value||'';let filtered=window.expenses.filter(e=>{const ms=e.description.toLowerCase().includes(search)||e.type.toLowerCase().includes(search)||(e.paidTo&&e.paidTo.toLowerCase().includes(search));return ms&&(!typeF||e.type===typeF)&&(!monthF||e.forMonth===monthF||e.date.startsWith(monthF));});if(!filtered.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No expenses found.</td></tr>';return;}tbody.innerHTML=filtered.map(e=>{const act=userRole==='staff'?'':`<td><div class="action-buttons"><button class="btn btn-warning" onclick="editExpense('${e.id}')" style="padding:5px 15px;">Edit</button><button class="btn btn-danger" onclick="deleteExpense('${e.id}')" style="padding:5px 15px;">Delete</button></div></td>`;return `<tr><td>${e.date}</td><td><span class="badge badge-active">${e.type}</span></td><td>${e.description}</td><td style="font-weight:600;color:#dc3545;">₹${e.amount.toLocaleString()}</td><td>${e.forMonth==='-'?'-':e.forMonth}</td><td>${e.paidTo}</td><td>${e.paymentMethod}</td><td style="font-size:0.9em;color:#666;">${e.notes}</td>${act}</tr>`;}).join('');};
-    document.getElementById('expenseSearch')?.addEventListener('input',updateExpenseTable);
-    window.clearExpenseFilters=function(){document.getElementById('expenseFilterType').value='';document.getElementById('expenseFilterMonth').value='';updateExpenseTable();};
-    window.editExpense=function(id){if(userRole==='staff'){alert('No permission.');return;}const e=window.expenses.find(x=>x.id===id);if(!e)return;editingExpenseId=id;document.getElementById('expenseType').value=e.type;document.getElementById('expenseDescription').value=e.description;document.getElementById('expenseAmount').value=e.amount;document.getElementById('expenseDate').value=e.date;document.getElementById('expensePaymentMethod').value=e.paymentMethod;document.getElementById('expensePaidTo').value=e.paidTo==='-'?'':e.paidTo;document.getElementById('expenseForMonth').value=e.forMonth==='-'?'':e.forMonth;document.getElementById('expenseNotes').value=e.notes==='-'?'':e.notes;const btn=document.querySelector('#expenseForm button[type="submit"]');btn.textContent='Update Expense';btn.classList.add('btn-warning');btn.classList.remove('btn-primary');if(!document.getElementById('cancelExpenseEditBtn')){const cb=document.createElement('button');cb.type='button';cb.id='cancelExpenseEditBtn';cb.className='btn btn-danger';cb.textContent='Cancel Edit';cb.onclick=cancelExpenseEdit;cb.style.marginLeft='10px';btn.parentNode.appendChild(cb);}document.getElementById('expenseFormSection').scrollIntoView({behavior:'smooth'});};
-    function cancelExpenseEdit(){editingExpenseId=null;document.getElementById('expenseForm').reset();document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);const btn=document.querySelector('#expenseForm button[type="submit"]');btn.textContent='Add Expense';btn.classList.remove('btn-warning');btn.classList.add('btn-primary');const cb=document.getElementById('cancelExpenseEditBtn');if(cb)cb.remove();}
-    window.deleteExpense=async function(id){if(userRole==='staff'){alert('No permission.');return;}if(!confirm('Delete?'))return;try{await deleteDoc(doc(db,'expenses',id));alert('Deleted!');}catch(e){alert(e.message);}};
-    window.updateExpenseSummary=function(){const cm=new Date().toISOString().slice(0,7);document.getElementById('totalExpenses').textContent='₹'+window.expenses.reduce((s,e)=>s+e.amount,0).toLocaleString();document.getElementById('thisMonthExpenses').textContent='₹'+window.expenses.filter(e=>e.date.startsWith(cm)||e.forMonth===cm).reduce((s,e)=>s+e.amount,0).toLocaleString();document.getElementById('expenseCount').textContent=window.expenses.length;};
+    function cancelEdit() {
+        editingStudentId = null;
+        document.getElementById('studentForm').reset();
+        const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+        submitBtn.textContent = 'Add Student';
+        submitBtn.classList.remove('btn-warning');
+        submitBtn.classList.add('btn-primary');
+        const cancelBtn = document.getElementById('cancelEditBtn');
+        if (cancelBtn) cancelBtn.remove();
+    }
 
-    // WhatsApp
-    window.sendWhatsAppReminder=async function(sid,phone,name,fee){let p=phone
+    window.updateStudentTable = function() {
+        const tbody = document.getElementById('studentTableBody');
+        const searchTerm = document.getElementById('studentSearch').value.toLowerCase();
+        const sortField = document.getElementById('sortField').value;
+        const sortOrder = document.getElementById('sortOrder').value;
+        let filteredStudents = window.students.filter(s =>
+            s.name.toLowerCase().includes(searchTerm) || s.rollNumber.toLowerCase().includes(searchTerm)
+        );
+        filteredStudents.sort((a, b) => {
+            let vA, vB;
+            if (sortField === 'rollNumber') {
+                vA = a.rollNumber.match(/\d+/) ? parseInt(a.rollNumber.match(/\d+/)[0]) : a.rollNumber;
+                vB = b.rollNumber.match(/\d+/) ? parseInt(b.rollNumber.match(/\d+/)[0]) : b.rollNumber;
+            } else if (sortField === 'monthlyFee') {
+                vA = parseFloat(a[sortField]) || 0; vB = parseFloat(b[sortField]) || 0;
+            } else {
+                vA = (a[sortField] || '').toString().toLowerCase();
+                vB = (b[sortField] || '').toString().toLowerCase();
+            }
+            if (vA < vB) return sortOrder === 'asc' ? -1 : 1;
+            if (vA > vB) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        tbody.innerHTML = filteredStudents.map(student => {
+            const currentMonth = new Date().toISOString().slice(0,7);
+            const hasPaid = window.payments.some(p => p.studentId === student.id && p.month === currentMonth);
+            const monthReminders = window.reminders.filter(r => r.studentId === student.id && r.month === currentMonth);
+            const reminderCount = monthReminders.length;
+            const lastReminder = monthReminders[0] || null;
+
+            let reminderCell = '<td class="reminder-info">';
+            if (reminderCount > 0) {
+                reminderCell += `<span class="reminder-count">${reminderCount} sent</span>`;
+                if (lastReminder) {
+                    const d = new Date(lastReminder.sentAt);
+                    reminderCell += `<span class="reminder-date">Last: ${d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })}</span>`;
+                }
+            } else {
+                reminderCell += '<span style="color: #999;">None</span>';
+            }
+            reminderCell += '</td>';
+
+            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
+                <button class="btn btn-warning" onclick="editStudent('${student.id}')" style="padding: 5px 15px;">Edit</button>
+                <button class="btn btn-danger" onclick="deleteStudent('${student.id}')" style="padding: 5px 15px;">Delete</button>
+            </div></td>`;
+
+            const whatsappCell = `<td><button class="btn btn-whatsapp" onclick="sendWhatsAppReminder('${student.id}','${student.phone}','${student.name.replace(/'/g,"\\'")}',${student.monthlyFee})" style="padding: 5px 15px;">📱 Remind</button></td>`;
+
+            return `<tr>
+                <td>${student.rollNumber}</td><td>${student.name}</td><td>${student.course}</td>
+                <td>${student.syllabus}</td><td>${student.phone}</td><td>₹${student.monthlyFee}</td>
+                <td><span class="badge ${student.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${student.status}</span></td>
+                <td><span class="badge ${hasPaid ? 'badge-paid' : 'badge-pending'}">${hasPaid ? 'Paid' : 'Pending'}</span></td>
+                ${reminderCell}${actionsCell}${whatsappCell}
+            </tr>`;
+        }).join('');
+    };
+
+    window.updateFeeStudentSelect = function() {
+        const select = document.getElementById('feeStudent');
+        select.innerHTML = '<option value="">Choose student...</option>' +
+            window.students.map(s => `<option value="${s.id}">${s.rollNumber} - ${s.name}</option>`).join('');
+    };
+
+    window.updatePaymentTable = function() {
+        const tbody = document.getElementById('paymentTableBody');
+        const sortField = document.getElementById('paymentSortField')?.value || 'date';
+        const sortOrder = document.getElementById('paymentSortOrder')?.value || 'desc';
+        let sorted = [...window.payments];
+        sorted.sort((a, b) => {
+            const sA = window.students.find(s => s.id === a.studentId);
+            const sB = window.students.find(s => s.id === b.studentId);
+            let vA, vB;
+            if (sortField === 'date') { vA = new Date(a.date); vB = new Date(b.date); }
+            else if (sortField === 'rollNumber') {
+                const rA = sA?.rollNumber || ''; const rB = sB?.rollNumber || '';
+                vA = rA.match(/\d+/) ? parseInt(rA.match(/\d+/)[0]) : rA;
+                vB = rB.match(/\d+/) ? parseInt(rB.match(/\d+/)[0]) : rB;
+            } else if (sortField === 'studentName') { vA = (sA?.name || '').toLowerCase(); vB = (sB?.name || '').toLowerCase(); }
+            else if (sortField === 'amount') { vA = a.amount; vB = b.amount; }
+            if (vA < vB) return sortOrder === 'asc' ? -1 : 1;
+            if (vA > vB) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+        tbody.innerHTML = sorted.slice(0,20).map(payment => {
+            const student = window.students.find(s => s.id === payment.studentId);
+            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
+                <button class="btn btn-primary" onclick='showReceipt(${JSON.stringify(payment).replace(/'/g,"&#39;")})' style="padding: 5px 15px;">View</button>
+                <button class="btn btn-danger" onclick="deletePayment('${payment.id}','${student ? student.name : 'Unknown'}','${payment.month}',${payment.amount})" style="padding: 5px 15px;">Delete</button>
+            </div></td>`;
+            return `<tr>
+                <td>${payment.receiptNo}</td><td>${payment.date}</td>
+                <td>${student ? student.rollNumber : 'N/A'}</td><td>${student ? student.name : 'Unknown'}</td>
+                <td>${payment.month}</td><td>₹${payment.amount}</td><td>${payment.method}</td>
+                ${actionsCell}
+            </tr>`;
+        }).join('');
+    };
+
+    window.showReceipt = function(payment) {
+        const student = window.students.find(s => s.id === payment.studentId);
+        document.getElementById('receiptContent').innerHTML = `
+            <div class="receipt">
+                <div class="receipt-header"><h2>📚 Vismaya Education Dashboard</h2><p>Fee Receipt</p></div>
+                <div class="receipt-details">
+                    <div class="receipt-row"><strong>Receipt No:</strong><span>${payment.receiptNo}</span></div>
+                    <div class="receipt-row"><strong>Date:</strong><span>${payment.date}</span></div>
+                    <div class="receipt-row"><strong>Student Name:</strong><span>${student ? student.name : 'Unknown'}</span></div>
+                    <div class="receipt-row"><strong>Roll Number:</strong><span>${student ? student.rollNumber : 'N/A'}</span></div>
+                    <div class="receipt-row"><strong>Class:</strong><span>${student ? student.course : 'N/A'}</span></div>
+                    <div class="receipt-row"><strong>Syllabus:</strong><span>${student ? student.syllabus : 'N/A'}</span></div>
+                    <div class="receipt-row"><strong>Fee Month:</strong><span>${payment.month}</span></div>
+                    <div class="receipt-row"><strong>Payment Method:</strong><span>${payment.method}</span></div>
+                    <div class="receipt-row receipt-total"><strong>Amount Paid:</strong><span>₹${payment.amount}</span></div>
+                </div>
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px dashed #667eea;">
+                    <p style="font-size: 0.9em; color: #666;">Thank you for your payment!</p>
+                    <p style="font-size: 0.8em; color: #999; margin-top: 10px;">Computer-generated receipt</p>
+                </div>
+            </div>`;
+        document.getElementById('receiptModal').classList.add('active');
+    };
+
+    window.closeReceipt = function() { document.getElementById('receiptModal').classList.remove('active'); };
+
+    window.updateStats = function() {
+        const currentMonth = new Date().toISOString().slice(0,7);
+        const total = window.students.length;
+        document.getElementById('totalStudents').textContent = total;
+        const paidSet = new Set(window.payments.filter(p => p.month === currentMonth).map(p => p.studentId));
+        document.getElementById('paidStudents').textContent = paidSet.size;
+        document.getElementById('pendingStudents').textContent = total - paidSet.size;
+        const collected = window.payments.filter(p => p.month === currentMonth).reduce((sum, p) => sum + p.amount, 0);
+        document.getElementById('totalCollected').textContent = '₹' + collected.toLocaleString();
+        const pending = window.students.filter(s => !paidSet.has(s.id)).reduce((sum, s) => sum + s.monthlyFee, 0);
+        document.getElementById('totalPending').textContent = '₹' + pending.toLocaleString();
+        const expected = window.students.reduce((sum, s) => sum + s.monthlyFee, 0);
+        document.getElementById('thisMonth').textContent = '₹' + expected.toLocaleString();
+    };
+
+    window.switchTab = function(tabName, clickedTab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        if (clickedTab) clickedTab.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+    };
+
+    window.generateReport = function() {
+        const month = document.getElementById('reportMonth').value;
+        const course = document.getElementById('reportCourse').value;
+        const syllabus = document.getElementById('reportSyllabus').value;
+        const feeStatus = document.getElementById('reportFeeStatus').value;
+        let filtered = window.students;
+        if (course) filtered = filtered.filter(s => s.course === course);
+        if (syllabus) filtered = filtered.filter(s => s.syllabus === syllabus);
+        const withStatus = filtered.map(s => ({ ...s, hasPaid: window.payments.some(p => p.studentId === s.id && p.month === month) }));
+        let final = withStatus;
+        if (feeStatus === 'paid') final = withStatus.filter(s => s.hasPaid);
+        else if (feeStatus === 'pending') final = withStatus.filter(s => !s.hasPaid);
+        const paid = final.filter(s => s.hasPaid);
+        const pending = final.filter(s => !s.hasPaid);
+        document.getElementById('reportTotalStudents').textContent = final.length;
+        document.getElementById('reportPaidCount').textContent = paid.length;
+        document.getElementById('reportPendingCount').textContent = pending.length;
+        document.getElementById('reportTotalAmount').textContent = '₹' + final.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
+        document.getElementById('reportCollectedAmount').textContent = '₹' + paid.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
+        document.getElementById('reportPendingAmount').textContent = '₹' + pending.reduce((sum, s) => sum + s.monthlyFee, 0).toLocaleString();
+        document.getElementById('reportSummary').style.display = 'block';
+        const tbody = document.getElementById('reportTableBody');
+        tbody.innerHTML = final.map(s => {
+            const last = window.payments.filter(p => p.studentId === s.id).sort((a,b) => new Date(b.date) - new Date(a.date))[0];
+            return `<tr>
+                <td>${s.rollNumber}</td><td>${s.name}</td><td>${s.course}</td><td>${s.syllabus}</td>
+                <td>₹${s.monthlyFee}</td>
+                <td><span class="badge ${s.hasPaid ? 'badge-paid' : 'badge-pending'}">${s.hasPaid ? 'Paid' : 'Pending'}</span></td>
+                <td>${last ? last.date : 'No payment yet'}</td>
+            </tr>`;
+        }).join('') || '<tr><td colspan="7" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>';
+    };
+
+    document.getElementById('studentSearch').addEventListener('input', updateStudentTable);
+    document.getElementById('feeStudent').addEventListener('change', function() {
+        const student = window.students.find(s => s.id === this.value);
+        if (student) document.getElementById('feeAmount').value = student.monthlyFee;
+    });
+
+    // ---- Teachers ----
+    document.getElementById('teacherForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true; submitBtn.textContent = 'Adding...';
+        try {
+            await addDoc(collection(db, 'teachers'), {
+                name: document.getElementById('teacherName').value,
+                employeeId: document.getElementById('employeeId').value,
+                subject: document.getElementById('teacherSubject').value || '-',
+                phone: document.getElementById('teacherPhone').value,
+                email: document.getElementById('teacherEmail').value || '-',
+                salary: parseFloat(document.getElementById('teacherSalary').value),
+                joiningDate: document.getElementById('teacherJoiningDate').value || '-',
+                status: document.getElementById('teacherStatus').value,
+                createdAt: new Date().toISOString()
+            });
+            alert('✅ Teacher added!');
+            this.reset();
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { submitBtn.disabled = false; submitBtn.textContent = 'Add Teacher'; }
+    });
+
+    window.updateTeacherTable = function() {
+        const tbody = document.getElementById('teacherTableBody');
+        const searchTerm = document.getElementById('teacherSearch')?.value.toLowerCase() || '';
+        const filtered = window.teachers.filter(t =>
+            t.name.toLowerCase().includes(searchTerm) || t.employeeId.toLowerCase().includes(searchTerm)
+        );
+        tbody.innerHTML = filtered.map(t => {
+            const actionsCell = userRole === 'staff' ? '' : `<td><button class="btn btn-danger" onclick="deleteTeacher('${t.id}')" style="padding:5px 15px;">Delete</button></td>`;
+            return `<tr>
+                <td>${t.employeeId}</td><td>${t.name}</td><td>${t.subject}</td><td>${t.phone}</td>
+                <td>${t.email}</td><td>₹${t.salary.toLocaleString()}</td><td>${t.joiningDate}</td>
+                <td><span class="badge ${t.status === 'Active' ? 'badge-active' : 'badge-inactive'}">${t.status}</span></td>
+                ${actionsCell}
+            </tr>`;
+        }).join('');
+    };
+
+    document.getElementById('teacherSearch')?.addEventListener('input', updateTeacherTable);
+
+    window.deleteTeacher = async function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (!confirm('Delete this teacher?')) return;
+        try { await deleteDoc(doc(db, 'teachers', id)); alert('Teacher deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.updateSalaryTeacherSelect = function() {
+        const select = document.getElementById('salaryTeacher');
+        select.innerHTML = '<option value="">Choose teacher...</option>' +
+            window.teachers.filter(t => t.status === 'Active').map(t => `<option value="${t.id}">${t.employeeId} - ${t.name}</option>`).join('');
+    };
+
+    document.getElementById('salaryTeacher')?.addEventListener('change', function() {
+        const teacher = window.teachers.find(t => t.id === this.value);
+        if (teacher) document.getElementById('salaryAmount').value = teacher.salary;
+    });
+
+    window.paySalary = async function() {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const teacherId = document.getElementById('salaryTeacher').value;
+        const month = document.getElementById('salaryMonth').value;
+        const amount = parseFloat(document.getElementById('salaryAmount').value);
+        const method = document.getElementById('salaryPaymentMethod').value;
+        if (!teacherId || !month || !amount || !method) { alert('Please fill all fields'); return; }
+        if (window.salaries.some(s => s.teacherId === teacherId && s.month === month)) {
+            alert('❌ Salary already paid for this month!'); return;
+        }
+        try {
+            await addDoc(collection(db, 'salaries'), {
+                receiptNo: 'SAL' + Date.now().toString().slice(-6),
+                teacherId, month, amount, method,
+                date: new Date().toISOString().slice(0,10),
+                createdAt: new Date().toISOString()
+            });
+            document.getElementById('salaryTeacher').value = '';
+            document.getElementById('salaryAmount').value = '';
+            document.getElementById('salaryPaymentMethod').value = '';
+            alert('✅ Salary paid!');
+        } catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.updateSalaryTable = function() {
+        const tbody = document.getElementById('salaryTableBody');
+        tbody.innerHTML = window.salaries.slice(0,20).map(salary => {
+            const teacher = window.teachers.find(t => t.id === salary.teacherId);
+            const actionsCell = userRole === 'staff' ? '' : `<td><button class="btn btn-danger" onclick="deleteSalary('${salary.id}','${teacher?.name||'Unknown'}','${salary.month}',${salary.amount})" style="padding:5px 15px;">Delete</button></td>`;
+            return `<tr>
+                <td>${salary.receiptNo}</td><td>${salary.date}</td>
+                <td>${teacher?.employeeId||'N/A'}</td><td>${teacher?.name||'Unknown'}</td>
+                <td>${salary.month}</td><td>₹${salary.amount.toLocaleString()}</td><td>${salary.method}</td>
+                ${actionsCell}
+            </tr>`;
+        }).join('');
+    };
+
+    window.deleteSalary = async function(id, name, month, amount) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (!confirm(`Delete salary payment?\nTeacher: ${name}\nMonth: ${month}\nAmount: ₹${amount}`)) return;
+        try { await deleteDoc(doc(db, 'salaries', id)); alert('✅ Deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
+    };
+
+    // ---- Expenses ----
+    document.getElementById('expenseForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        const isEditing = editingExpenseId !== null;
+        submitBtn.textContent = isEditing ? 'Updating...' : 'Adding...';
+        try {
+            const expenseData = {
+                type: document.getElementById('expenseType').value,
+                description: document.getElementById('expenseDescription').value,
+                amount: parseFloat(document.getElementById('expenseAmount').value),
+                date: document.getElementById('expenseDate').value,
+                paymentMethod: document.getElementById('expensePaymentMethod').value,
+                paidTo: document.getElementById('expensePaidTo').value || '-',
+                forMonth: document.getElementById('expenseForMonth').value || '-',
+                notes: document.getElementById('expenseNotes').value || '-'
+            };
+            if (isEditing) {
+                await updateDoc(doc(db, 'expenses', editingExpenseId), { ...expenseData, updatedAt: new Date().toISOString() });
+                alert('✅ Expense updated!');
+                cancelExpenseEdit();
+            } else {
+                await addDoc(collection(db, 'expenses'), { ...expenseData, createdAt: new Date().toISOString() });
+                alert('✅ Expense added!');
+            }
+            this.reset();
+            document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Expense' : 'Add Expense'; }
+    });
+
+    window.updateExpenseTable = function() {
+        const tbody = document.getElementById('expenseTableBody');
+        const searchTerm = document.getElementById('expenseSearch')?.value.toLowerCase() || '';
+        const typeFilter = document.getElementById('expenseFilterType')?.value || '';
+        const monthFilter = document.getElementById('expenseFilterMonth')?.value || '';
+        let filtered = window.expenses.filter(e => {
+            const matchSearch = e.description.toLowerCase().includes(searchTerm) || e.type.toLowerCase().includes(searchTerm) || (e.paidTo && e.paidTo.toLowerCase().includes(searchTerm));
+            const matchType = !typeFilter || e.type === typeFilter;
+            const matchMonth = !monthFilter || e.forMonth === monthFilter || e.date.startsWith(monthFilter);
+            return matchSearch && matchType && matchMonth;
+        });
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No expenses found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = filtered.map(e => {
+            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
+                <button class="btn btn-warning" onclick="editExpense('${e.id}')" style="padding:5px 15px;">Edit</button>
+                <button class="btn btn-danger" onclick="deleteExpense('${e.id}')" style="padding:5px 15px;">Delete</button>
+            </div></td>`;
+            return `<tr>
+                <td>${e.date}</td><td><span class="badge badge-active">${e.type}</span></td>
+                <td>${e.description}</td><td style="font-weight:600;color:#dc3545;">₹${e.amount.toLocaleString()}</td>
+                <td>${e.forMonth === '-' ? '-' : e.forMonth}</td><td>${e.paidTo}</td>
+                <td>${e.paymentMethod}</td><td style="font-size:0.9em;color:#666;">${e.notes}</td>
+                ${actionsCell}
+            </tr>`;
+        }).join('');
+    };
+
+    document.getElementById('expenseSearch')?.addEventListener('input', updateExpenseTable);
+
+    window.clearExpenseFilters = function() {
+        document.getElementById('expenseFilterType').value = '';
+        document.getElementById('expenseFilterMonth').value = '';
+        updateExpenseTable();
+    };
+
+    window.editExpense = function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const expense = window.expenses.find(e => e.id === id);
+        if (expense) {
+            editingExpenseId = id;
+            document.getElementById('expenseType').value = expense.type;
+            document.getElementById('expenseDescription').value = expense.description;
+            document.getElementById('expenseAmount').value = expense.amount;
+            document.getElementById('expenseDate').value = expense.date;
+            document.getElementById('expensePaymentMethod').value = expense.paymentMethod;
+            document.getElementById('expensePaidTo').value = expense.paidTo === '-' ? '' : expense.paidTo;
+            document.getElementById('expenseForMonth').value = expense.forMonth === '-' ? '' : expense.forMonth;
+            document.getElementById('expenseNotes').value = expense.notes === '-' ? '' : expense.notes;
+            const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
+            submitBtn.textContent = 'Update Expense';
+            submitBtn.classList.add('btn-warning');
+            submitBtn.classList.remove('btn-primary');
+            if (!document.getElementById('cancelExpenseEditBtn')) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button'; cancelBtn.id = 'cancelExpenseEditBtn';
+                cancelBtn.className = 'btn btn-danger'; cancelBtn.textContent = 'Cancel Edit';
+                cancelBtn.onclick = cancelExpenseEdit; cancelBtn.style.marginLeft = '10px';
+                submitBtn.parentNode.appendChild(cancelBtn);
+            }
+            document.getElementById('expenseFormSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    function cancelExpenseEdit() {
+        editingExpenseId = null;
+        document.getElementById('expenseForm').reset();
+        document.getElementById('expenseDate').value = new Date().toISOString().slice(0,10);
+        const submitBtn = document.querySelector('#expenseForm button[type="submit"]');
+        submitBtn.textContent = 'Add Expense';
+        submitBtn.classList.remove('btn-warning');
+        submitBtn.classList.add('btn-primary');
+        const cancelBtn = document.getElementById('cancelExpenseEditBtn');
+        if (cancelBtn) cancelBtn.remove();
+    }
+
+    window.deleteExpense = async function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        if (!confirm('Delete this expense?')) return;
+        try { await deleteDoc(doc(db, 'expenses', id)); alert('Expense deleted!'); }
+        catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.updateExpenseSummary = function() {
+        const currentMonth = new Date().toISOString().slice(0,7);
+        const total = window.expenses.reduce((sum, e) => sum + e.amount, 0);
+        const thisMonth = window.expenses.filter(e => e.date.startsWith(currentMonth) || e.forMonth === currentMonth).reduce((sum, e) => sum + e.amount, 0);
+        document.getElementById('totalExpenses').textContent = '₹' + total.toLocaleString();
+        document.getElementById('thisMonthExpenses').textContent = '₹' + thisMonth.toLocaleString();
+        document.getElementById('expenseCount').textContent = window.expenses.length;
+    };
+
+    // ---- WhatsApp ----
+    window.sendWhatsAppReminder = async function(studentId, phone, studentName, monthlyFee) {
+        let cleanPhone = phone.replace(/\D/g, '');
+        if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const currentMonth = monthNames[new Date().getMonth()];
+        const currentMonthCode = new Date().toISOString().slice(0,7);
+        const message = `Dear ${studentName},\n\nThis is a friendly reminder from Vismaya Education regarding your fee payment.\n\n📚 *Fee Details:*\n• Month: ${currentMonth}\n• Amount: ₹${monthlyFee}\n\nPlease make the payment at your earliest convenience.\n\nThank you!\n*Vismaya Education*`;
+        try {
+            await addDoc(collection(db, 'reminders'), { studentId, month: currentMonthCode, sentAt: new Date().toISOString(), sentBy: currentUser.email, phone, studentName });
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        } catch (error) { window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank'); }
+    };
+
+    window.sendBulkWhatsAppReminders = function() {
+        const currentMonth = new Date().toISOString().slice(0,7);
+        const unpaid = window.students.filter(s => !window.payments.some(p => p.studentId === s.id && p.month === currentMonth) && s.status === 'Active');
+        if (unpaid.length === 0) { alert('✅ All active students have paid!'); return; }
+        if (confirm(`Send WhatsApp reminders to ${unpaid.length} students?`)) {
+            unpaid.forEach((s, i) => setTimeout(() => sendWhatsAppReminder(s.id, s.phone, s.name, s.monthlyFee), i * 2000));
+        }
+    };
+
+    // ---- Accounts ----
+    window.generateAccountsSummary = function() {
+        const month = document.getElementById('accountsMonth').value;
+        if (!month) { alert('Please select a month.'); return; }
+        const monthPayments = window.payments.filter(p => p.month === month);
+        const totalFees = monthPayments.reduce((sum, p) => sum + p.amount, 0);
+        const monthSalaries = window.salaries.filter(s => s.month === month);
+        const totalSalary = monthSalaries.reduce((sum, s) => sum + s.amount, 0);
+        const monthExpenses = window.expenses.filter(e => e.date.startsWith(month) || e.forMonth === month);
+        const totalExpenses = monthExpenses.reduce((sum, e) => sum + e.amount, 0);
+        const totalExpenditure = totalSalary + totalExpenses;
+        const netResult = totalFees - totalExpenditure;
+        const isProfit = netResult >= 0;
+
+        currentAccountsData = { month, monthPayments, monthSalaries, monthExpenses, totalFees, totalSalary, totalExpenses, totalExpenditure, netResult };
+
+        document.getElementById('accTotalFees').textContent = '₹' + totalFees.toLocaleString();
+        document.getElementById('accTotalSalary').textContent = '₹' + totalSalary.toLocaleString();
+        document.getElementById('accTotalExpenses').textContent = '₹' + totalExpenses.toLocaleString();
+        document.getElementById('accTotalExpenditure').textContent = '₹' + totalExpenditure.toLocaleString();
+
+        const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+        document.getElementById('netResultBanner').innerHTML = `
+            <div class="net-result-banner ${isProfit ? 'profit-banner' : 'loss-banner'}">
+                <div>
+                    <div class="net-label">${monthLabel} — ${isProfit ? '🟢 Net Profit' : '🔴 Net Loss'}</div>
+                    <div class="net-formula">₹${totalFees.toLocaleString()} (Fees) − ₹${totalSalary.toLocaleString()} (Salary) − ₹${totalExpenses.toLocaleString()} (Expenses)</div>
+                </div>
+                <div class="net-value">${isProfit ? '+' : ''}₹${Math.abs(netResult).toLocaleString()}</div>
+            </div>`;
+
+        const feeBody = document.getElementById('feeBreakdownBody');
+        feeBody.innerHTML = monthPayments.length === 0 ? '<div class="accounts-breakdown-empty">No fees this month</div>' :
+            monthPayments.map(p => { const s = window.students.find(st => st.id === p.studentId); return `<div class="accounts-breakdown-row"><span class="row-label">${s?.name||'Unknown'} (${s?.rollNumber||'N/A'})</span><span class="row-amount green">₹${p.amount.toLocaleString()}</span></div>`; }).join('');
+        document.getElementById('feeBreakdownTotal').textContent = '₹' + totalFees.toLocaleString();
+
+        const expBody = document.getElementById('expenseBreakdownBody');
+        expBody.innerHTML = monthExpenses.length === 0 ? '<div class="accounts-breakdown-empty">No expenses this month</div>' :
+            monthExpenses.map(e => `<div class="accounts-breakdown-row"><span class="row-label">${e.description}</span><span class="row-amount red">₹${e.amount.toLocaleString()}</span></div>`).join('');
+        document.getElementById('expenseBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
+
+        const salBody = document.getElementById('salaryBreakdownBody');
+        salBody.innerHTML = monthSalaries.length === 0 ? '<div class="accounts-breakdown-empty">No salary this month</div>' :
+            monthSalaries.map(s => { const t = window.teachers.find(tc => tc.id === s.teacherId); return `<div class="accounts-breakdown-row"><span class="row-label">${t?.name||'Unknown'}</span><span class="row-amount orange">₹${s.amount.toLocaleString()}</span></div>`; }).join('');
+        document.getElementById('salaryBreakdownTotal').textContent = '₹' + totalSalary.toLocaleString();
+
+        const catMap = {};
+        monthExpenses.forEach(e => { catMap[e.type] = (catMap[e.type] || 0) + e.amount; });
+        const catBody = document.getElementById('categoryBreakdownBody');
+        catBody.innerHTML = Object.keys(catMap).length === 0 ? '<div class="accounts-breakdown-empty">No expenses this month</div>' :
+            Object.entries(catMap).map(([type, amount]) => `<div class="accounts-breakdown-row"><span class="row-label">${type}</span><span class="row-amount red">₹${amount.toLocaleString()}</span></div>`).join('');
+        document.getElementById('categoryBreakdownTotal').textContent = '₹' + totalExpenses.toLocaleString();
+
+        generateMonthlyHistory();
+
+        document.getElementById('netResultBanner').style.display = 'block';
+        document.getElementById('accountsSummaryGrid').style.display = 'grid';
+        document.getElementById('accountsBreakdown').style.display = 'grid';
+        document.getElementById('monthlyHistorySection').style.display = 'block';
+        document.getElementById('exportAccountsBtn').style.display = 'inline-block';
+    };
+
+    function generateMonthlyHistory() {
+        const allMonths = new Set();
+        window.payments.forEach(p => allMonths.add(p.month));
+        window.salaries.forEach(s => allMonths.add(s.month));
+        window.expenses.forEach(e => { if (e.forMonth && e.forMonth !== '-') allMonths.add(e.forMonth); else allMonths.add(e.date.slice(0,7)); });
+        const sorted = Array.from(allMonths).sort((a,b) => b.localeCompare(a));
+        const tbody = document.getElementById('monthlyHistoryBody');
+        if (sorted.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No data available</td></tr>'; return; }
+        tbody.innerHTML = sorted.map(m => {
+            const fees = window.payments.filter(p => p.month === m).reduce((sum, p) => sum + p.amount, 0);
+            const salary = window.salaries.filter(s => s.month === m).reduce((sum, s) => sum + s.amount, 0);
+            const expenses = window.expenses.filter(e => e.date.startsWith(m) || e.forMonth === m).reduce((sum, e) => sum + e.amount, 0);
+            const exp = salary + expenses;
+            const net = fees - exp;
+            const isP = net >= 0;
+            const label = new Date(m + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+            return `<tr class="${isP ? 'profit-row' : 'loss-row'}">
+                <td><strong>${label}</strong></td>
+                <td style="color:#28a745;font-weight:600;">₹${fees.toLocaleString()}</td>
+                <td style="color:#fd7e14;font-weight:600;">₹${salary.toLocaleString()}</td>
+                <td style="color:#dc3545;font-weight:600;">₹${expenses.toLocaleString()}</td>
+                <td style="color:#dc3545;font-weight:700;">₹${exp.toLocaleString()}</td>
+                <td style="font-weight:700;color:${isP?'#28a745':'#dc3545'};">${isP?'🟢 +':'🔴 '}₹${Math.abs(net).toLocaleString()}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    window.exportAccountsToExcel = function() {
+        if (!currentAccountsData) { alert('Please generate a summary first.'); return; }
+        const { month, monthPayments, monthSalaries, monthExpenses, totalFees, totalSalary, totalExpenses, totalExpenditure, netResult } = currentAccountsData;
+        const monthLabel = new Date(month + '-01').toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+        const wb = XLSX.utils.book_new();
+        const summaryData = [
+            ['Vismaya Education - Monthly Accounts Summary'],
+            ['Month:', monthLabel], ['Generated On:', new Date().toLocaleDateString('en-IN')], [],
+            ['Category', 'Amount (₹)'],
+            ['Total Fees Collected', totalFees], ['Salary Paid', totalSalary],
+            ['Other Expenses', totalExpenses], ['Total Expenditure', totalExpenditure], ['Net Profit / Loss', netResult]
+        ];
+        const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+        wsSummary['!cols'] = [{ wch: 30 },{ wch: 20 }];
+        XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
+        XLSX.writeFile(wb, `Accounts_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    // ---- Excel Exports ----
+    window.exportStudentsToExcel = function() {
+        const currentMonth = new Date().toISOString().slice(0,7);
+        const data = window.students.map(s => ({
+            'Roll Number': s.rollNumber, 'Name': s.name, 'Class': s.course, 'Syllabus': s.syllabus,
+            'Phone': s.phone, 'Monthly Fee': s.monthlyFee, 'Admission Date': s.admissionDate,
+            'Status': s.status, 'Fee Status (This Month)': window.payments.some(p => p.studentId === s.id && p.month === currentMonth) ? 'Paid' : 'Pending'
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        ws['!cols'] = [{ wch:12 },{ wch:25 },{ wch:12 },{ wch:12 },{ wch:15 },{ wch:12 },{ wch:15 },{ wch:10 },{ wch:20 }];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Students');
+        XLSX.writeFile(wb, `Students_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.exportRecentPaymentsToExcel = function() {
+        const data = window.payments.slice(0,20).map(p => {
+            const s = window.students.find(st => st.id === p.studentId);
+            return { 'Receipt No': p.receiptNo, 'Date': p.date, 'Roll Number': s?.rollNumber||'N/A', 'Student Name': s?.name||'Unknown', 'Class': s?.course||'N/A', 'Fee Month': p.month, 'Amount': p.amount, 'Payment Method': p.method };
+        });
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Recent Payments');
+        XLSX.writeFile(wb, `Recent_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.generatePaidStudentsReport = function() {
+        const month = document.getElementById('paidReportMonth').value;
+        const classFilter = document.getElementById('paidReportClass').value;
+        const methodFilter = document.getElementById('paidReportMethod').value;
+        let monthPayments = window.payments.filter(p => p.month === month);
+        if (methodFilter) monthPayments = monthPayments.filter(p => p.method === methodFilter);
+        const paidData = [];
+        monthPayments.forEach(payment => {
+            const student = window.students.find(s => s.id === payment.studentId);
+            if (student && (!classFilter || student.course === classFilter)) paidData.push({ student, payment });
+        });
+        filteredPaidStudents = paidData;
+        const total = paidData.length;
+        const totalAmount = paidData.reduce((sum, item) => sum + item.payment.amount, 0);
+        document.getElementById('paidReportCount').textContent = total;
+        document.getElementById('paidReportTotal').textContent = '₹' + totalAmount.toLocaleString();
+        document.getElementById('paidReportAverage').textContent = '₹' + Math.round(total > 0 ? totalAmount/total : 0).toLocaleString();
+        document.getElementById('paidReportSummary').style.display = 'block';
+        document.getElementById('paidStudentsTableContainer').style.display = 'block';
+        document.getElementById('exportPaidReportBtn').style.display = 'inline-block';
+        updatePaidStudentsTable(paidData);
+    };
+
+    function updatePaidStudentsTable(data) {
+        const tbody = document.getElementById('paidStudentsTableBody');
+        if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No students found.</td></tr>'; return; }
+        tbody.innerHTML = data.map((item, i) => `<tr>
+            <td>${i+1}</td><td>${item.student.rollNumber}</td><td>${item.student.name}</td>
+            <td>${item.student.course}</td><td>${item.student.phone}</td>
+            <td>₹${item.payment.amount}</td><td>${item.payment.date}</td>
+            <td><span class="badge badge-active">${item.payment.method}</span></td>
+            <td>${item.payment.receiptNo}</td>
+        </tr>`).join('');
+    }
+
+    window.filterPaidStudentsTable = function() {
+        const search = document.getElementById('paidStudentsSearch').value.toLowerCase();
+        updatePaidStudentsTable(filteredPaidStudents.filter(item => item.student.name.toLowerCase().includes(search) || item.student.rollNumber.toLowerCase().includes(search)));
+    };
+
+    window.exportPaidStudentsReport = function() {
+        if (filteredPaidStudents.length === 0) { alert('Generate a report first.'); return; }
+        const month = document.getElementById('paidReportMonth').value;
+        const data = filteredPaidStudents.map((item, i) => ({
+            'S.No': i+1, 'Roll Number': item.student.rollNumber, 'Student Name': item.student.name,
+            'Class': item.student.course, 'Syllabus': item.student.syllabus, 'Phone': item.student.phone,
+            'Monthly Fee': item.student.monthlyFee, 'Amount Paid': item.payment.amount,
+            'Payment Date': item.payment.date, 'Payment Method': item.payment.method, 'Receipt No': item.payment.receiptNo
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Paid Students');
+        XLSX.writeFile(wb, `Paid_Students_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.exportTeachersToExcel = function() {
+        const data = window.teachers.map(t => ({ 'Employee ID': t.employeeId, 'Name': t.name, 'Subject': t.subject, 'Phone': t.phone, 'Email': t.email, 'Monthly Salary': t.salary, 'Joining Date': t.joiningDate, 'Status': t.status }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Teachers');
+        XLSX.writeFile(wb, `Teachers_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.exportSalaryPaymentsToExcel = function() {
+        const data = window.salaries.map(s => {
+            const t = window.teachers.find(tc => tc.id === s.teacherId);
+            return { 'Receipt No': s.receiptNo, 'Date': s.date, 'Employee ID': t?.employeeId||'N/A', 'Teacher Name': t?.name||'Unknown', 'Month': s.month, 'Amount': s.amount, 'Payment Method': s.method };
+        });
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Salary Payments');
+        XLSX.writeFile(wb, `Salary_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.exportExpensesToExcel = function() {
+        const data = window.expenses.map(e => ({ 'Date': e.date, 'Type': e.type, 'Description': e.description, 'Amount': e.amount, 'For Month': e.forMonth, 'Paid To': e.paidTo, 'Payment Method': e.paymentMethod, 'Notes': e.notes }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Expenses');
+        XLSX.writeFile(wb, `Expenses_${new Date().toISOString().slice(0,10)}.xlsx`);
+    };
+
+    window.downloadTemplate = function() {
+        const template = [
+            ['Student Name','Roll Number','Class','Syllabus','Phone Number','Monthly Fee','Admission Date','Status'],
+            ['John Doe','001','Class 10','CBSE','9876543210','5000','01/01/2024','Active'],
+            ['Jane Smith','002','Class 11','Matric','9876543211','6000','','Active']
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(template);
+        ws['!cols'] = [{ wch:20 },{ wch:12 },{ wch:12 },{ wch:12 },{ wch:15 },{ wch:12 },{ wch:15 },{ wch:10 }];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Students');
+        XLSX.writeFile(wb, 'Student_Upload_Template.xlsx');
+    };
+
+    window.uploadExcel = async function() {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const fileInput = document.getElementById('excelFile');
+        const file = fileInput.files[0];
+        if (!file) { alert('Please select an Excel file first.'); return; }
+        const statusDiv = document.getElementById('uploadStatus');
+        statusDiv.style.display = 'block';
+        statusDiv.style.background = '#fff3cd'; statusDiv.style.color = '#856404';
+        statusDiv.textContent = '⏳ Reading Excel file...';
+        try {
+            const data = await file.arrayBuffer();
+            const workbook = XLSX.read(data);
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            if (jsonData.length < 2) throw new Error('Excel file is empty or has no data rows.');
+            const rows = jsonData.slice(1);
+            let successCount = 0, errorCount = 0;
+            const errors = [];
+            statusDiv.textContent = `⏳ Uploading ${rows.length} students...`;
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row || row.length === 0 || !row[0]) continue;
+                try {
+                    let admissionDate = row[6];
+                    if (admissionDate) {
+                        if (typeof admissionDate === 'number') {
+                            const excelEpoch = new Date(1900, 0, 1);
+                            admissionDate = new Date(excelEpoch.getTime() + (admissionDate - 2) * 86400000).toISOString().slice(0,10);
+                        } else if (typeof admissionDate === 'string' && admissionDate.includes('/')) {
+                            const parts = admissionDate.split('/');
+                            if (parts.length === 3) admissionDate = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+                        }
+                    } else { admissionDate = '-'; }
+                    const student = {
+                        name: String(row[0]||'').trim(), rollNumber: String(row[1]||'').trim(),
+                        course: String(row[2]||'').trim(), syllabus: String(row[3]||'').trim() || '-',
+                        phone: String(row[4]||'').trim(), monthlyFee: parseFloat(row[5]) || 0,
+                        admissionDate, status: String(row[7]||'').trim() || 'Active', createdAt: new Date().toISOString()
+                    };
+                    if (!student.name || !student.rollNumber || !student.course || !student.phone || !student.monthlyFee || !student.status) {
+                        errors.push(`Row ${i+2}: Missing required fields`); errorCount++; continue;
+                    }
+                    if (student.status !== 'Active' && student.status !== 'Inactive') {
+                        errors.push(`Row ${i+2}: Status must be "Active" or "Inactive"`); errorCount++; continue;
+                    }
+                    if (window.students.find(s => s.rollNumber === student.rollNumber)) {
+                        errors.push(`Row ${i+2}: Roll number ${student.rollNumber} already exists`); errorCount++; continue;
+                    }
+                    await addDoc(collection(db, 'students'), student);
+                    successCount++;
+                    statusDiv.textContent = `⏳ Uploaded ${successCount} of ${rows.length} students...`;
+                } catch (error) { errors.push(`Row ${i+2}: ${error.message}`); errorCount++; }
+            }
+            if (successCount > 0 && errorCount === 0) {
+                statusDiv.style.background = '#d4edda'; statusDiv.style.color = '#155724';
+                statusDiv.innerHTML = `✅ Successfully uploaded ${successCount} student(s)!`;
+            } else if (successCount > 0) {
+                statusDiv.style.background = '#fff3cd'; statusDiv.style.color = '#856404';
+                statusDiv.innerHTML = `⚠️ Uploaded ${successCount}. ${errorCount} failed.<details style="margin-top:10px;"><summary>View Errors</summary><pre style="margin-top:5px;font-size:0.85em;">${errors.join('\n')}</pre></details>`;
+            } else {
+                statusDiv.style.background = '#f8d7da'; statusDiv.style.color = '#721c24';
+                statusDiv.innerHTML = `❌ Upload failed. ${errorCount} error(s).<details style="margin-top:10px;"><summary>View Errors</summary><pre>${errors.join('\n')}</pre></details>`;
+            }
+            fileInput.value = '';
+        } catch (error) {
+            statusDiv.style.background = '#f8d7da'; statusDiv.style.color = '#721c24';
+            statusDiv.textContent = `❌ Error: ${error.message}`;
+        }
+    };
+
+    function getErrorMessage(code) {
+        const messages = {
+            'auth/email-already-in-use': 'This email is already registered.',
+            'auth/invalid-email': 'Invalid email address.',
+            'auth/weak-password': 'Password should be at least 6 characters.',
+            'auth/user-disabled': 'This account has been disabled.',
+            'auth/user-not-found': 'No account found with this email.',
+            'auth/wrong-password': 'Incorrect password.',
+            'auth/invalid-credential': 'Invalid email or password.',
+            'auth/too-many-requests': 'Too many attempts. Please try again later.'
+        };
+        return messages[code] || 'An error occurred. Please try again.';
+    }
+</script>
+</body>
+</html>
