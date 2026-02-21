@@ -166,28 +166,6 @@
         .iq-bulk-bar { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; color: white; }
         .iq-bulk-bar p { font-size: 0.9em; opacity: 0.9; }
 
-        /* PDF Upload Section */
-        .pdf-upload-section { background: linear-gradient(135deg, #fff8f0 0%, #fff3e0 100%); border: 2px solid #fd7e14; border-radius: 12px; padding: 20px 25px; margin-bottom: 25px; }
-        .pdf-upload-section h3 { color: #e65100; margin-bottom: 5px; font-size: 1.05em; }
-        .pdf-upload-section p { color: #666; font-size: 0.88em; margin-bottom: 15px; }
-        .pdf-slot { background: white; border: 2px dashed #fd7e14; border-radius: 10px; padding: 18px 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; transition: border-color 0.3s; }
-        .pdf-slot:hover { border-color: #e65100; }
-        .pdf-slot-label { font-weight: 700; color: #e65100; font-size: 0.95em; min-width: 80px; }
-        .pdf-slot-info { flex: 1; }
-        .pdf-slot-info .pdf-name { font-weight: 600; color: #333; font-size: 0.9em; word-break: break-all; }
-        .pdf-slot-info .pdf-url { font-size: 0.78em; color: #667eea; word-break: break-all; margin-top: 2px; }
-        .pdf-slot-info .pdf-empty { color: #999; font-size: 0.88em; font-style: italic; }
-        .pdf-upload-progress { width: 100%; margin-top: 8px; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; display: none; }
-        .pdf-upload-progress-bar { height: 100%; background: linear-gradient(90deg, #fd7e14, #ffc107); border-radius: 3px; width: 0%; transition: width 0.3s; }
-        .pdf-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .btn-upload { background: linear-gradient(135deg, #fd7e14, #ffc107); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.85em; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .btn-upload:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(253,126,20,0.4); }
-        .btn-upload:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .btn-remove-pdf { background: #dc3545; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 0.85em; font-weight: 600; cursor: pointer; }
-        .pdf-status-badge { padding: 4px 10px; border-radius: 10px; font-size: 0.8em; font-weight: 600; }
-        .pdf-status-badge.uploaded { background: #d4edda; color: #155724; }
-        .pdf-status-badge.none { background: #f8d7da; color: #721c24; }
-
         .convert-modal-content { background: white; padding: 30px; border-radius: 15px; max-width: 700px; width: 95%; max-height: 90vh; overflow-y: auto; }
         .convert-notice { background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; border-left: 4px solid #17a2b8; }
 
@@ -867,91 +845,6 @@
                     <div class="iq-stat pending-color"><h3 id="iqPending">0</h3><p>Pending Send</p></div>
                 </div>
 
-                <!-- Add Form -->
-                <!-- PDF Upload Section for Class 10 & 12 -->
-                <div class="pdf-upload-section">
-                    <h3>📎 Important Questions PDF — Manage Files</h3>
-                    <p>Upload PDFs to Firebase Storage. The public download link will be auto-included in every WhatsApp message sent from this tab.</p>
-
-                    <!-- Class 10 PDF -->
-                    <div class="pdf-slot" id="pdfSlot10">
-                        <span class="pdf-slot-label">🔵 Class 10</span>
-                        <div class="pdf-slot-info">
-                            <div class="pdf-name" id="pdfName10">No file uploaded</div>
-                            <div class="pdf-url" id="pdfUrlDisplay10" style="display:none;"></div>
-                            <div class="pdf-upload-progress" id="pdfProgress10">
-                                <div class="pdf-upload-progress-bar" id="pdfProgressBar10"></div>
-                            </div>
-                        </div>
-                        <div class="pdf-actions">
-                            <span class="pdf-status-badge none" id="pdfBadge10">Not Uploaded</span>
-                            <input type="file" id="pdfFile10" accept="application/pdf" style="display:none;" onchange="uploadIQPdf('10', this)">
-                            <button class="btn-upload" onclick="document.getElementById('pdfFile10').click()" id="pdfUploadBtn10">📤 Upload PDF</button>
-                            <button class="btn-remove-pdf" onclick="removeIQPdf('10')" id="pdfRemoveBtn10" style="display:none;">🗑 Remove</button>
-                        </div>
-                    </div>
-
-                    <!-- Class 12 PDFs — 3 subjects -->
-                    <div style="background:#f3f0ff; border-radius:8px; padding:12px 15px; margin-bottom:8px;">
-                        <strong style="color:#764ba2; font-size:0.95em;">🟣 Class 12 — Subject-wise PDFs</strong>
-                        <p style="font-size:0.82em; color:#888; margin:4px 0 10px;">Upload one PDF per subject. WhatsApp will auto-attach the matching PDF based on the subject selected in the form.</p>
-
-                        <!-- Maths -->
-                        <div class="pdf-slot" id="pdfSlot12_maths" style="margin-bottom:8px;">
-                            <span class="pdf-slot-label" style="color:#e53935;">📐 Maths</span>
-                            <div class="pdf-slot-info">
-                                <div class="pdf-name" id="pdfName12_maths">No file uploaded</div>
-                                <div class="pdf-url" id="pdfUrlDisplay12_maths" style="display:none;"></div>
-                                <div class="pdf-upload-progress" id="pdfProgress12_maths">
-                                    <div class="pdf-upload-progress-bar" id="pdfProgressBar12_maths"></div>
-                                </div>
-                            </div>
-                            <div class="pdf-actions">
-                                <span class="pdf-status-badge none" id="pdfBadge12_maths">Not Uploaded</span>
-                                <input type="file" id="pdfFile12_maths" accept="application/pdf" style="display:none;" onchange="uploadIQPdf('12_maths', this)">
-                                <button class="btn-upload" onclick="document.getElementById('pdfFile12_maths').click()" id="pdfUploadBtn12_maths">📤 Upload</button>
-                                <button class="btn-remove-pdf" onclick="removeIQPdf('12_maths')" id="pdfRemoveBtn12_maths" style="display:none;">🗑</button>
-                            </div>
-                        </div>
-
-                        <!-- Physics -->
-                        <div class="pdf-slot" id="pdfSlot12_physics" style="margin-bottom:8px;">
-                            <span class="pdf-slot-label" style="color:#1565c0;">⚛️ Physics</span>
-                            <div class="pdf-slot-info">
-                                <div class="pdf-name" id="pdfName12_physics">No file uploaded</div>
-                                <div class="pdf-url" id="pdfUrlDisplay12_physics" style="display:none;"></div>
-                                <div class="pdf-upload-progress" id="pdfProgress12_physics">
-                                    <div class="pdf-upload-progress-bar" id="pdfProgressBar12_physics"></div>
-                                </div>
-                            </div>
-                            <div class="pdf-actions">
-                                <span class="pdf-status-badge none" id="pdfBadge12_physics">Not Uploaded</span>
-                                <input type="file" id="pdfFile12_physics" accept="application/pdf" style="display:none;" onchange="uploadIQPdf('12_physics', this)">
-                                <button class="btn-upload" onclick="document.getElementById('pdfFile12_physics').click()" id="pdfUploadBtn12_physics">📤 Upload</button>
-                                <button class="btn-remove-pdf" onclick="removeIQPdf('12_physics')" id="pdfRemoveBtn12_physics" style="display:none;">🗑</button>
-                            </div>
-                        </div>
-
-                        <!-- Accounts -->
-                        <div class="pdf-slot" id="pdfSlot12_accounts">
-                            <span class="pdf-slot-label" style="color:#2e7d32;">📊 Accounts</span>
-                            <div class="pdf-slot-info">
-                                <div class="pdf-name" id="pdfName12_accounts">No file uploaded</div>
-                                <div class="pdf-url" id="pdfUrlDisplay12_accounts" style="display:none;"></div>
-                                <div class="pdf-upload-progress" id="pdfProgress12_accounts">
-                                    <div class="pdf-upload-progress-bar" id="pdfProgressBar12_accounts"></div>
-                                </div>
-                            </div>
-                            <div class="pdf-actions">
-                                <span class="pdf-status-badge none" id="pdfBadge12_accounts">Not Uploaded</span>
-                                <input type="file" id="pdfFile12_accounts" accept="application/pdf" style="display:none;" onchange="uploadIQPdf('12_accounts', this)">
-                                <button class="btn-upload" onclick="document.getElementById('pdfFile12_accounts').click()" id="pdfUploadBtn12_accounts">📤 Upload</button>
-                                <button class="btn-remove-pdf" onclick="removeIQPdf('12_accounts')" id="pdfRemoveBtn12_accounts" style="display:none;">🗑</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="iqFormSection" class="iq-form-section">
                     <h3>➕ Add New Request</h3>
                     <form id="iqForm">
@@ -1183,7 +1076,6 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, getDoc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-    import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
     import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.1/package/xlsx.mjs';
 
     const firebaseConfig = {
@@ -1198,7 +1090,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     window.students = [];
     window.payments = [];
@@ -1209,10 +1100,12 @@
     window.inquiries = [];
     window.iqInquiries = []; // Important Questions collection
 
-    // PDF storage URLs (loaded from Firestore settings doc)
-    // Class 10: single PDF | Class 12: per-subject PDFs
-    let iqPdfUrls = { '10': null, '12_maths': null, '12_physics': null, '12_accounts': null };
-    let iqPdfNames = { '10': null, '12_maths': null, '12_physics': null, '12_accounts': null };
+    // Hardcoded Google Drive PDF links per subject (Class 12)
+    const IQ_PDF_LINKS = {
+        'Accounts': 'https://drive.google.com/uc?export=download&id=1hSNHUy71NkqRj2L28EgIDWPL-gdzjkXk',
+        'Maths':    null,  // Not ready yet
+        'Physics':  'https://drive.google.com/uc?export=download&id=1un2yL_LqGwKrQjsKh0jM4YnB9jMQLEyy'
+    };
 
     let studentsListener = null, paymentsListener = null, remindersListener = null;
     let teachersListener = null, salariesListener = null, expensesListener = null;
@@ -1352,9 +1245,6 @@
                 updateIQTable(); updateIQStats();
             });
 
-            // Load PDF settings
-            loadIQPdfSettings();
-
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
         } catch (error) { console.error('Error loading data:', error); alert('Error loading data: ' + error.message); }
@@ -1390,151 +1280,6 @@
         } else {
             subjectSelect.innerHTML = '<option value="">— Select Class first —</option>';
         }
-    };
-
-    // ============================================================
-    // PDF UPLOAD FUNCTIONS (Firebase Storage)
-    // ============================================================
-
-    async function loadIQPdfSettings() {
-        try {
-            const docSnap = await getDoc(doc(db, 'settings', 'iqPdfs'));
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                const slots = [
-                    { key: '10',         firestoreKey: 'class10',         fallback: 'Class10_IQ.pdf' },
-                    { key: '12_maths',   firestoreKey: 'class12_maths',   fallback: 'Class12_Maths_IQ.pdf' },
-                    { key: '12_physics', firestoreKey: 'class12_physics', fallback: 'Class12_Physics_IQ.pdf' },
-                    { key: '12_accounts',firestoreKey: 'class12_accounts',fallback: 'Class12_Accounts_IQ.pdf' },
-                ];
-                slots.forEach(slot => {
-                    if (data[slot.firestoreKey + 'Url']) {
-                        iqPdfUrls[slot.key]  = data[slot.firestoreKey + 'Url'];
-                        iqPdfNames[slot.key] = data[slot.firestoreKey + 'Name'] || slot.fallback;
-                        updatePdfUI(slot.key);
-                    }
-                });
-            }
-        } catch (e) { console.log('PDF settings not found yet, starting fresh.'); }
-    }
-
-    function updatePdfUI(cls) {
-        const hasFile = !!iqPdfUrls[cls];
-        // Convert key like '12_maths' → element id suffix '12_maths'
-        const badge    = document.getElementById(`pdfBadge${cls}`);
-        const nameEl   = document.getElementById(`pdfName${cls}`);
-        const urlEl    = document.getElementById(`pdfUrlDisplay${cls}`);
-        const removeBtn= document.getElementById(`pdfRemoveBtn${cls}`);
-        const uploadBtn= document.getElementById(`pdfUploadBtn${cls}`);
-        const slot     = document.getElementById(`pdfSlot${cls}`);
-        if (!badge) return; // element not in DOM
-
-        if (hasFile) {
-            badge.textContent = '✅ Uploaded';
-            badge.className = 'pdf-status-badge uploaded';
-            nameEl.textContent = iqPdfNames[cls] || `${cls}_IQ.pdf`;
-            urlEl.style.display = 'block';
-            urlEl.innerHTML = `<a href="${iqPdfUrls[cls]}" target="_blank" style="color:#667eea;">🔗 View / Download PDF</a>`;
-            removeBtn.style.display = 'inline-block';
-            uploadBtn.textContent = '🔄 Replace';
-            slot.style.borderColor = '#28a745';
-            slot.style.background = '#f0fff4';
-        } else {
-            badge.textContent = 'Not Uploaded';
-            badge.className = 'pdf-status-badge none';
-            nameEl.textContent = 'No file uploaded';
-            urlEl.style.display = 'none';
-            removeBtn.style.display = 'none';
-            uploadBtn.textContent = '📤 Upload';
-            slot.style.borderColor = '#fd7e14';
-            slot.style.background = 'white';
-        }
-    }
-
-    window.uploadIQPdf = function(cls, inputEl) {
-        const file = inputEl.files[0];
-        if (!file) return;
-        if (file.type !== 'application/pdf') { alert('Please select a PDF file only.'); inputEl.value = ''; return; }
-        if (file.size > 20 * 1024 * 1024) { alert('File size must be under 20MB.'); inputEl.value = ''; return; }
-
-        const uploadBtn       = document.getElementById(`pdfUploadBtn${cls}`);
-        const progressContainer = document.getElementById(`pdfProgress${cls}`);
-        const progressBar     = document.getElementById(`pdfProgressBar${cls}`);
-        const nameEl          = document.getElementById(`pdfName${cls}`);
-
-        uploadBtn.disabled = true;
-        uploadBtn.textContent = '⏳ Uploading...';
-        progressContainer.style.display = 'block';
-        progressBar.style.width = '0%';
-        nameEl.textContent = `Uploading ${file.name}...`;
-
-        // Firestore key: '10' → 'class10', '12_maths' → 'class12_maths'
-        const firestoreKey = 'class' + cls;   // e.g. class10, class12_maths
-
-        const fileName = `iq_pdfs/${cls}_${Date.now()}_${file.name}`;
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                progressBar.style.width = progress + '%';
-                uploadBtn.textContent = `⏳ ${progress}%`;
-            },
-            (error) => {
-                console.error('Upload error:', error);
-                alert('❌ Upload failed: ' + error.message + '\n\nMake sure Firebase Storage rules allow writes.');
-                uploadBtn.disabled = false;
-                uploadBtn.textContent = '📤 Upload';
-                progressContainer.style.display = 'none';
-                nameEl.textContent = 'Upload failed';
-                inputEl.value = '';
-            },
-            async () => {
-                try {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    iqPdfUrls[cls]  = downloadURL;
-                    iqPdfNames[cls] = file.name;
-
-                    // Save to Firestore settings
-                    const settingsData = {};
-                    settingsData[firestoreKey + 'Url']         = downloadURL;
-                    settingsData[firestoreKey + 'Name']        = file.name;
-                    settingsData[firestoreKey + 'StoragePath'] = fileName;
-                    settingsData[firestoreKey + 'UpdatedAt']   = new Date().toISOString();
-                    await setDoc(doc(db, 'settings', 'iqPdfs'), settingsData, { merge: true });
-
-                    progressContainer.style.display = 'none';
-                    uploadBtn.disabled = false;
-                    updatePdfUI(cls);
-
-                    const label = cls === '10' ? 'Class 10' : `Class 12 — ${cls.split('_')[1].charAt(0).toUpperCase() + cls.split('_')[1].slice(1)}`;
-                    alert(`✅ ${label} PDF uploaded!\nFile: ${file.name}\n\nThis PDF link will now be sent automatically in WhatsApp messages.`);
-                } catch (err) {
-                    alert('❌ Error saving PDF URL: ' + err.message);
-                    uploadBtn.disabled = false;
-                    uploadBtn.textContent = '📤 Upload';
-                }
-                inputEl.value = '';
-            }
-        );
-    };
-
-    window.removeIQPdf = async function(cls) {
-        const label = cls === '10' ? 'Class 10' : `Class 12 — ${cls.split('_')[1].charAt(0).toUpperCase() + cls.split('_')[1].slice(1)}`;
-        if (!confirm(`Remove the ${label} PDF? Students will no longer receive this PDF link.`)) return;
-        try {
-            const firestoreKey = 'class' + cls;
-            const settingsData = {};
-            settingsData[firestoreKey + 'Url']         = null;
-            settingsData[firestoreKey + 'Name']        = null;
-            settingsData[firestoreKey + 'StoragePath'] = null;
-            await setDoc(doc(db, 'settings', 'iqPdfs'), settingsData, { merge: true });
-            iqPdfUrls[cls]  = null;
-            iqPdfNames[cls] = null;
-            updatePdfUI(cls);
-            alert(`✅ ${label} PDF removed.`);
-        } catch (err) { alert('Error removing PDF: ' + err.message); }
     };
 
     // ============================================================
@@ -1595,34 +1340,23 @@
             await addDoc(collection(db, 'iqInquiries'), { ...data, createdAt: new Date().toISOString() });
             document.getElementById('iqForm').reset();
             document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
-            // sendIQWhatsApp will auto-resolve PDF url from iqPdfUrls
             sendIQWhatsApp(mobile, name, studentClass, syllabus, subject);
         } catch (error) { alert('Error: ' + error.message); }
         finally { btn.disabled = false; btn.textContent = '➕ Add & Send WhatsApp'; }
     };
 
-    window.sendIQWhatsApp = function(mobile, name, studentClass, syllabus, subject, pdfUrl) {
+    window.sendIQWhatsApp = function(mobile, name, studentClass, syllabus, subject) {
         let cleanPhone = String(mobile).replace(/\D/g, '');
         if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
         const syllabusText = syllabus && syllabus !== '-' ? ` (${syllabus})` : '';
         const subjectText  = subject && subject !== '-' ? subject : 'All Subjects';
 
-        // Resolve the correct PDF URL
-        let resolvedPdfUrl = pdfUrl || null;
-        if (!resolvedPdfUrl) {
-            if (studentClass === 'Class 10') {
-                resolvedPdfUrl = iqPdfUrls['10'];
-            } else if (studentClass === 'Class 12') {
-                const subjectLower = (subject || '').toLowerCase();
-                if (subjectLower === 'maths')    resolvedPdfUrl = iqPdfUrls['12_maths'];
-                else if (subjectLower === 'physics')  resolvedPdfUrl = iqPdfUrls['12_physics'];
-                else if (subjectLower === 'accounts') resolvedPdfUrl = iqPdfUrls['12_accounts'];
-            }
-        }
+        // Resolve PDF link — Class 12 is subject-wise, Class 10 has no PDF yet
+        const pdfUrl = studentClass === 'Class 12' ? (IQ_PDF_LINKS[subject] || null) : null;
 
         let pdfLine = '';
-        if (resolvedPdfUrl) {
-            pdfLine = `\n\n📎 *Download Important Questions PDF:*\n${resolvedPdfUrl}`;
+        if (pdfUrl) {
+            pdfLine = `\n\n📎 *Download Important Questions PDF:*\n${pdfUrl}`;
         }
 
         const message = `Dear ${name},
@@ -1633,7 +1367,7 @@ We have your request for *Important Questions* for *${studentClass}${syllabusTex
 
 📝 *Subject:* ${subjectText}${pdfLine}
 
-${resolvedPdfUrl ? 'Please download the PDF using the link above.' : 'We are preparing the important questions and will send them to you shortly.'}
+${pdfUrl ? 'Please download the PDF using the link above.' : 'We are preparing the important questions and will send them to you shortly.'}
 
 For any queries, feel free to contact us.
 
