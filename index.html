@@ -325,7 +325,7 @@
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card"><h3 id="totalStudents">0</h3><p>Total Students</p></div>
+                <div class="stat-card"><h3 id="totalStudents">0</h3><p>Total Active Students</p></div>
                 <div class="stat-card"><h3 id="paidStudents">0</h3><p>Students Paid</p></div>
                 <div class="stat-card"><h3 id="pendingStudents">0</h3><p>Students Pending</p></div>
                 <div class="stat-card"><h3 id="totalCollected">₹0</h3><p>Collected This Month</p></div>
@@ -821,9 +821,7 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
             <!-- IMPORTANT QUESTIONS TAB -->
-            <!-- ============================================================ -->
             <div id="importantquestions" class="tab-content">
                 <div class="iq-tab-header">
                     <div class="iq-tab-header-left">
@@ -835,8 +833,6 @@
                         <button class="btn btn-whatsapp" onclick="sendBulkIQWhatsApp()" style="padding: 10px 20px;">📱 Send Bulk WhatsApp</button>
                     </div>
                 </div>
-
-                <!-- Stats -->
                 <div class="iq-stats">
                     <div class="iq-stat"><h3 id="iqTotal">0</h3><p>Total Requests</p></div>
                     <div class="iq-stat c10"><h3 id="iqClass10">0</h3><p>Class 10</p></div>
@@ -844,19 +840,12 @@
                     <div class="iq-stat sent-color"><h3 id="iqSent">0</h3><p>WhatsApp Sent</p></div>
                     <div class="iq-stat pending-color"><h3 id="iqPending">0</h3><p>Pending Send</p></div>
                 </div>
-
                 <div id="iqFormSection" class="iq-form-section">
                     <h3>➕ Add New Request</h3>
                     <form id="iqForm">
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Student / Parent Name *</label>
-                                <input type="text" id="iqName" required placeholder="Full name">
-                            </div>
-                            <div class="form-group">
-                                <label>Mobile Number *</label>
-                                <input type="tel" id="iqMobile" required placeholder="10-digit mobile number">
-                            </div>
+                            <div class="form-group"><label>Student / Parent Name *</label><input type="text" id="iqName" required placeholder="Full name"></div>
+                            <div class="form-group"><label>Mobile Number *</label><input type="tel" id="iqMobile" required placeholder="10-digit mobile number"></div>
                             <div class="form-group">
                                 <label>Class *</label>
                                 <select id="iqClass" required onchange="handleIQClassChange()">
@@ -879,10 +868,7 @@
                                     <option value="">— Select Class first —</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Request Date *</label>
-                                <input type="date" id="iqDate" required>
-                            </div>
+                            <div class="form-group"><label>Request Date *</label><input type="date" id="iqDate" required></div>
                             <div class="form-group">
                                 <label>WhatsApp Status</label>
                                 <select id="iqWAStatus">
@@ -890,10 +876,7 @@
                                     <option value="Sent">Sent</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Notes (Optional)</label>
-                                <input type="text" id="iqNotes" placeholder="Any additional notes">
-                            </div>
+                            <div class="form-group"><label>Notes (Optional)</label><input type="text" id="iqNotes" placeholder="Any additional notes"></div>
                         </div>
                         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                             <button type="submit" class="btn btn-primary" id="iqSubmitBtn">Add Request</button>
@@ -901,8 +884,6 @@
                         </div>
                     </form>
                 </div>
-
-                <!-- Bulk Send Banner -->
                 <div class="iq-bulk-bar">
                     <div style="flex:1;">
                         <strong>📱 Bulk WhatsApp Sender</strong>
@@ -917,8 +898,6 @@
                         <button class="btn" onclick="sendBulkIQWhatsApp()" style="background:white;color:#128C7E;font-weight:700;padding:10px 20px;">📱 Send to Pending</button>
                     </div>
                 </div>
-
-                <!-- Filters -->
                 <div class="iq-filter-bar">
                     <input type="text" class="search-box" placeholder="Search by name or mobile..." id="iqSearch" style="margin-bottom:0; max-width:280px; flex:1;">
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -939,21 +918,12 @@
                     </div>
                     <button class="btn btn-primary" onclick="clearIQFilters()" style="padding:10px 18px;">Clear Filters</button>
                 </div>
-
-                <!-- Table -->
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>S.No</th>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Mobile</th>
-                                <th>Class</th>
-                                <th>Syllabus</th>
-                                <th>Subject</th>
-                                <th>WA Status</th>
-                                <th>Notes</th>
+                                <th>S.No</th><th>Date</th><th>Name</th><th>Mobile</th><th>Class</th>
+                                <th>Syllabus</th><th>Subject</th><th>WA Status</th><th>Notes</th>
                                 <th id="iqActionsHeader">Actions</th>
                             </tr>
                         </thead>
@@ -1098,12 +1068,11 @@
     window.salaries = [];
     window.expenses = [];
     window.inquiries = [];
-    window.iqInquiries = []; // Important Questions collection
+    window.iqInquiries = [];
 
-    // Hardcoded Google Drive PDF links per subject (Class 12)
     const IQ_PDF_LINKS = {
         'Accounts': 'https://drive.google.com/uc?export=download&id=1hSNHUy71NkqRj2L28EgIDWPL-gdzjkXk',
-        'Maths':    null,  // Not ready yet
+        'Maths':    null,
         'Physics':  'https://drive.google.com/uc?export=download&id=1un2yL_LqGwKrQjsKh0jM4YnB9jMQLEyy'
     };
 
@@ -1239,7 +1208,6 @@
                 window.inquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 updateInquiryTable(); updateInquiryStats();
             });
-            // Important Questions listener
             iqListener = onSnapshot(query(collection(db, 'iqInquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
                 window.iqInquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 updateIQTable(); updateIQStats();
@@ -1250,7 +1218,6 @@
         } catch (error) { console.error('Error loading data:', error); alert('Error loading data: ' + error.message); }
     }
 
-    // Set default dates
     const todayStr = new Date().toISOString().slice(0,10);
     const monthStr = new Date().toISOString().slice(0,7);
     document.getElementById('feeMonth').value = monthStr;
@@ -1266,7 +1233,6 @@
         const cls = document.getElementById('iqClass').value;
         const subjectSelect = document.getElementById('iqSubject');
         subjectSelect.innerHTML = '';
-
         if (cls === 'Class 10') {
             subjectSelect.innerHTML = '<option value="All Subjects">All Subjects</option>';
             subjectSelect.value = 'All Subjects';
@@ -1322,7 +1288,6 @@
         };
     }
 
-    // Add and immediately send WhatsApp
     window.submitAndSendIQ = async function() {
         if (userRole === 'staff') { alert('You do not have permission.'); return; }
         const name = document.getElementById('iqName').value.trim();
@@ -1331,7 +1296,6 @@
         const syllabus = document.getElementById('iqSyllabus').value || '';
         const subject = document.getElementById('iqSubject').value.trim() || 'All Subjects';
         if (!name || !mobile || !studentClass) { alert('Please fill Name, Mobile, and Class first.'); return; }
-
         const btn = document.getElementById('iqSubmitSendBtn');
         btn.disabled = true; btn.textContent = 'Processing...';
         try {
@@ -1350,33 +1314,13 @@
         if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
         const syllabusText = syllabus && syllabus !== '-' ? ` (${syllabus})` : '';
         const subjectText  = subject && subject !== '-' ? subject : 'All Subjects';
-
-        // Resolve PDF link — Class 12 is subject-wise, Class 10 has no PDF yet
         const pdfUrl = studentClass === 'Class 12' ? (IQ_PDF_LINKS[subject] || null) : null;
-
         let pdfLine = '';
-        if (pdfUrl) {
-            pdfLine = `\n\n📎 *Download Important Questions PDF:*\n${pdfUrl}`;
-        }
-
-        const message = `Dear ${name},
-
-Greetings from *Vismaya Education*! 📚
-
-We have your request for *Important Questions* for *${studentClass}${syllabusText}*.
-
-📝 *Subject:* ${subjectText}${pdfLine}
-
-${pdfUrl ? 'Please download the PDF using the link above.' : 'We are preparing the important questions and will send them to you shortly.'}
-
-For any queries, feel free to contact us.
-
-Best regards,
-*Vismaya Education Team* 🎓`;
+        if (pdfUrl) pdfLine = `\n\n📎 *Download Important Questions PDF:*\n${pdfUrl}`;
+        const message = `Dear ${name},\n\nGreetings from *Vismaya Education*! 📚\n\nWe have your request for *Important Questions* for *${studentClass}${syllabusText}*.\n\n📝 *Subject:* ${subjectText}${pdfLine}\n\n${pdfUrl ? 'Please download the PDF using the link above.' : 'We are preparing the important questions and will send them to you shortly.'}\n\nFor any queries, feel free to contact us.\n\nBest regards,\n*Vismaya Education Team* 🎓`;
         window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
     };
 
-    // Mark as sent and open WhatsApp
     window.sendAndMarkIQ = async function(id, mobile, name, studentClass, syllabus, subject) {
         if (userRole === 'staff') { alert('No permission.'); return; }
         try {
@@ -1391,11 +1335,7 @@ Best regards,
         if (classFilter) pending = pending.filter(iq => iq.studentClass === classFilter);
         if (pending.length === 0) { alert(`✅ No pending entries${classFilter ? ' for ' + classFilter : ''}!`); return; }
         if (!confirm(`Send WhatsApp to ${pending.length} pending student(s)${classFilter ? ' in ' + classFilter : ''}?`)) return;
-        pending.forEach((iq, i) => {
-            setTimeout(() => {
-                sendAndMarkIQ(iq.id, iq.mobile, iq.name, iq.studentClass, iq.syllabus, iq.subject);
-            }, i * 2500);
-        });
+        pending.forEach((iq, i) => setTimeout(() => sendAndMarkIQ(iq.id, iq.mobile, iq.name, iq.studentClass, iq.syllabus, iq.subject), i * 2500));
     };
 
     window.updateIQTable = function() {
@@ -1403,47 +1343,30 @@ Best regards,
         const searchTerm = document.getElementById('iqSearch')?.value.toLowerCase() || '';
         const classFilter = document.getElementById('iqClassFilter')?.value || '';
         const statusFilter = document.getElementById('iqStatusFilter')?.value || '';
-
         let filtered = window.iqInquiries.filter(iq => {
             const matchSearch = iq.name.toLowerCase().includes(searchTerm) || iq.mobile.includes(searchTerm);
             const matchClass = !classFilter || iq.studentClass === classFilter;
             const matchStatus = !statusFilter || iq.waStatus === statusFilter;
             return matchSearch && matchClass && matchStatus;
         });
-
         if (filtered.length === 0) {
             tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999;">No requests found. Add your first request above!</td></tr>';
             return;
         }
-
         tbody.innerHTML = filtered.map((iq, idx) => {
-            const classBadge = iq.studentClass === 'Class 10'
-                ? `<span class="iq-class-badge-10">Class 10</span>`
-                : `<span class="iq-class-badge-12">Class 12</span>`;
-            const waBadge = iq.waStatus === 'Sent'
-                ? `<span class="badge badge-sent">✅ Sent</span>`
-                : `<span class="badge badge-notsent">⏳ Pending</span>`;
-
-            const actionsCell = userRole === 'staff' ? '' : `<td>
-                <div class="action-buttons">
-                    <button class="btn btn-whatsapp" onclick="sendAndMarkIQ('${iq.id}','${iq.mobile}','${iq.name.replace(/'/g,"\\'")}','${iq.studentClass}','${iq.syllabus}','${iq.subject}')" style="padding:5px 10px;font-size:0.82em;">📱 Send</button>
-                    <button class="btn btn-warning" onclick="editIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Delete</button>
-                </div>
-            </td>`;
-
+            const classBadge = iq.studentClass === 'Class 10' ? `<span class="iq-class-badge-10">Class 10</span>` : `<span class="iq-class-badge-12">Class 12</span>`;
+            const waBadge = iq.waStatus === 'Sent' ? `<span class="badge badge-sent">✅ Sent</span>` : `<span class="badge badge-notsent">⏳ Pending</span>`;
+            const actionsCell = userRole === 'staff' ? '' : `<td><div class="action-buttons">
+                <button class="btn btn-whatsapp" onclick="sendAndMarkIQ('${iq.id}','${iq.mobile}','${iq.name.replace(/'/g,"\\'")}','${iq.studentClass}','${iq.syllabus}','${iq.subject}')" style="padding:5px 10px;font-size:0.82em;">📱 Send</button>
+                <button class="btn btn-warning" onclick="editIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Edit</button>
+                <button class="btn btn-danger" onclick="deleteIQEntry('${iq.id}')" style="padding:5px 10px;font-size:0.82em;">Delete</button>
+            </div></td>`;
             return `<tr style="${iq.waStatus === 'Sent' ? 'background:#f0fff4;' : ''}">
-                <td>${idx + 1}</td>
-                <td>${iq.date}</td>
-                <td><strong>${iq.name}</strong></td>
-                <td>${iq.mobile}</td>
-                <td>${classBadge}</td>
-                <td style="font-size:0.9em;">${iq.syllabus === '-' ? '-' : iq.syllabus}</td>
-                <td style="font-size:0.9em;">${iq.subject === '-' ? '-' : iq.subject}</td>
-                <td>${waBadge}</td>
+                <td>${idx + 1}</td><td>${iq.date}</td><td><strong>${iq.name}</strong></td><td>${iq.mobile}</td>
+                <td>${classBadge}</td><td style="font-size:0.9em;">${iq.syllabus === '-' ? '-' : iq.syllabus}</td>
+                <td style="font-size:0.9em;">${iq.subject === '-' ? '-' : iq.subject}</td><td>${waBadge}</td>
                 <td style="font-size:0.85em;color:#666;max-width:140px;word-break:break-word;">${iq.notes === '-' ? '-' : iq.notes}</td>
-                ${actionsCell}
-            </tr>`;
+                ${actionsCell}</tr>`;
         }).join('');
     };
 
@@ -1452,12 +1375,11 @@ Best regards,
         const c10 = window.iqInquiries.filter(iq => iq.studentClass === 'Class 10').length;
         const c12 = window.iqInquiries.filter(iq => iq.studentClass === 'Class 12').length;
         const sent = window.iqInquiries.filter(iq => iq.waStatus === 'Sent').length;
-        const pending = total - sent;
         document.getElementById('iqTotal').textContent = total;
         document.getElementById('iqClass10').textContent = c10;
         document.getElementById('iqClass12').textContent = c12;
         document.getElementById('iqSent').textContent = sent;
-        document.getElementById('iqPending').textContent = pending;
+        document.getElementById('iqPending').textContent = total - sent;
     };
 
     window.editIQEntry = function(id) {
@@ -1469,17 +1391,14 @@ Best regards,
         document.getElementById('iqMobile').value = iq.mobile;
         document.getElementById('iqClass').value = iq.studentClass;
         document.getElementById('iqSyllabus').value = iq.syllabus === '-' ? '' : iq.syllabus;
-        // Rebuild subject dropdown for the saved class, then restore saved value
         handleIQClassChange();
         document.getElementById('iqSubject').value = iq.subject === '-' ? '' : iq.subject;
         document.getElementById('iqDate').value = iq.date;
         document.getElementById('iqWAStatus').value = iq.waStatus;
         document.getElementById('iqNotes').value = iq.notes === '-' ? '' : iq.notes;
-
         const submitBtn = document.getElementById('iqSubmitBtn');
         submitBtn.textContent = 'Update Request';
         submitBtn.classList.add('btn-warning'); submitBtn.classList.remove('btn-primary');
-
         if (!document.getElementById('cancelIQEditBtn')) {
             const cancelBtn = document.createElement('button');
             cancelBtn.type = 'button'; cancelBtn.id = 'cancelIQEditBtn';
@@ -1517,19 +1436,9 @@ Best regards,
 
     window.exportIQInquiriesToExcel = function() {
         if (window.iqInquiries.length === 0) { alert('No data to export.'); return; }
-        const data = window.iqInquiries.map((iq, i) => ({
-            'S.No': i + 1,
-            'Date': iq.date,
-            'Name': iq.name,
-            'Mobile': iq.mobile,
-            'Class': iq.studentClass,
-            'Syllabus': iq.syllabus,
-            'Subject': iq.subject,
-            'WhatsApp Status': iq.waStatus,
-            'Notes': iq.notes
-        }));
+        const data = window.iqInquiries.map((iq, i) => ({'S.No':i+1,'Date':iq.date,'Name':iq.name,'Mobile':iq.mobile,'Class':iq.studentClass,'Syllabus':iq.syllabus,'Subject':iq.subject,'WhatsApp Status':iq.waStatus,'Notes':iq.notes}));
         const ws = XLSX.utils.json_to_sheet(data);
-        ws['!cols'] = [{ wch:5 },{ wch:12 },{ wch:25 },{ wch:15 },{ wch:10 },{ wch:10 },{ wch:20 },{ wch:15 },{ wch:25 }];
+        ws['!cols'] = [{wch:5},{wch:12},{wch:25},{wch:15},{wch:10},{wch:10},{wch:20},{wch:15},{wch:25}];
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'IQ Inquiries');
         XLSX.writeFile(wb, `ImportantQuestions_${new Date().toISOString().slice(0,10)}.xlsx`);
@@ -1538,7 +1447,7 @@ Best regards,
     document.getElementById('iqSearch').addEventListener('input', updateIQTable);
 
     // ============================================================
-    // INQUIRY FUNCTIONS (original)
+    // INQUIRY FUNCTIONS
     // ============================================================
 
     document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
@@ -1608,8 +1517,7 @@ Best regards,
                 <td><span class="badge ${statusBadgeClass}">${inq.status}</span></td>
                 <td style="font-size:0.9em;color:${inq.followUpDate!=='-'?'#856404':'#999'};">${inq.followUpDate!=='-'?'📅 '+inq.followUpDate:'-'}</td>
                 <td style="font-size:0.85em;color:#666;max-width:150px;word-break:break-word;">${inq.notes}</td>
-                ${actionsCell}
-            </tr>`;
+                ${actionsCell}</tr>`;
         }).join('');
     };
 
@@ -1920,18 +1828,23 @@ Best regards,
 
     window.closeReceipt = function() { document.getElementById('receiptModal').classList.remove('active'); };
 
+    // ============================================================
+    // ✅ FIXED updateStats — Inactive students excluded from all calculations
+    // ============================================================
     window.updateStats = function() {
         const currentMonth=new Date().toISOString().slice(0,7);
-        const total=window.students.length;
+        const activeStudents=window.students.filter(s=>s.status==='Active');
+        const activeIds=new Set(activeStudents.map(s=>s.id));
+        const total=activeStudents.length;
         document.getElementById('totalStudents').textContent=total;
-        const paidSet=new Set(window.payments.filter(p=>p.month===currentMonth).map(p=>p.studentId));
+        const paidSet=new Set(window.payments.filter(p=>p.month===currentMonth&&activeIds.has(p.studentId)).map(p=>p.studentId));
         document.getElementById('paidStudents').textContent=paidSet.size;
         document.getElementById('pendingStudents').textContent=total-paidSet.size;
-        const collected=window.payments.filter(p=>p.month===currentMonth).reduce((sum,p)=>sum+p.amount,0);
+        const collected=window.payments.filter(p=>p.month===currentMonth&&activeIds.has(p.studentId)).reduce((sum,p)=>sum+p.amount,0);
         document.getElementById('totalCollected').textContent='₹'+collected.toLocaleString();
-        const pending=window.students.filter(s=>!paidSet.has(s.id)).reduce((sum,s)=>sum+s.monthlyFee,0);
+        const pending=activeStudents.filter(s=>!paidSet.has(s.id)).reduce((sum,s)=>sum+s.monthlyFee,0);
         document.getElementById('totalPending').textContent='₹'+pending.toLocaleString();
-        const expected=window.students.reduce((sum,s)=>sum+s.monthlyFee,0);
+        const expected=activeStudents.reduce((sum,s)=>sum+s.monthlyFee,0);
         document.getElementById('thisMonth').textContent='₹'+expected.toLocaleString();
     };
 
