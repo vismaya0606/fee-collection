@@ -1833,7 +1833,8 @@
     // ============================================================
     window.updateStats = function() {
         const currentMonth=new Date().toISOString().slice(0,7);
-        const activeStudents=window.students.filter(s=>s.status==='Active');
+        // Only include students admitted on or before the current month
+        const activeStudents=window.students.filter(s=>s.status==='Active'&&(!s.admissionDate||s.admissionDate==='-'||s.admissionDate.slice(0,7)<=currentMonth));
         const activeIds=new Set(activeStudents.map(s=>s.id));
         const total=activeStudents.length;
         document.getElementById('totalStudents').textContent=total;
@@ -1863,6 +1864,8 @@
         let filtered=window.students;
         if (course) filtered=filtered.filter(s=>s.course===course);
         if (syllabus) filtered=filtered.filter(s=>s.syllabus===syllabus);
+        // Exclude students whose admission date is after the selected report month
+        filtered=filtered.filter(s=>!s.admissionDate||s.admissionDate==='-'||s.admissionDate.slice(0,7)<=month);
         const withStatus=filtered.map(s=>({...s,hasPaid:window.payments.some(p=>p.studentId===s.id&&p.month===month)}));
         let final=withStatus;
         if (feeStatus==='paid') final=withStatus.filter(s=>s.hasPaid);
