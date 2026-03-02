@@ -1866,9 +1866,9 @@
         const withStatus=filtered.map(s=>({...s,hasPaid:window.payments.some(p=>p.studentId===s.id&&p.month===month)}));
         let final=withStatus;
         if (feeStatus==='paid') final=withStatus.filter(s=>s.hasPaid);
-        else if (feeStatus==='pending') final=withStatus.filter(s=>!s.hasPaid);
+        else if (feeStatus==='pending') final=withStatus.filter(s=>!s.hasPaid&&s.status==='Active');
         const paid=final.filter(s=>s.hasPaid);
-        const pending=final.filter(s=>!s.hasPaid);
+        const pending=final.filter(s=>!s.hasPaid&&s.status==='Active');
         document.getElementById('reportTotalStudents').textContent=final.length;
         document.getElementById('reportPaidCount').textContent=paid.length;
         document.getElementById('reportPendingCount').textContent=pending.length;
