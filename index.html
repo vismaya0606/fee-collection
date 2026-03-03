@@ -185,6 +185,23 @@
         .accounts-card.profit { background: #f0f4ff; }
         .accounts-card.profit::before { background: #667eea; }
         .accounts-card-icon { font-size: 2em; margin-bottom: 10px; }
+
+        /* Timetable Tab Styles */
+        .timetable-filter-bar { background: #f8f9fa; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; }
+        .timetable-grid-wrapper { overflow-x: auto; margin-top: 5px; }
+        .timetable-grid { width: 100%; border-collapse: collapse; min-width: 700px; }
+        .timetable-grid th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 10px; text-align: center; font-size: 0.9em; border: 1px solid rgba(255,255,255,0.2); }
+        .timetable-grid td { border: 1px solid #e0e0e0; padding: 8px 6px; vertical-align: top; min-width: 110px; }
+        .timetable-grid .period-cell { background: #f0f4ff; font-weight: 700; color: #667eea; text-align: center; font-size: 0.85em; white-space: nowrap; min-width: 60px; }
+        .timetable-entry { background: white; border: 1px solid #c5cae9; border-radius: 6px; padding: 5px 7px; margin-bottom: 4px; font-size: 0.82em; border-left: 3px solid #667eea; }
+        .timetable-entry .entry-subject { font-weight: 700; color: #333; word-break: break-word; }
+        .timetable-entry .entry-teacher { color: #777; font-size: 0.9em; }
+        .timetable-entry .entry-time { color: #888; font-size: 0.78em; margin-bottom: 2px; }
+        .timetable-entry-actions { display: flex; gap: 3px; margin-top: 4px; }
+        .tt-btn { font-size: 0.72em !important; padding: 2px 7px !important; line-height: 1.5 !important; min-width: unset !important; }
+        .timetable-form-section { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .timetable-form-section h3 { margin-bottom: 20px; color: #667eea; font-size: 1.1em; }
+        .timetable-empty { text-align: center; padding: 40px; color: #999; font-size: 0.95em; }
         .accounts-card-label { font-size: 0.9em; color: #666; margin-bottom: 8px; font-weight: 500; }
         .accounts-card-value { font-size: 1.9em; font-weight: 700; }
         .accounts-card.income .accounts-card-value { color: #28a745; }
@@ -342,6 +359,7 @@
                 <button class="tab" onclick="switchTab('inquiries', this)">🔍 Inquiry Form</button>
                 <button class="tab" onclick="switchTab('importantquestions', this)">📝 Important Questions</button>
                 <button class="tab" onclick="switchTab('reports', this)">Reports</button>
+                <button class="tab" onclick="switchTab('timetable', this)">📅 Timetable</button>
             </div>
 
             <!-- Students Tab -->
@@ -978,6 +996,110 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Timetable Tab -->
+            <div id="timetable" class="tab-content">
+                <div id="timetableFormSection">
+                    <div class="timetable-form-section">
+                        <h3 id="timetableFormTitle">➕ Add Timetable Entry</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Class *</label>
+                                <select id="ttClass" required>
+                                    <option value="">Select Class</option>
+                                    <option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option>
+                                    <option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option>
+                                    <option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Syllabus</label>
+                                <select id="ttSyllabus">
+                                    <option value="">All / Not Specified</option>
+                                    <option value="CBSE">CBSE</option>
+                                    <option value="Matric">Matric</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Day *</label>
+                                <select id="ttDay" required>
+                                    <option value="">Select Day</option>
+                                    <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+                                    <option>Thursday</option><option>Friday</option><option>Saturday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Period No. *</label>
+                                <select id="ttPeriod" required>
+                                    <option value="">Select Period</option>
+                                    <option value="1">Period 1</option><option value="2">Period 2</option>
+                                    <option value="3">Period 3</option><option value="4">Period 4</option>
+                                    <option value="5">Period 5</option><option value="6">Period 6</option>
+                                    <option value="7">Period 7</option><option value="8">Period 8</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="time" id="ttStartTime">
+                            </div>
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <input type="time" id="ttEndTime">
+                            </div>
+                            <div class="form-group">
+                                <label>Subject *</label>
+                                <input type="text" id="ttSubject" placeholder="e.g. Mathematics">
+                            </div>
+                            <div class="form-group">
+                                <label>Teacher Name</label>
+                                <input type="text" id="ttTeacher" placeholder="e.g. Mr. Sharma">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="saveTimetableEntry()">💾 Save Entry</button>
+                            <button class="btn btn-warning" id="cancelTTEditBtn" onclick="cancelEditTimetable()" style="display:none;">Cancel Edit</button>
+                        </div>
+                        <input type="hidden" id="editingTimetableId">
+                    </div>
+                </div>
+                <div class="timetable-filter-bar">
+                    <div class="form-group" style="margin:0;">
+                        <label style="margin-bottom:6px; display:block; font-weight:600; color:#333; font-size:0.9em;">View Class</label>
+                        <select id="ttViewClass" onchange="updateTimetableView()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em; min-width:160px;">
+                            <option value="">Select Class</option>
+                            <option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option>
+                            <option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option>
+                            <option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label style="margin-bottom:6px; display:block; font-weight:600; color:#333; font-size:0.9em;">Syllabus</label>
+                        <select id="ttViewSyllabus" onchange="updateTimetableView()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em; min-width:140px;">
+                            <option value="">All</option>
+                            <option value="CBSE">CBSE</option>
+                            <option value="Matric">Matric</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="timetable-grid-wrapper">
+                    <table class="timetable-grid">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetableGridBody">
+                            <tr><td colspan="7" class="timetable-empty">📅 Select a class above to view its timetable</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1069,6 +1191,7 @@
     window.expenses = [];
     window.inquiries = [];
     window.iqInquiries = [];
+    window.timetables = [];
 
     const IQ_PDF_LINKS = {
         'Accounts': 'https://drive.google.com/uc?export=download&id=1hSNHUy71NkqRj2L28EgIDWPL-gdzjkXk',
@@ -1078,7 +1201,7 @@
 
     let studentsListener = null, paymentsListener = null, remindersListener = null;
     let teachersListener = null, salariesListener = null, expensesListener = null;
-    let inquiriesListener = null, iqListener = null;
+    let inquiriesListener = null, iqListener = null, timetablesListener = null;
     let currentUser = null, userRole = null;
     let editingStudentId = null, editingExpenseId = null, editingInquiryId = null;
     let convertingInquiryId = null, editingIQId = null;
@@ -1170,7 +1293,7 @@
     function applyRoleBasedUI(role) {
         const isStaff = role === 'staff';
         document.getElementById('staffNotice').style.display = isStaff ? 'block' : 'none';
-        ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','iqFormSection'].forEach(id => {
+        ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','iqFormSection','timetableFormSection'].forEach(id => {
             document.getElementById(id).style.display = isStaff ? 'none' : 'block';
         });
         ['actionsHeader','paymentActionsHeader','teacherActionsHeader','salaryActionsHeader','expenseActionsHeader','inquiryActionsHeader','iqActionsHeader'].forEach(id => {
@@ -1211,6 +1334,10 @@
             iqListener = onSnapshot(query(collection(db, 'iqInquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
                 window.iqInquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 updateIQTable(); updateIQStats();
+            });
+            timetablesListener = onSnapshot(query(collection(db, 'timetables'), orderBy('class')), (snapshot) => {
+                window.timetables = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateTimetableView();
             });
 
             document.getElementById('loadingIndicator').style.display = 'none';
@@ -1847,6 +1974,117 @@
         document.getElementById('totalPending').textContent='₹'+pending.toLocaleString();
         const expected=activeStudents.reduce((sum,s)=>sum+s.monthlyFee,0);
         document.getElementById('thisMonth').textContent='₹'+expected.toLocaleString();
+    };
+
+    // ============================================================
+    // TIMETABLE FUNCTIONS
+    // ============================================================
+
+    window.updateTimetableView = function() {
+        const viewClass = document.getElementById('ttViewClass').value;
+        const viewSyllabus = document.getElementById('ttViewSyllabus').value;
+        const tbody = document.getElementById('timetableGridBody');
+        if (!viewClass) {
+            tbody.innerHTML = '<tr><td colspan="7" class="timetable-empty">📅 Select a class above to view its timetable</td></tr>';
+            return;
+        }
+        let entries = window.timetables.filter(t => t.class === viewClass);
+        if (viewSyllabus) entries = entries.filter(t => !t.syllabus || t.syllabus === '' || t.syllabus === viewSyllabus);
+        const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const periods = [1,2,3,4,5,6,7,8];
+        const map = {};
+        periods.forEach(p => { map[p] = {}; days.forEach(d => { map[p][d] = []; }); });
+        entries.forEach(e => { const p = parseInt(e.period); if (map[p] && map[p][e.day]) map[p][e.day].push(e); });
+        let rows = '';
+        periods.forEach(p => {
+            let cells = '';
+            days.forEach(d => {
+                const cellEntries = map[p][d];
+                let cellContent = '';
+                cellEntries.forEach(e => {
+                    const timeStr = (e.startTime && e.endTime) ? `<div class="entry-time">${e.startTime}–${e.endTime}</div>` : '';
+                    const teacherStr = e.teacher ? `<div class="entry-teacher">👤 ${e.teacher}</div>` : '';
+                    const actionsStr = userRole !== 'staff' ? `<div class="timetable-entry-actions"><button class="btn btn-warning tt-btn" onclick="editTimetableEntry('${e.id}')">Edit</button><button class="btn btn-danger tt-btn" onclick="deleteTimetableEntry('${e.id}')">Del</button></div>` : '';
+                    cellContent += `<div class="timetable-entry">${timeStr}<div class="entry-subject">${e.subject}</div>${teacherStr}${actionsStr}</div>`;
+                });
+                if (userRole !== 'staff') {
+                    cellContent += `<button class="btn btn-info tt-btn" onclick="prefillTimetableAdd('${viewClass}','${d}',${p})" style="margin-top:4px;">+ Add</button>`;
+                }
+                cells += `<td>${cellContent}</td>`;
+            });
+            rows += `<tr><td class="period-cell">P${p}</td>${cells}</tr>`;
+        });
+        tbody.innerHTML = rows;
+    };
+
+    window.prefillTimetableAdd = function(cls, day, period) {
+        document.getElementById('ttClass').value = cls;
+        document.getElementById('ttDay').value = day;
+        document.getElementById('ttPeriod').value = period;
+        document.getElementById('timetableFormSection').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('ttSubject').focus();
+    };
+
+    window.saveTimetableEntry = async function() {
+        if (userRole === 'staff') { alert('You do not have permission.'); return; }
+        const cls = document.getElementById('ttClass').value;
+        const syllabus = document.getElementById('ttSyllabus').value;
+        const day = document.getElementById('ttDay').value;
+        const period = document.getElementById('ttPeriod').value;
+        const startTime = document.getElementById('ttStartTime').value;
+        const endTime = document.getElementById('ttEndTime').value;
+        const subject = document.getElementById('ttSubject').value.trim();
+        const teacher = document.getElementById('ttTeacher').value.trim();
+        const editingId = document.getElementById('editingTimetableId').value;
+        if (!cls || !day || !period || !subject) { alert('Please fill in Class, Day, Period and Subject.'); return; }
+        const data = { class: cls, syllabus, day, period: parseInt(period), startTime, endTime, subject, teacher, createdAt: new Date().toISOString() };
+        try {
+            if (editingId) {
+                await updateDoc(doc(db, 'timetables', editingId), { ...data, updatedAt: new Date().toISOString() });
+                alert('✅ Timetable entry updated!');
+            } else {
+                await addDoc(collection(db, 'timetables'), data);
+                alert('✅ Timetable entry added!');
+            }
+            document.getElementById('ttViewClass').value = cls;
+            cancelEditTimetable();
+            updateTimetableView();
+        } catch (err) { alert('Error saving entry: ' + err.message); }
+    };
+
+    window.editTimetableEntry = function(id) {
+        const entry = window.timetables.find(t => t.id === id);
+        if (!entry) return;
+        document.getElementById('ttClass').value = entry.class;
+        document.getElementById('ttSyllabus').value = entry.syllabus || '';
+        document.getElementById('ttDay').value = entry.day;
+        document.getElementById('ttPeriod').value = entry.period;
+        document.getElementById('ttStartTime').value = entry.startTime || '';
+        document.getElementById('ttEndTime').value = entry.endTime || '';
+        document.getElementById('ttSubject').value = entry.subject;
+        document.getElementById('ttTeacher').value = entry.teacher || '';
+        document.getElementById('editingTimetableId').value = id;
+        document.getElementById('timetableFormTitle').textContent = '✏️ Edit Timetable Entry';
+        document.getElementById('cancelTTEditBtn').style.display = 'inline-block';
+        document.getElementById('timetableFormSection').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.cancelEditTimetable = function() {
+        ['ttClass','ttSyllabus','ttDay','ttPeriod','ttStartTime','ttEndTime','ttSubject','ttTeacher','editingTimetableId'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('timetableFormTitle').textContent = '➕ Add Timetable Entry';
+        document.getElementById('cancelTTEditBtn').style.display = 'none';
+    };
+
+    window.deleteTimetableEntry = async function(id) {
+        if (userRole === 'staff') { alert('No permission.'); return; }
+        const entry = window.timetables.find(t => t.id === id);
+        const label = entry ? `"${entry.subject}" (${entry.day}, Period ${entry.period})` : 'this entry';
+        if (!confirm(`Delete timetable entry for ${label}?`)) return;
+        try {
+            await deleteDoc(doc(db, 'timetables', id));
+        } catch (err) { alert('Error: ' + err.message); }
     };
 
     window.switchTab = function(tabName, clickedTab) {
