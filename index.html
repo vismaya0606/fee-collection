@@ -1510,24 +1510,33 @@
             }
 
             // Attendance: teachers see only their own records; admin/staff see all
-            // Teacher query uses only `where` (no orderBy) to avoid composite index requirement; sorted client-side
-            const attQuery = userRole === 'teacher'
-                ? query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email))
-                : query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
-            attendanceListener = onSnapshot(attQuery, (snapshot) => {
-                window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                if (userRole === 'teacher') {
+            if (userRole === 'teacher') {
+                // For teachers: use getDocs for guaranteed initial load, then onSnapshot for real-time updates
+                const teacherAttQuery = query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email));
+                try {
+                    const snap = await getDocs(teacherAttQuery);
+                    window.attendanceRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                     window.attendanceRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-                }
-                updateAttendanceTable();
-                if (userRole !== 'teacher') updateAttendanceStats();
-            }, (error) => {
-                console.error('Attendance listener error:', error);
-                const tbody = userRole === 'teacher'
-                    ? document.getElementById('myAttendanceTableBody')
-                    : document.getElementById('adminAttendanceTableBody');
-                if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:20px;color:#dc3545;">⚠️ Could not load attendance: ${error.message}</td></tr>`;
-            });
+                    updateAttendanceTable();
+                } catch(e) { console.error('Error loading teacher attendance:', e); }
+                // Also keep real-time listener for updates
+                attendanceListener = onSnapshot(teacherAttQuery, (snapshot) => {
+                    window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    window.attendanceRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    updateAttendanceTable();
+                }, (error) => { console.error('Attendance listener error:', error); });
+            } else {
+                const attQuery = query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
+                attendanceListener = onSnapshot(attQuery, (snapshot) => {
+                    window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateAttendanceTable();
+                    updateAttendanceStats();
+                }, (error) => {
+                    console.error('Attendance listener error:', error);
+                    const tbody = document.getElementById('adminAttendanceTableBody');
+                    if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:20px;color:#dc3545;">⚠️ Could not load attendance: ${error.message}</td></tr>`;
+                });
+            }
 
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
@@ -2754,7 +2763,7 @@
         try {
             const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
             const teacherName = userDoc.exists() ? userDoc.data().name : currentUser.email;
-            await addDoc(collection(db, 'teacherAttendance'), {
+            const newRecord = {
                 teacherId: currentUser.uid,
                 teacherName,
                 teacherEmail: currentUser.email,
@@ -2768,7 +2777,11 @@
                 approvedBy: '-',
                 approvedAt: '-',
                 adminNotes: '-'
-            });
+            };
+            const docRef = await addDoc(collection(db, 'teacherAttendance'), newRecord);
+            // Immediately update local array so history shows right away
+            window.attendanceRecords.unshift({ id: docRef.id, ...newRecord });
+            updateAttendanceTable();
             alert('✅ Attendance submitted successfully! Waiting for admin approval.');
             document.getElementById('attendanceStatus').value = '';
             document.getElementById('attendanceCheckIn').value = '';
