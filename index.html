@@ -1511,8 +1511,8 @@
 
             // Attendance: teachers see only their own records; admin/staff see all
             if (userRole === 'teacher') {
-                // For teachers: use getDocs for guaranteed initial load, then onSnapshot for real-time updates
-                const teacherAttQuery = query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email));
+                // For teachers: query by teacherId (uid) — matches Firestore security rules pattern
+                const teacherAttQuery = query(collection(db, 'teacherAttendance'), where('teacherId', '==', currentUser.uid));
                 try {
                     const snap = await getDocs(teacherAttQuery);
                     window.attendanceRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -2752,7 +2752,7 @@
         if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
 
         // Check if already submitted for this date
-        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherEmail === currentUser.email);
+        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherId === currentUser.uid);
         if (existing) {
             alert(`❌ Attendance already submitted for ${date}. Status: ${existing.approvalStatus}.`);
             return;
