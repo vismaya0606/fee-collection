@@ -244,6 +244,30 @@
             .receipt, .receipt * { visibility: visible; }
             .receipt { position: absolute; left: 0; top: 0; }
         }
+
+        /* Attendance Tab Styles */
+        .attendance-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .attendance-stat { background: white; border-radius: 12px; padding: 18px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
+        .attendance-stat.present-color { border-top-color: #28a745; }
+        .attendance-stat.late-color { border-top-color: #ffc107; }
+        .attendance-stat.half-day-color { border-top-color: #17a2b8; }
+        .attendance-stat.pending-color { border-top-color: #dc3545; }
+        .attendance-stat h3 { font-size: 1.8em; font-weight: 700; margin-bottom: 4px; color: #667eea; }
+        .attendance-stat.present-color h3 { color: #28a745; }
+        .attendance-stat.late-color h3 { color: #ffc107; }
+        .attendance-stat.half-day-color h3 { color: #17a2b8; }
+        .attendance-stat.pending-color h3 { color: #dc3545; }
+        .attendance-stat p { font-size: 0.8em; color: #666; }
+        .badge-approved { background: #d4edda; color: #155724; }
+        .badge-rejected { background: #f8d7da; color: #721c24; }
+        .badge-present { background: #d4edda; color: #155724; }
+        .badge-late { background: #fff3cd; color: #856404; }
+        .badge-halfday { background: #cce5ff; color: #004085; }
+        .attendance-form-section { background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #28a745; }
+        .attendance-form-section h3 { margin-bottom: 20px; color: #28a745; font-size: 1.1em; }
+        .teacher-welcome { background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); border: 1px solid rgba(102,126,234,0.2); border-radius: 12px; padding: 20px 25px; margin-bottom: 25px; }
+        .teacher-welcome h2 { color: #667eea; margin-bottom: 5px; }
+        .teacher-welcome p { color: #666; font-size: 0.9em; }
     </style>
 </head>
 <body>
@@ -289,6 +313,7 @@
                 <label>Role</label>
                 <select id="signupRole" required>
                     <option value="">Select your role</option>
+                    <option value="teacher">Teacher (Attendance Only)</option>
                     <option value="staff">Staff (Read Only)</option>
                     <option value="admin">Admin (Full Access)</option>
                 </select>
@@ -360,6 +385,7 @@
                 <button class="tab" onclick="switchTab('importantquestions', this)">📝 Important Questions</button>
                 <button class="tab" onclick="switchTab('reports', this)">Reports</button>
                 <button class="tab" onclick="switchTab('timetable', this)">📅 Timetable</button>
+                <button class="tab" id="attendanceTabBtn" onclick="switchTab('attendance', this)">📋 Attendance</button>
             </div>
 
             <!-- Students Tab -->
@@ -1079,6 +1105,105 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Attendance Tab -->
+            <div id="attendance" class="tab-content">
+
+                <!-- Teacher View: Mark own attendance -->
+                <div id="teacherAttendanceSection" style="display:none;">
+                    <div class="teacher-welcome">
+                        <h2>📋 Mark Your Attendance</h2>
+                        <p>Submit your daily attendance below. An admin will review and approve it.</p>
+                    </div>
+                    <div class="attendance-form-section">
+                        <h3>✅ Submit Attendance</h3>
+                        <div id="alreadyMarkedNotice" style="display:none; background:#d4edda; color:#155724; padding:15px; border-radius:8px; margin-bottom:15px; font-weight:600;"></div>
+                        <div id="attendanceMarkForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Date *</label>
+                                    <input type="date" id="attendanceDate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Status *</label>
+                                    <select id="attendanceStatus" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Present">Present</option>
+                                        <option value="Half Day">Half Day</option>
+                                        <option value="Late">Late</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Check-in Time *</label>
+                                    <input type="time" id="attendanceCheckIn">
+                                </div>
+                                <div class="form-group">
+                                    <label>Check-out Time (Optional)</label>
+                                    <input type="time" id="attendanceCheckOut">
+                                </div>
+                                <div class="form-group" style="grid-column: 1/-1;">
+                                    <label>Notes (Optional)</label>
+                                    <input type="text" id="attendanceNotes" placeholder="Any additional notes...">
+                                </div>
+                            </div>
+                            <button class="btn btn-success" onclick="submitAttendance()" id="submitAttendanceBtn">Submit Attendance</button>
+                        </div>
+                    </div>
+                    <h2 style="margin-bottom: 20px;">My Attendance History</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th><th>Status</th><th>Check-in</th><th>Check-out</th>
+                                    <th>Notes</th><th>Approval</th><th>Admin Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myAttendanceTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admin / Staff View: All teacher attendance -->
+                <div id="adminAttendanceSection" style="display:none;">
+                    <h2 style="margin-bottom: 20px;">Teacher Attendance Records</h2>
+                    <div class="attendance-stats">
+                        <div class="attendance-stat present-color"><h3 id="attPresent">0</h3><p>Present Today</p></div>
+                        <div class="attendance-stat late-color"><h3 id="attLate">0</h3><p>Late Today</p></div>
+                        <div class="attendance-stat half-day-color"><h3 id="attHalfDay">0</h3><p>Half Day Today</p></div>
+                        <div class="attendance-stat pending-color"><h3 id="attPending">0</h3><p>Pending Approval</p></div>
+                    </div>
+                    <div class="iq-filter-bar">
+                        <input type="date" id="attFilterDate" onchange="updateAttendanceTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em;">
+                        <input type="text" placeholder="Search teacher name..." id="attSearch" oninput="updateAttendanceTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em; min-width:200px;">
+                        <select id="attStatusFilter" onchange="updateAttendanceTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em;">
+                            <option value="">All Status</option>
+                            <option value="Present">Present</option>
+                            <option value="Half Day">Half Day</option>
+                            <option value="Late">Late</option>
+                        </select>
+                        <select id="attApprovalFilter" onchange="updateAttendanceTable()" style="padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.95em;">
+                            <option value="">All Approval</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                        <button class="btn btn-warning" onclick="clearAttFilters()" style="padding:10px 20px;">Clear</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th><th>Teacher</th><th>Status</th><th>Check-in</th>
+                                    <th>Check-out</th><th>Notes</th><th>Submitted At</th>
+                                    <th>Approval</th><th>Admin Notes</th><th id="attActionsHeader">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminAttendanceTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -1143,7 +1268,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, getDoc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, onSnapshot, getDoc, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
     import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.1/package/xlsx.mjs';
 
     const firebaseConfig = {
@@ -1168,6 +1293,7 @@
     window.inquiries = [];
     window.iqInquiries = [];
     window.timetables = [];
+    window.attendanceRecords = [];
 
     const IQ_PDF_LINKS = {
         'Accounts': 'https://drive.google.com/uc?export=download&id=1hSNHUy71NkqRj2L28EgIDWPL-gdzjkXk',
@@ -1214,6 +1340,7 @@
     let studentsListener = null, paymentsListener = null, remindersListener = null;
     let teachersListener = null, salariesListener = null, expensesListener = null;
     let inquiriesListener = null, iqListener = null, timetablesListener = null;
+    let attendanceListener = null;
     let currentUser = null, userRole = null;
     let editingStudentId = null, editingExpenseId = null, editingInquiryId = null;
     let convertingInquiryId = null, editingIQId = null;
@@ -1297,7 +1424,7 @@
     window.logout = async function() {
         if (confirm('Are you sure you want to logout?')) {
             try {
-                [studentsListener, paymentsListener, remindersListener, teachersListener, salariesListener, expensesListener, inquiriesListener, iqListener].forEach(l => { if (l) l(); });
+                [studentsListener, paymentsListener, remindersListener, teachersListener, salariesListener, expensesListener, inquiriesListener, iqListener, timetablesListener, attendanceListener].forEach(l => { if (l) l(); });
                 await signOut(auth);
             } catch (error) { alert('Error logging out: ' + error.message); }
         }
@@ -1305,52 +1432,91 @@
 
     function applyRoleBasedUI(role) {
         const isStaff = role === 'staff';
+        const isTeacher = role === 'teacher';
+        const isAdmin = role === 'admin';
+
         document.getElementById('staffNotice').style.display = isStaff ? 'block' : 'none';
-        ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','iqFormSection','timetableFormSection'].forEach(id => {
-            document.getElementById(id).style.display = isStaff ? 'none' : 'block';
-        });
-        ['actionsHeader','paymentActionsHeader','teacherActionsHeader','salaryActionsHeader','expenseActionsHeader','inquiryActionsHeader','iqActionsHeader'].forEach(id => {
-            document.getElementById(id).style.display = isStaff ? 'none' : 'table-cell';
-        });
+
+        if (isTeacher) {
+            // Teacher: hide stats grid and all tabs except Attendance
+            document.querySelector('.stats-grid').style.display = 'none';
+            document.querySelectorAll('.tab').forEach(t => {
+                t.style.display = t.id === 'attendanceTabBtn' ? 'inline-block' : 'none';
+            });
+            // Show teacher attendance section only
+            document.getElementById('teacherAttendanceSection').style.display = 'block';
+            document.getElementById('adminAttendanceSection').style.display = 'none';
+            // Switch active tab to attendance
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('attendance').classList.add('active');
+            document.getElementById('attendanceTabBtn').classList.add('active');
+        } else {
+            // Admin / Staff: hide teacher form sections for staff
+            ['studentFormSection','feeFormSection','teacherFormSection','salaryFormSection','expenseFormSection','inquiryFormSection','iqFormSection','timetableFormSection'].forEach(id => {
+                document.getElementById(id).style.display = isStaff ? 'none' : 'block';
+            });
+            ['actionsHeader','paymentActionsHeader','teacherActionsHeader','salaryActionsHeader','expenseActionsHeader','inquiryActionsHeader','iqActionsHeader'].forEach(id => {
+                document.getElementById(id).style.display = isStaff ? 'none' : 'table-cell';
+            });
+            // Show admin attendance section
+            document.getElementById('teacherAttendanceSection').style.display = 'none';
+            document.getElementById('adminAttendanceSection').style.display = 'block';
+            // Hide approve/reject actions for staff
+            if (isStaff) {
+                document.getElementById('attActionsHeader').style.display = 'none';
+            }
+        }
     }
 
     async function loadData() {
         try {
-            studentsListener = onSnapshot(query(collection(db, 'students'), orderBy('rollNumber')), (snapshot) => {
-                window.students = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateStudentTable(); updateFeeStudentSelect(); updateStats();
-            });
-            paymentsListener = onSnapshot(query(collection(db, 'payments'), orderBy('date', 'desc')), (snapshot) => {
-                window.payments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updatePaymentTable(); updateStats();
-            });
-            remindersListener = onSnapshot(query(collection(db, 'reminders'), orderBy('sentAt', 'desc')), (snapshot) => {
-                window.reminders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateStudentTable();
-            });
-            teachersListener = onSnapshot(query(collection(db, 'teachers'), orderBy('employeeId')), (snapshot) => {
-                window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateTeacherTable(); updateSalaryTeacherSelect();
-            });
-            salariesListener = onSnapshot(query(collection(db, 'salaries'), orderBy('date', 'desc')), (snapshot) => {
-                window.salaries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateSalaryTable();
-            });
-            expensesListener = onSnapshot(query(collection(db, 'expenses'), orderBy('date', 'desc')), (snapshot) => {
-                window.expenses = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateExpenseTable(); updateExpenseSummary();
-            });
-            inquiriesListener = onSnapshot(query(collection(db, 'inquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
-                window.inquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateInquiryTable(); updateInquiryStats();
-            });
-            iqListener = onSnapshot(query(collection(db, 'iqInquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
-                window.iqInquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateIQTable(); updateIQStats();
-            });
-            timetablesListener = onSnapshot(query(collection(db, 'timetables'), orderBy('class')), (snapshot) => {
-                window.timetables = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateTimetableView();
+            if (userRole !== 'teacher') {
+                studentsListener = onSnapshot(query(collection(db, 'students'), orderBy('rollNumber')), (snapshot) => {
+                    window.students = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateStudentTable(); updateFeeStudentSelect(); updateStats();
+                });
+                paymentsListener = onSnapshot(query(collection(db, 'payments'), orderBy('date', 'desc')), (snapshot) => {
+                    window.payments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updatePaymentTable(); updateStats();
+                });
+                remindersListener = onSnapshot(query(collection(db, 'reminders'), orderBy('sentAt', 'desc')), (snapshot) => {
+                    window.reminders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateStudentTable();
+                });
+                teachersListener = onSnapshot(query(collection(db, 'teachers'), orderBy('employeeId')), (snapshot) => {
+                    window.teachers = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateTeacherTable(); updateSalaryTeacherSelect();
+                });
+                salariesListener = onSnapshot(query(collection(db, 'salaries'), orderBy('date', 'desc')), (snapshot) => {
+                    window.salaries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateSalaryTable();
+                });
+                expensesListener = onSnapshot(query(collection(db, 'expenses'), orderBy('date', 'desc')), (snapshot) => {
+                    window.expenses = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateExpenseTable(); updateExpenseSummary();
+                });
+                inquiriesListener = onSnapshot(query(collection(db, 'inquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
+                    window.inquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateInquiryTable(); updateInquiryStats();
+                });
+                iqListener = onSnapshot(query(collection(db, 'iqInquiries'), orderBy('createdAt', 'desc')), (snapshot) => {
+                    window.iqInquiries = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateIQTable(); updateIQStats();
+                });
+                timetablesListener = onSnapshot(query(collection(db, 'timetables'), orderBy('class')), (snapshot) => {
+                    window.timetables = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateTimetableView();
+                });
+            }
+
+            // Attendance: teachers see only their own records; admin/staff see all
+            const attQuery = userRole === 'teacher'
+                ? query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email), orderBy('date', 'desc'))
+                : query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
+            attendanceListener = onSnapshot(attQuery, (snapshot) => {
+                window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateAttendanceTable();
+                if (userRole !== 'teacher') updateAttendanceStats();
             });
 
             document.getElementById('loadingIndicator').style.display = 'none';
@@ -1368,6 +1534,7 @@
     document.getElementById('accountsMonth').value = monthStr;
     document.getElementById('inqDate').value = todayStr;
     document.getElementById('iqDate').value = todayStr;
+    document.getElementById('attendanceDate').value = todayStr;
 
     window.handleIQClassChange = function() {
         const cls = document.getElementById('iqClass').value;
@@ -2551,6 +2718,187 @@
         const messages={'auth/email-already-in-use':'This email is already registered.','auth/invalid-email':'Invalid email address.','auth/weak-password':'Password should be at least 6 characters.','auth/user-disabled':'This account has been disabled.','auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Invalid email or password.','auth/too-many-requests':'Too many attempts. Please try again later.'};
         return messages[code]||'An error occurred. Please try again.';
     }
+
+    // ============================================================
+    // ATTENDANCE FUNCTIONS
+    // ============================================================
+
+    window.submitAttendance = async function() {
+        const date = document.getElementById('attendanceDate').value;
+        const status = document.getElementById('attendanceStatus').value;
+        const checkIn = document.getElementById('attendanceCheckIn').value;
+        const checkOut = document.getElementById('attendanceCheckOut').value;
+        const notes = document.getElementById('attendanceNotes').value.trim();
+
+        if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
+
+        // Check if already submitted for this date
+        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherEmail === currentUser.email);
+        if (existing) {
+            alert(`❌ Attendance already submitted for ${date}. Status: ${existing.approvalStatus}.`);
+            return;
+        }
+
+        const btn = document.getElementById('submitAttendanceBtn');
+        btn.disabled = true; btn.textContent = 'Submitting...';
+        try {
+            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+            const teacherName = userDoc.exists() ? userDoc.data().name : currentUser.email;
+            await addDoc(collection(db, 'teacherAttendance'), {
+                teacherId: currentUser.uid,
+                teacherName,
+                teacherEmail: currentUser.email,
+                date,
+                status,
+                checkIn,
+                checkOut: checkOut || '-',
+                notes: notes || '-',
+                submittedAt: new Date().toISOString(),
+                approvalStatus: 'Pending',
+                approvedBy: '-',
+                approvedAt: '-',
+                adminNotes: '-'
+            });
+            alert('✅ Attendance submitted successfully! Waiting for admin approval.');
+            document.getElementById('attendanceStatus').value = '';
+            document.getElementById('attendanceCheckIn').value = '';
+            document.getElementById('attendanceCheckOut').value = '';
+            document.getElementById('attendanceNotes').value = '';
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { btn.disabled = false; btn.textContent = 'Submit Attendance'; }
+    };
+
+    window.updateAttendanceTable = function() {
+        if (userRole === 'teacher') {
+            const tbody = document.getElementById('myAttendanceTableBody');
+            if (!window.attendanceRecords.length) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#999;">No attendance records yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = window.attendanceRecords.map(r => {
+                const approvalBadge = r.approvalStatus === 'Approved'
+                    ? '<span class="badge badge-approved">Approved</span>'
+                    : r.approvalStatus === 'Rejected'
+                        ? '<span class="badge badge-rejected">Rejected</span>'
+                        : '<span class="badge badge-pending">Pending</span>';
+                const statusClass = r.status === 'Present' ? 'badge-present' : r.status === 'Late' ? 'badge-late' : 'badge-halfday';
+                return `<tr>
+                    <td>${r.date}</td>
+                    <td><span class="badge ${statusClass}">${r.status}</span></td>
+                    <td>${r.checkIn}</td>
+                    <td>${r.checkOut === '-' ? '-' : r.checkOut}</td>
+                    <td style="font-size:0.9em;color:#666;">${r.notes === '-' ? '-' : r.notes}</td>
+                    <td>${approvalBadge}</td>
+                    <td style="font-size:0.85em;color:#666;">${r.adminNotes === '-' ? '-' : r.adminNotes}</td>
+                </tr>`;
+            }).join('');
+        } else {
+            // Admin/Staff view
+            const tbody = document.getElementById('adminAttendanceTableBody');
+            const dateFilter = document.getElementById('attFilterDate')?.value || '';
+            const search = document.getElementById('attSearch')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('attStatusFilter')?.value || '';
+            const approvalFilter = document.getElementById('attApprovalFilter')?.value || '';
+
+            let filtered = window.attendanceRecords.filter(r => {
+                const matchDate = !dateFilter || r.date === dateFilter;
+                const matchSearch = !search || r.teacherName.toLowerCase().includes(search) || r.teacherEmail.toLowerCase().includes(search);
+                const matchStatus = !statusFilter || r.status === statusFilter;
+                const matchApproval = !approvalFilter || r.approvalStatus === approvalFilter;
+                return matchDate && matchSearch && matchStatus && matchApproval;
+            });
+
+            if (!filtered.length) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999;">No attendance records found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(r => {
+                const approvalBadge = r.approvalStatus === 'Approved'
+                    ? '<span class="badge badge-approved">Approved</span>'
+                    : r.approvalStatus === 'Rejected'
+                        ? '<span class="badge badge-rejected">Rejected</span>'
+                        : '<span class="badge badge-pending">Pending</span>';
+                const statusClass = r.status === 'Present' ? 'badge-present' : r.status === 'Late' ? 'badge-late' : 'badge-halfday';
+                const submittedDate = new Date(r.submittedAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
+                const actionsCell = userRole === 'admin'
+                    ? `<td><div class="action-buttons">
+                        ${r.approvalStatus === 'Pending' ? `<button class="btn btn-success" onclick="approveAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Approve</button><button class="btn btn-danger" onclick="rejectAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Reject</button>` : `<button class="btn btn-warning" onclick="resetAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Reset</button>`}
+                       </div></td>`
+                    : '';
+                return `<tr>
+                    <td>${r.date}</td>
+                    <td><strong>${r.teacherName}</strong><br><small style="color:#999;">${r.teacherEmail}</small></td>
+                    <td><span class="badge ${statusClass}">${r.status}</span></td>
+                    <td>${r.checkIn}</td>
+                    <td>${r.checkOut === '-' ? '-' : r.checkOut}</td>
+                    <td style="font-size:0.85em;color:#666;">${r.notes === '-' ? '-' : r.notes}</td>
+                    <td style="font-size:0.85em;">${submittedDate}</td>
+                    <td>${approvalBadge}</td>
+                    <td style="font-size:0.85em;color:#666;">${r.adminNotes === '-' ? '-' : r.adminNotes}</td>
+                    ${actionsCell}
+                </tr>`;
+            }).join('');
+        }
+    };
+
+    window.updateAttendanceStats = function() {
+        const today = new Date().toISOString().slice(0, 10);
+        const todayRecords = window.attendanceRecords.filter(r => r.date === today);
+        document.getElementById('attPresent').textContent = todayRecords.filter(r => r.status === 'Present').length;
+        document.getElementById('attLate').textContent = todayRecords.filter(r => r.status === 'Late').length;
+        document.getElementById('attHalfDay').textContent = todayRecords.filter(r => r.status === 'Half Day').length;
+        document.getElementById('attPending').textContent = window.attendanceRecords.filter(r => r.approvalStatus === 'Pending').length;
+    };
+
+    window.approveAttendance = async function(id) {
+        const adminNotes = prompt('Add a note (optional):') || '-';
+        if (!confirm('Approve this attendance record?')) return;
+        try {
+            await updateDoc(doc(db, 'teacherAttendance', id), {
+                approvalStatus: 'Approved',
+                approvedBy: currentUser.email,
+                approvedAt: new Date().toISOString(),
+                adminNotes: adminNotes.trim() || '-'
+            });
+            alert('✅ Attendance approved!');
+        } catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.rejectAttendance = async function(id) {
+        const reason = prompt('Reason for rejection (required):');
+        if (!reason || !reason.trim()) { alert('Please provide a rejection reason.'); return; }
+        if (!confirm('Reject this attendance record?')) return;
+        try {
+            await updateDoc(doc(db, 'teacherAttendance', id), {
+                approvalStatus: 'Rejected',
+                approvedBy: currentUser.email,
+                approvedAt: new Date().toISOString(),
+                adminNotes: reason.trim()
+            });
+            alert('✅ Attendance rejected.');
+        } catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.resetAttendance = async function(id) {
+        if (!confirm('Reset approval status to Pending?')) return;
+        try {
+            await updateDoc(doc(db, 'teacherAttendance', id), {
+                approvalStatus: 'Pending',
+                approvedBy: '-',
+                approvedAt: '-',
+                adminNotes: '-'
+            });
+        } catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.clearAttFilters = function() {
+        document.getElementById('attFilterDate').value = '';
+        document.getElementById('attSearch').value = '';
+        document.getElementById('attStatusFilter').value = '';
+        document.getElementById('attApprovalFilter').value = '';
+        updateAttendanceTable();
+    };
 </script>
 </body>
 </html>
