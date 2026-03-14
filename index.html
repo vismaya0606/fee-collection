@@ -1543,8 +1543,12 @@
         } catch (error) { console.error('Error loading data:', error); alert('Error loading data: ' + error.message); }
     }
 
-    const todayStr = new Date().toISOString().slice(0,10);
-    const monthStr = new Date().toISOString().slice(0,7);
+    // Use local date to avoid UTC offset issues (e.g. IST = UTC+5:30)
+    function localDateStr(d = new Date()) {
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    const todayStr = localDateStr();
+    const monthStr = todayStr.slice(0,7);
     document.getElementById('feeMonth').value = monthStr;
     document.getElementById('reportMonth').value = monthStr;
     document.getElementById('paidReportMonth').value = monthStr;
@@ -1596,7 +1600,7 @@
                 alert('✅ Request added!');
             }
             document.getElementById('iqForm').reset();
-            document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+            document.getElementById('iqDate').value = localDateStr();
         } catch (error) { alert('Error: ' + error.message); }
         finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Request' : 'Add Request'; }
     });
@@ -1629,7 +1633,7 @@
             data.waStatus = 'Sent';
             await addDoc(collection(db, 'iqInquiries'), { ...data, createdAt: new Date().toISOString() });
             document.getElementById('iqForm').reset();
-            document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+            document.getElementById('iqDate').value = localDateStr();
             sendIQWhatsApp(mobile, name, studentClass, syllabus, subject);
         } catch (error) { alert('Error: ' + error.message); }
         finally { btn.disabled = false; btn.textContent = '➕ Add & Send WhatsApp'; }
@@ -1738,7 +1742,7 @@
     function cancelIQEdit() {
         editingIQId = null;
         document.getElementById('iqForm').reset();
-        document.getElementById('iqDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('iqDate').value = localDateStr();
         const submitBtn = document.getElementById('iqSubmitBtn');
         submitBtn.textContent = 'Add Request';
         submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
@@ -1767,7 +1771,7 @@
         ws['!cols'] = [{wch:5},{wch:12},{wch:25},{wch:15},{wch:10},{wch:10},{wch:20},{wch:15},{wch:25}];
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'IQ Inquiries');
-        XLSX.writeFile(wb, `ImportantQuestions_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb, `ImportantQuestions_${localDateStr()}.xlsx`);
     };
 
     document.getElementById('iqSearch').addEventListener('input', updateIQTable);
@@ -1806,7 +1810,7 @@
                 alert('✅ Inquiry added successfully!');
             }
             this.reset();
-            document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
+            document.getElementById('inqDate').value = localDateStr();
         } catch (error) { alert('Error saving inquiry: ' + error.message); }
         finally { submitBtn.disabled = false; submitBtn.textContent = isEditing ? 'Update Inquiry' : 'Add Inquiry'; }
     });
@@ -1888,7 +1892,7 @@
     function cancelInquiryEdit() {
         editingInquiryId = null;
         document.getElementById('inquiryForm').reset();
-        document.getElementById('inqDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('inqDate').value = localDateStr();
         const submitBtn = document.getElementById('inqSubmitBtn');
         submitBtn.textContent = 'Add Inquiry';
         submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
@@ -1920,7 +1924,7 @@
         document.getElementById('convClass').value = inq.interestedClass;
         document.getElementById('convSyllabus').value = inq.syllabus==='-'?'':inq.syllabus;
         document.getElementById('convFee').value = inq.expectedFee>0?inq.expectedFee:'';
-        document.getElementById('convAdmissionDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('convAdmissionDate').value = localDateStr();
         document.getElementById('convRollNumber').value='';
         document.getElementById('convertInquiryInfo').innerHTML=`<strong>Inquiry Details:</strong><br>📋 Name: ${inq.name} &nbsp;|&nbsp; 📞 Phone: ${inq.phone}<br>🏫 Class: ${inq.interestedClass} &nbsp;|&nbsp; 📅 Date: ${inq.date}<br>📝 Notes: ${inq.notes}`;
         document.getElementById('convertModal').classList.add('active');
@@ -1971,7 +1975,7 @@
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Inquiries');
-        XLSX.writeFile(wb, `Inquiries_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb, `Inquiries_${localDateStr()}.xlsx`);
     };
 
     document.getElementById('inquirySearch').addEventListener('input', updateInquiryTable);
@@ -2020,7 +2024,7 @@
         const alreadyPaid = window.payments.some(p=>p.studentId===studentId&&p.month===month);
         if (alreadyPaid) { const s=window.students.find(s=>s.id===studentId); alert(`❌ Fee Already Collected!\nStudent: ${s?.name}\nMonth: ${month}`); return; }
         try {
-            const payment = { receiptNo:'REC'+Date.now().toString().slice(-6), studentId, month, amount, method, date:new Date().toISOString().slice(0,10), createdAt:new Date().toISOString() };
+            const payment = { receiptNo:'REC'+Date.now().toString().slice(-6), studentId, month, amount, method, date:localDateStr(), createdAt:new Date().toISOString() };
             const docRef = await addDoc(collection(db,'payments'), payment);
             document.getElementById('feeStudent').value='';
             document.getElementById('feeAmount').value='';
@@ -2100,7 +2104,7 @@
             return 0;
         });
         tbody.innerHTML = filteredStudents.map(student => {
-            const currentMonth=new Date().toISOString().slice(0,7);
+            const currentMonth=localDateStr().slice(0,7);
             const hasPaid=window.payments.some(p=>p.studentId===student.id&&p.month===currentMonth);
             const monthReminders=window.reminders.filter(r=>r.studentId===student.id&&r.month===currentMonth);
             const reminderCount=monthReminders.length;
@@ -2158,7 +2162,7 @@
     // ✅ FIXED updateStats — Inactive students excluded from all calculations
     // ============================================================
     window.updateStats = function() {
-        const currentMonth=new Date().toISOString().slice(0,7);
+        const currentMonth=localDateStr().slice(0,7);
         // Only include students admitted on or before the current month
         const activeStudents=window.students.filter(s=>s.status==='Active'&&(!s.admissionDate||s.admissionDate==='-'||s.admissionDate.slice(0,7)<=currentMonth));
         const activeIds=new Set(activeStudents.map(s=>s.id));
@@ -2377,7 +2381,7 @@
         if (!teacherId||!month||!amount||!method) { alert('Please fill all fields'); return; }
         if (window.salaries.some(s=>s.teacherId===teacherId&&s.month===month)) { alert('❌ Salary already paid for this month!'); return; }
         try {
-            await addDoc(collection(db,'salaries'), { receiptNo:'SAL'+Date.now().toString().slice(-6), teacherId, month, amount, method, date:new Date().toISOString().slice(0,10), createdAt:new Date().toISOString() });
+            await addDoc(collection(db,'salaries'), { receiptNo:'SAL'+Date.now().toString().slice(-6), teacherId, month, amount, method, date:localDateStr(), createdAt:new Date().toISOString() });
             document.getElementById('salaryTeacher').value='';
             document.getElementById('salaryAmount').value='';
             document.getElementById('salaryPaymentMethod').value='';
@@ -2419,7 +2423,7 @@
                 alert('✅ Expense added!');
             }
             this.reset();
-            document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);
+            document.getElementById('expenseDate').value=localDateStr();
         } catch (error) { alert('Error: '+error.message); }
         finally { submitBtn.disabled=false; submitBtn.textContent=isEditing?'Update Expense':'Add Expense'; }
     });
@@ -2480,7 +2484,7 @@
     function cancelExpenseEdit() {
         editingExpenseId=null;
         document.getElementById('expenseForm').reset();
-        document.getElementById('expenseDate').value=new Date().toISOString().slice(0,10);
+        document.getElementById('expenseDate').value=localDateStr();
         const submitBtn=document.querySelector('#expenseForm button[type="submit"]');
         submitBtn.textContent='Add Expense';
         submitBtn.classList.remove('btn-warning'); submitBtn.classList.add('btn-primary');
@@ -2496,7 +2500,7 @@
     };
 
     window.updateExpenseSummary = function() {
-        const currentMonth=new Date().toISOString().slice(0,7);
+        const currentMonth=localDateStr().slice(0,7);
         const total=window.expenses.reduce((sum,e)=>sum+e.amount,0);
         const thisMonth=window.expenses.filter(e=>e.date.startsWith(currentMonth)||e.forMonth===currentMonth).reduce((sum,e)=>sum+e.amount,0);
         document.getElementById('totalExpenses').textContent='₹'+total.toLocaleString();
@@ -2510,14 +2514,14 @@
         if (cleanPhone.length===10) cleanPhone='91'+cleanPhone;
         const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
         const currentMonth=monthNames[new Date().getMonth()];
-        const currentMonthCode=new Date().toISOString().slice(0,7);
+        const currentMonthCode=localDateStr().slice(0,7);
         const message=`Dear ${studentName},\n\nThis is a friendly reminder from Vismaya Education regarding your fee payment.\n\n📚 *Fee Details:*\n• Month: ${currentMonth}\n• Amount: ₹${monthlyFee}\n\nPlease make the payment at your earliest convenience.\n\nThank you!\n*Vismaya Education*`;
         try { await addDoc(collection(db,'reminders'), {studentId, month:currentMonthCode, sentAt:new Date().toISOString(), sentBy:currentUser.email, phone, studentName}); window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`,'_blank'); }
         catch (error) { window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`,'_blank'); }
     };
 
     window.sendBulkWhatsAppReminders = function() {
-        const currentMonth=new Date().toISOString().slice(0,7);
+        const currentMonth=localDateStr().slice(0,7);
         const unpaid=window.students.filter(s=>!window.payments.some(p=>p.studentId===s.id&&p.month===currentMonth)&&s.status==='Active');
         if (unpaid.length===0) { alert('✅ All active students have paid!'); return; }
         if (confirm(`Send WhatsApp reminders to ${unpaid.length} students?`)) {
@@ -2594,17 +2598,17 @@
         const wsSummary=XLSX.utils.aoa_to_sheet(summaryData);
         wsSummary['!cols']=[{wch:30},{wch:20}];
         XLSX.utils.book_append_sheet(wb,wsSummary,'Summary');
-        XLSX.writeFile(wb,`Accounts_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Accounts_${month}_${localDateStr()}.xlsx`);
     };
 
     // ---- Excel Exports ----
     window.exportStudentsToExcel = function() {
-        const currentMonth=new Date().toISOString().slice(0,7);
+        const currentMonth=localDateStr().slice(0,7);
         const data=window.students.map(s=>({'Roll Number':s.rollNumber,'Name':s.name,'Class':s.course,'Syllabus':s.syllabus,'Phone':s.phone,'Monthly Fee':s.monthlyFee,'Admission Date':s.admissionDate,'Status':s.status,'Fee Status (This Month)':window.payments.some(p=>p.studentId===s.id&&p.month===currentMonth)?'Paid':'Pending'}));
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Students');
-        XLSX.writeFile(wb,`Students_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Students_${localDateStr()}.xlsx`);
     };
 
     window.exportRecentPaymentsToExcel = function() {
@@ -2612,7 +2616,7 @@
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Recent Payments');
-        XLSX.writeFile(wb,`Recent_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Recent_Payments_${localDateStr()}.xlsx`);
     };
 
     window.generatePaidStudentsReport = function() {
@@ -2653,7 +2657,7 @@
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Paid Students');
-        XLSX.writeFile(wb,`Paid_Students_${month}_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Paid_Students_${month}_${localDateStr()}.xlsx`);
     };
 
     window.exportTeachersToExcel = function() {
@@ -2661,7 +2665,7 @@
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Teachers');
-        XLSX.writeFile(wb,`Teachers_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Teachers_${localDateStr()}.xlsx`);
     };
 
     window.exportSalaryPaymentsToExcel = function() {
@@ -2669,7 +2673,7 @@
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Salary Payments');
-        XLSX.writeFile(wb,`Salary_Payments_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Salary_Payments_${localDateStr()}.xlsx`);
     };
 
     window.exportExpensesToExcel = function() {
@@ -2677,7 +2681,7 @@
         const ws=XLSX.utils.json_to_sheet(data);
         const wb=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb,ws,'Expenses');
-        XLSX.writeFile(wb,`Expenses_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb,`Expenses_${localDateStr()}.xlsx`);
     };
 
     window.downloadTemplate = function() {
@@ -2751,7 +2755,7 @@
 
         if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
 
-        const sysdate = new Date().toISOString().slice(0, 10);
+        const sysdate = localDateStr();
         if (date !== sysdate) {
             alert(`❌ Attendance can only be submitted for today (${sysdate}).`);
             document.getElementById('attendanceDate').value = sysdate;
@@ -2892,7 +2896,7 @@
     };
 
     window.updateAttendanceStats = function() {
-        const today = new Date().toISOString().slice(0, 10);
+        const today = localDateStr();
         const todayRecords = window.attendanceRecords.filter(r => r.date === today);
         document.getElementById('attPresent').textContent = todayRecords.filter(r => r.status === 'Present').length;
         document.getElementById('attLate').textContent = todayRecords.filter(r => r.status === 'Late').length;
