@@ -1510,11 +1510,15 @@
             }
 
             // Attendance: teachers see only their own records; admin/staff see all
+            // Teacher query uses only `where` (no orderBy) to avoid composite index requirement; sorted client-side
             const attQuery = userRole === 'teacher'
-                ? query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email), orderBy('date', 'desc'))
+                ? query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email))
                 : query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
             attendanceListener = onSnapshot(attQuery, (snapshot) => {
                 window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                if (userRole === 'teacher') {
+                    window.attendanceRecords.sort((a, b) => b.date.localeCompare(a.date));
+                }
                 updateAttendanceTable();
                 if (userRole !== 'teacher') updateAttendanceStats();
             });
