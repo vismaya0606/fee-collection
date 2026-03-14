@@ -2751,15 +2751,31 @@
 
         if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
 
-        // Check if already submitted for this date
-        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherId === currentUser.uid);
-        if (existing) {
-            alert(`❌ Attendance already submitted for ${date}. Status: ${existing.approvalStatus}.`);
-            return;
-        }
-
         const btn = document.getElementById('submitAttendanceBtn');
-        btn.disabled = true; btn.textContent = 'Submitting...';
+        btn.disabled = true; btn.textContent = 'Checking...';
+        try {
+            // Always check Firestore directly to prevent duplicates reliably
+            const dupSnap = await getDocs(query(
+                collection(db, 'teacherAttendance'),
+                where('teacherId', '==', currentUser.uid),
+                where('date', '==', date)
+            ));
+            if (!dupSnap.empty) {
+                const existing = dupSnap.docs[0].data();
+                alert(`❌ Attendance already submitted for ${date}.\nStatus: ${existing.status} | Approval: ${existing.approvalStatus}`);
+                btn.disabled = false; btn.textContent = 'Submit Attendance';
+                return;
+            }
+        } catch(e) {
+            // Fallback to local check if Firestore query fails
+            const localExisting = window.attendanceRecords.find(r => r.date === date && r.teacherId === currentUser.uid);
+            if (localExisting) {
+                alert(`❌ Attendance already submitted for ${date}. Status: ${localExisting.approvalStatus}.`);
+                btn.disabled = false; btn.textContent = 'Submit Attendance';
+                return;
+            }
+        }
+        btn.textContent = 'Submitting...';
         try {
             const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
             const teacherName = userDoc.exists() ? userDoc.data().name : currentUser.email;
