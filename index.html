@@ -1510,14 +1510,33 @@
             }
 
             // Attendance: teachers see only their own records; admin/staff see all
-            const attQuery = userRole === 'teacher'
-                ? query(collection(db, 'teacherAttendance'), where('teacherEmail', '==', currentUser.email), orderBy('date', 'desc'))
-                : query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
-            attendanceListener = onSnapshot(attQuery, (snapshot) => {
-                window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateAttendanceTable();
-                if (userRole !== 'teacher') updateAttendanceStats();
-            });
+            if (userRole === 'teacher') {
+                // For teachers: query by teacherId (uid) — matches Firestore security rules pattern
+                const teacherAttQuery = query(collection(db, 'teacherAttendance'), where('teacherId', '==', currentUser.uid));
+                try {
+                    const snap = await getDocs(teacherAttQuery);
+                    window.attendanceRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    window.attendanceRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    updateAttendanceTable();
+                } catch(e) { console.error('Error loading teacher attendance:', e); }
+                // Also keep real-time listener for updates
+                attendanceListener = onSnapshot(teacherAttQuery, (snapshot) => {
+                    window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    window.attendanceRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    updateAttendanceTable();
+                }, (error) => { console.error('Attendance listener error:', error); });
+            } else {
+                const attQuery = query(collection(db, 'teacherAttendance'), orderBy('date', 'desc'));
+                attendanceListener = onSnapshot(attQuery, (snapshot) => {
+                    window.attendanceRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateAttendanceTable();
+                    updateAttendanceStats();
+                }, (error) => {
+                    console.error('Attendance listener error:', error);
+                    const tbody = document.getElementById('adminAttendanceTableBody');
+                    if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:20px;color:#dc3545;">⚠️ Could not load attendance: ${error.message}</td></tr>`;
+                });
+            }
 
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
@@ -2733,7 +2752,7 @@
         if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
 
         // Check if already submitted for this date
-        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherEmail === currentUser.email);
+        const existing = window.attendanceRecords.find(r => r.date === date && r.teacherId === currentUser.uid);
         if (existing) {
             alert(`❌ Attendance already submitted for ${date}. Status: ${existing.approvalStatus}.`);
             return;
@@ -2744,7 +2763,7 @@
         try {
             const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
             const teacherName = userDoc.exists() ? userDoc.data().name : currentUser.email;
-            await addDoc(collection(db, 'teacherAttendance'), {
+            const newRecord = {
                 teacherId: currentUser.uid,
                 teacherName,
                 teacherEmail: currentUser.email,
@@ -2758,7 +2777,11 @@
                 approvedBy: '-',
                 approvedAt: '-',
                 adminNotes: '-'
-            });
+            };
+            const docRef = await addDoc(collection(db, 'teacherAttendance'), newRecord);
+            // Immediately update local array so history shows right away
+            window.attendanceRecords.unshift({ id: docRef.id, ...newRecord });
+            updateAttendanceTable();
             alert('✅ Attendance submitted successfully! Waiting for admin approval.');
             document.getElementById('attendanceStatus').value = '';
             document.getElementById('attendanceCheckIn').value = '';
@@ -2782,14 +2805,15 @@
                         ? '<span class="badge badge-rejected">Rejected</span>'
                         : '<span class="badge badge-pending">Pending</span>';
                 const statusClass = r.status === 'Present' ? 'badge-present' : r.status === 'Late' ? 'badge-late' : 'badge-halfday';
+                const safeVal = v => (!v || v === '-') ? '-' : v;
                 return `<tr>
-                    <td>${r.date}</td>
-                    <td><span class="badge ${statusClass}">${r.status}</span></td>
-                    <td>${r.checkIn}</td>
-                    <td>${r.checkOut === '-' ? '-' : r.checkOut}</td>
-                    <td style="font-size:0.9em;color:#666;">${r.notes === '-' ? '-' : r.notes}</td>
+                    <td>${safeVal(r.date)}</td>
+                    <td><span class="badge ${statusClass}">${safeVal(r.status)}</span></td>
+                    <td>${safeVal(r.checkIn)}</td>
+                    <td>${safeVal(r.checkOut)}</td>
+                    <td style="font-size:0.9em;color:#666;">${safeVal(r.notes)}</td>
                     <td>${approvalBadge}</td>
-                    <td style="font-size:0.85em;color:#666;">${r.adminNotes === '-' ? '-' : r.adminNotes}</td>
+                    <td style="font-size:0.85em;color:#666;">${safeVal(r.adminNotes)}</td>
                 </tr>`;
             }).join('');
         } else {
@@ -2820,22 +2844,23 @@
                         ? '<span class="badge badge-rejected">Rejected</span>'
                         : '<span class="badge badge-pending">Pending</span>';
                 const statusClass = r.status === 'Present' ? 'badge-present' : r.status === 'Late' ? 'badge-late' : 'badge-halfday';
-                const submittedDate = new Date(r.submittedAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
+                const submittedDate = r.submittedAt ? new Date(r.submittedAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}) : '-';
+                const safeVal = v => (!v || v === '-') ? '-' : v;
                 const actionsCell = userRole === 'admin'
                     ? `<td><div class="action-buttons">
                         ${r.approvalStatus === 'Pending' ? `<button class="btn btn-success" onclick="approveAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Approve</button><button class="btn btn-danger" onclick="rejectAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Reject</button>` : `<button class="btn btn-warning" onclick="resetAttendance('${r.id}')" style="padding:5px 12px;font-size:0.85em;">Reset</button>`}
                        </div></td>`
                     : '';
                 return `<tr>
-                    <td>${r.date}</td>
-                    <td><strong>${r.teacherName}</strong><br><small style="color:#999;">${r.teacherEmail}</small></td>
-                    <td><span class="badge ${statusClass}">${r.status}</span></td>
-                    <td>${r.checkIn}</td>
-                    <td>${r.checkOut === '-' ? '-' : r.checkOut}</td>
-                    <td style="font-size:0.85em;color:#666;">${r.notes === '-' ? '-' : r.notes}</td>
+                    <td>${safeVal(r.date)}</td>
+                    <td><strong>${safeVal(r.teacherName)}</strong><br><small style="color:#999;">${safeVal(r.teacherEmail)}</small></td>
+                    <td><span class="badge ${statusClass}">${safeVal(r.status)}</span></td>
+                    <td>${safeVal(r.checkIn)}</td>
+                    <td>${safeVal(r.checkOut)}</td>
+                    <td style="font-size:0.85em;color:#666;">${safeVal(r.notes)}</td>
                     <td style="font-size:0.85em;">${submittedDate}</td>
                     <td>${approvalBadge}</td>
-                    <td style="font-size:0.85em;color:#666;">${r.adminNotes === '-' ? '-' : r.adminNotes}</td>
+                    <td style="font-size:0.85em;color:#666;">${safeVal(r.adminNotes)}</td>
                     ${actionsCell}
                 </tr>`;
             }).join('');
