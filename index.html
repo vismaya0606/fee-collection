@@ -1118,6 +1118,12 @@
                     <div class="attendance-form-section">
                         <h3>✅ Submit Attendance</h3>
                         <div id="alreadyMarkedNotice" style="display:none; background:#d4edda; color:#155724; padding:15px; border-radius:8px; margin-bottom:15px; font-weight:600;"></div>
+                        <!-- Location verification banner -->
+                        <div id="locationStatus" style="display:flex;align-items:center;gap:10px;padding:12px 15px;border-radius:8px;margin-bottom:15px;font-weight:600;background:#fff3cd;color:#856404;border:1px solid #ffc107;">
+                            <span id="locationIcon" style="font-size:1.3em;">📍</span>
+                            <span id="locationMsg">Checking your location…</span>
+                            <button onclick="window.verifyLocation()" style="margin-left:auto;padding:4px 12px;border:1px solid currentColor;border-radius:6px;background:transparent;cursor:pointer;font-size:0.85em;font-weight:600;color:inherit;">Retry</button>
+                        </div>
                         <div id="attendanceMarkForm">
                             <div class="form-grid">
                                 <div class="form-group">
@@ -2746,6 +2752,66 @@
     // ATTENDANCE FUNCTIONS
     // ============================================================
 
+    // ── Geo-fence constants ──────────────────────────────────────────────────
+    const CENTER_LAT = 9.822287289885228;
+    const CENTER_LNG = 77.99536585653365;
+    const ALLOWED_RADIUS_M = 200;
+
+    function haversineDistance(lat1, lng1, lat2, lng2) {
+        const R = 6371000; // Earth radius in metres
+        const toRad = x => x * Math.PI / 180;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat/2)**2 +
+                  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng/2)**2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    // Holds the last verified location result: null | { ok, distance }
+    window._locationVerified = null;
+
+    window.verifyLocation = function() {
+        const banner = document.getElementById('locationStatus');
+        const icon   = document.getElementById('locationIcon');
+        const msg    = document.getElementById('locationMsg');
+
+        // Reset to checking state
+        banner.style.background = '#fff3cd'; banner.style.color = '#856404'; banner.style.borderColor = '#ffc107';
+        icon.textContent = '📍'; msg.textContent = 'Checking your location…';
+        window._locationVerified = null;
+
+        if (!navigator.geolocation) {
+            banner.style.background='#f8d7da'; banner.style.color='#721c24'; banner.style.borderColor='#f5c6cb';
+            icon.textContent='❌'; msg.textContent='Geolocation is not supported by this browser.';
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            pos => {
+                const dist = Math.round(haversineDistance(pos.coords.latitude, pos.coords.longitude, CENTER_LAT, CENTER_LNG));
+                if (dist <= ALLOWED_RADIUS_M) {
+                    banner.style.background='#d4edda'; banner.style.color='#155724'; banner.style.borderColor='#c3e6cb';
+                    icon.textContent='✅'; msg.textContent=`Location verified — you are ${dist}m from the tuition center.`;
+                    window._locationVerified = { ok: true, distance: dist };
+                } else {
+                    banner.style.background='#f8d7da'; banner.style.color='#721c24'; banner.style.borderColor='#f5c6cb';
+                    icon.textContent='❌'; msg.textContent=`Outside tuition center — you are ${dist}m away (limit: ${ALLOWED_RADIUS_M}m). Attendance can only be submitted from the center.`;
+                    window._locationVerified = { ok: false, distance: dist };
+                }
+            },
+            err => {
+                banner.style.background='#f8d7da'; banner.style.color='#721c24'; banner.style.borderColor='#f5c6cb';
+                icon.textContent='❌';
+                const reasons = { 1:'Location permission denied. Please allow location access and retry.', 2:'Location unavailable. Please check GPS and retry.', 3:'Location request timed out. Please retry.' };
+                msg.textContent = reasons[err.code] || 'Location error. Please retry.';
+                window._locationVerified = null;
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+    };
+
+    // Auto-check location when attendance tab loads
+    window.verifyLocation();
+
     window.submitAttendance = async function() {
         const date = document.getElementById('attendanceDate').value;
         const status = document.getElementById('attendanceStatus').value;
@@ -2754,6 +2820,17 @@
         const notes = document.getElementById('attendanceNotes').value.trim();
 
         if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
+
+        // Enforce geo-fence
+        if (!window._locationVerified) {
+            alert('📍 Location not verified yet. Please wait for the location check to complete or click Retry.');
+            window.verifyLocation();
+            return;
+        }
+        if (!window._locationVerified.ok) {
+            alert(`❌ You must be inside the tuition center to submit attendance.\n\nYour distance: ${window._locationVerified.distance}m\nAllowed radius: ${ALLOWED_RADIUS_M}m`);
+            return;
+        }
 
         const sysdate = localDateStr();
         if (date !== sysdate) {
@@ -2800,6 +2877,7 @@
                 checkOut: checkOut || '-',
                 notes: notes || '-',
                 submittedAt: new Date().toISOString(),
+                locationDistance: window._locationVerified ? window._locationVerified.distance : null,
                 approvalStatus: 'Pending',
                 approvedBy: '-',
                 approvedAt: '-',
