@@ -1172,6 +1172,52 @@
                 <!-- Admin / Staff View: All teacher attendance -->
                 <div id="adminAttendanceSection" style="display:none;">
                     <h2 style="margin-bottom: 20px;">Teacher Attendance Records</h2>
+
+                    <!-- Admin: Add Attendance on Behalf -->
+                    <div id="adminAddAttendanceSection" style="background:#f0f7ff;border:2px solid #b3d7ff;border-radius:12px;padding:20px;margin-bottom:24px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleAdminAttForm()">
+                            <h3 style="margin:0;color:#0056b3;">➕ Add Attendance on Behalf of Teacher</h3>
+                            <span id="adminAttFormToggleIcon" style="font-size:1.2em;color:#0056b3;">▼</span>
+                        </div>
+                        <div id="adminAttFormBody" style="display:none;margin-top:20px;">
+                            <p style="color:#555;margin-bottom:15px;font-size:0.95em;">Use this form to add attendance for a teacher who failed to mark their own attendance.</p>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Teacher *</label>
+                                    <select id="adminAttTeacherSelect" required>
+                                        <option value="">Select Teacher</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date *</label>
+                                    <input type="date" id="adminAttDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status *</label>
+                                    <select id="adminAttStatus" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Present">Present</option>
+                                        <option value="Half Day">Half Day</option>
+                                        <option value="Late">Late</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Check-in Time *</label>
+                                    <input type="time" id="adminAttCheckIn">
+                                </div>
+                                <div class="form-group">
+                                    <label>Check-out Time (Optional)</label>
+                                    <input type="time" id="adminAttCheckOut">
+                                </div>
+                                <div class="form-group" style="grid-column: 1/-1;">
+                                    <label>Notes (Optional)</label>
+                                    <input type="text" id="adminAttNotes" placeholder="Reason for adding on behalf...">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="adminSubmitAttendanceOnBehalf()" id="adminAddAttBtn">Add Attendance</button>
+                        </div>
+                    </div>
+
                     <div class="attendance-stats">
                         <div class="attendance-stat present-color"><h3 id="attPresent">0</h3><p>Present Today</p></div>
                         <div class="attendance-stat late-color"><h3 id="attLate">0</h3><p>Late Today</p></div>
@@ -1294,6 +1340,7 @@
     window.payments = [];
     window.reminders = [];
     window.teachers = [];
+    window.teacherUsers = [];
     window.salaries = [];
     window.expenses = [];
     window.inquiries = [];
@@ -1513,6 +1560,13 @@
                     window.timetables = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                     updateTimetableView();
                 });
+
+                // Load teacher user accounts for "Add Attendance on Behalf" feature
+                try {
+                    const teacherUsersSnap = await getDocs(query(collection(db, 'users'), where('role', '==', 'teacher')));
+                    window.teacherUsers = teacherUsersSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
+                    populateAdminAttTeacherSelect();
+                } catch(e) { console.error('Error loading teacher users:', e); }
             }
 
             // Attendance: teachers see only their own records; admin/staff see all
@@ -2949,7 +3003,10 @@
                         ? '<span class="badge badge-rejected">Rejected</span>'
                         : '<span class="badge badge-pending">Pending</span>';
                 const statusClass = r.status === 'Present' ? 'badge-present' : r.status === 'Late' ? 'badge-late' : 'badge-halfday';
-                const submittedDate = r.submittedAt ? new Date(r.submittedAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}) : '-';
+                const submittedDateStr = r.submittedAt ? new Date(r.submittedAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}) : '-';
+                const submittedDate = r.addedByAdmin
+                    ? `${submittedDateStr}<br><span style="font-size:0.78em;background:#0056b3;color:#fff;padding:2px 6px;border-radius:4px;display:inline-block;margin-top:2px;">Admin Added</span>`
+                    : submittedDateStr;
                 const safeVal = v => (!v || v === '-') ? '-' : v;
                 const actionsCell = userRole === 'admin'
                     ? `<td><div class="action-buttons">
@@ -3032,6 +3089,100 @@
             updateAttendanceStats();
             alert('✅ Attendance record deleted.');
         } catch (error) { alert('Error: ' + error.message); }
+    };
+
+    window.populateAdminAttTeacherSelect = function() {
+        const sel = document.getElementById('adminAttTeacherSelect');
+        if (!sel) return;
+        sel.innerHTML = '<option value="">Select Teacher</option>';
+        window.teacherUsers.sort((a, b) => (a.name || '').localeCompare(b.name || '')).forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t.uid;
+            opt.textContent = `${t.name} (${t.email})`;
+            opt.dataset.name = t.name;
+            opt.dataset.email = t.email;
+            sel.appendChild(opt);
+        });
+    };
+
+    window.toggleAdminAttForm = function() {
+        const body = document.getElementById('adminAttFormBody');
+        const icon = document.getElementById('adminAttFormToggleIcon');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            icon.textContent = '▲';
+        } else {
+            body.style.display = 'none';
+            icon.textContent = '▼';
+        }
+    };
+
+    window.adminSubmitAttendanceOnBehalf = async function() {
+        const sel = document.getElementById('adminAttTeacherSelect');
+        const teacherId = sel.value;
+        const selectedOpt = sel.options[sel.selectedIndex];
+        const teacherName = selectedOpt?.dataset?.name || '';
+        const teacherEmail = selectedOpt?.dataset?.email || '';
+        const date = document.getElementById('adminAttDate').value;
+        const status = document.getElementById('adminAttStatus').value;
+        const checkIn = document.getElementById('adminAttCheckIn').value;
+        const checkOut = document.getElementById('adminAttCheckOut').value;
+        const notes = document.getElementById('adminAttNotes').value.trim();
+
+        if (!teacherId) { alert('Please select a teacher.'); return; }
+        if (!date || !status || !checkIn) { alert('Please fill in Date, Status, and Check-in Time.'); return; }
+
+        const btn = document.getElementById('adminAddAttBtn');
+        btn.disabled = true; btn.textContent = 'Checking...';
+        try {
+            // Check for duplicate attendance for this teacher on this date
+            const dupSnap = await getDocs(query(
+                collection(db, 'teacherAttendance'),
+                where('teacherId', '==', teacherId),
+                where('date', '==', date)
+            ));
+            if (!dupSnap.empty) {
+                const existing = dupSnap.docs[0].data();
+                const overwrite = confirm(`⚠️ Attendance already exists for ${teacherName} on ${date}.\nStatus: ${existing.status} | Approval: ${existing.approvalStatus}\n\nDo you want to add a new record anyway?`);
+                if (!overwrite) { btn.disabled = false; btn.textContent = 'Add Attendance'; return; }
+            }
+        } catch(e) {
+            console.warn('Duplicate check failed, proceeding:', e);
+        }
+
+        btn.textContent = 'Adding...';
+        try {
+            const newRecord = {
+                teacherId,
+                teacherName,
+                teacherEmail,
+                date,
+                status,
+                checkIn,
+                checkOut: checkOut || '-',
+                notes: notes || '-',
+                submittedAt: new Date().toISOString(),
+                locationDistance: null,
+                approvalStatus: 'Approved',
+                approvedBy: currentUser.email,
+                approvedAt: new Date().toISOString(),
+                adminNotes: `Added by admin on behalf of teacher`,
+                addedByAdmin: true
+            };
+            const docRef = await addDoc(collection(db, 'teacherAttendance'), newRecord);
+            window.attendanceRecords.unshift({ id: docRef.id, ...newRecord });
+            updateAttendanceTable();
+            updateAttendanceStats();
+            alert(`✅ Attendance added for ${teacherName} on ${date}.`);
+            // Reset form
+            sel.value = '';
+            document.getElementById('adminAttDate').value = '';
+            document.getElementById('adminAttStatus').value = '';
+            document.getElementById('adminAttCheckIn').value = '';
+            document.getElementById('adminAttCheckOut').value = '';
+            document.getElementById('adminAttNotes').value = '';
+        } catch (error) { alert('Error: ' + error.message); }
+        finally { btn.disabled = false; btn.textContent = 'Add Attendance'; }
     };
 
     window.clearAttFilters = function() {
