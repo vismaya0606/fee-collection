@@ -68,7 +68,7 @@
 
     <div class="receipt-card">
         <div class="receipt-header">
-            <h4><i class="bi bi-mortarboard-fill me-2"></i>School Fee Management</h4>
+            <h4><i class="bi bi-mortarboard-fill me-2"></i>Demo School Fee Management</h4>
             <p>Fee Payment Receipt</p>
         </div>
         <div class="receipt-body">

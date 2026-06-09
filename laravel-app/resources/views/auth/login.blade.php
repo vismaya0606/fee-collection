@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — School Fee Management</title>
+    <title>Login — Demo School Fee Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
@@ -54,7 +54,7 @@
         <i class="bi bi-mortarboard-fill"></i>
     </div>
     <h4 class="text-center fw-bold mb-1">Welcome Back</h4>
-    <p class="text-center text-muted mb-4 small">School Fee Management System</p>
+    <p class="text-center text-muted mb-4 small">Demo School Fee Management System</p>
 
     @if($errors->any())
         <div class="alert alert-danger py-2">
