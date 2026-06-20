@@ -1,0 +1,11 @@
+{
+  "name": "fee-collection",
+  "version": "1.0.0",
+  "description": "Vismaya Education Dashboard - Fee Collection System",
+  "scripts": {
+    "lint": "htmlhint index.html"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4"
+  }
+}
